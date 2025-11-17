@@ -10,7 +10,7 @@
   },
   "favicon": "/favicon.ico",
   "fonts": {
-    "family": "SimSun, sans-serif"
+
   },
   "navigation": {
     "tabs": [
@@ -79,5 +79,10 @@
   },
   "seo": {
     "indexing": "all"
-  }
+  },
+  "integrations": {
+    "ga4": {
+        "measurementId": "G-MC78QR8803"
+    }
+}
 }
