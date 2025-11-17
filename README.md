@@ -42,3 +42,8 @@ Install our GitHub app from your [dashboard](https://dashboard.mintlify.com/sett
 ### Resources
 - [Mintlify documentation](https://mintlify.com/docs)
 
+
+
+### seo配置
+- https://www.mintlify.com/docs/optimize/seo#common-meta-tags-reference
+
