@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "palm",
+  "theme": "mint",
   "name": "BrowserAct",
   "description": "Instantly perform web scraping from any site using our AI-powered web scraper. This user-friendly web scraping tool provides scalable, cost-effective solutions without coding.",
   "colors": {
