@@ -9,44 +9,100 @@
     "dark": "#03bf80"
   },
   "favicon": "/favicon.ico",
-  "fonts": {
-
-  },
+  "fonts": {},
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Learn",
         "groups": [
           {
-            "group": "Getting started",
+            "group": "Basics",
+            "expanded": false,
             "pages": [
-              "index",
-              "quickstart",
-              "development"
+              {
+                "group": "Learn BrowserAct through simple tasks",
+                "pages": [
+                  "Learn/Basics/Learn BrowserAct through simple tasks/test"
+                ]
+              },
+              {
+                "group": "Node Types",
+                "pages": ["Learn/Basics/Node Types/test"]
+              },
+              {
+                "group": "Product Features",
+                "pages": ["Learn/Basics/Product Features/test"]
+              }
             ]
           },
           {
-            "group": "Customization",
+            "group": "Quick Start",
+            "expanded": false,
             "pages": [
-              "essentials/settings",
-              "essentials/navigation"
+              {
+                "group": "Core Concepts",
+                "pages": ["Learn/Quick Start/Core Concepts/test"]
+              },
+              "Learn/Quick Start/Try it with Templates",
+              "Learn/Quick Start/Use BrowserAct in n8n.Make.Zapier"
             ]
           },
           {
-            "group": "Writing content",
+            "group": "What is BrowserAct",
+            "expanded": false,
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
+              "Learn/What is BrowserAct/Capabilities",
+              "Learn/What is BrowserAct/Use Cases",
+              "Learn/What is BrowserAct/Why BrowserAct"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Help",
+        "groups": [
+          {
+            "group": "Help by Feature",
+            "expanded": false,
+            "pages": [
+              {
+                "group": "Everyday Questions",
+                "pages": ["Help/Help by Feature/Everyday Questions/test"]
+              },
+              {
+                "group": "Run failures & Errors",
+                "pages": ["Help/Help by Feature/Run failures & Errors/test"]
+              }
             ]
           },
           {
-            "group": "AI tools",
+            "group": "Help by Task",
+            "expanded": false,
             "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              {
+                "group": "Agent issues",
+                "pages": ["Help/Help by Task/Agent issues/test"]
+              },
+              {
+                "group": "Billing & usage limits",
+                "pages": ["Help/Help by Task/Billing & usage limits/test"]
+              },
+              {
+                "group": "Credentials & authentication",
+                "pages": ["Help/Help by Task/Credentials & authentication/test"]
+              },
+              {
+                "group": "Integrations",
+                "pages": ["Help/Help by Task/Integrations/test"]
+              },
+              {
+                "group": "Logs & diagnostics",
+                "pages": ["Help/Help by Task/Logs & diagnostics/test"]
+              },
+              {
+                "group": "Template issues",
+                "pages": ["Help/Help by Task/Template issues/test"]
+              }
             ]
           }
         ]
@@ -82,7 +138,7 @@
   },
   "integrations": {
     "ga4": {
-        "measurementId": "G-MC78QR8803"
+      "measurementId": "G-MC78QR8803"
     }
-}
+  }
 }
