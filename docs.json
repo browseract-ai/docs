@@ -10,6 +10,7 @@
   },
   "favicon": "/favicon.ico",
   "fonts": {},
+  "icons": { "library": "lucide" }, 
   "navigation": {
     "tabs": [
       {
