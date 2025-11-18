@@ -1,1 +1,90 @@
-/
+---
+sidebarTitle: "123"
+'og:image': "123"
+title: "fvdvdv"
+description: "vdfvdfvfdfv"
+---
+
+## **What is the Tab Operation Node?**
+
+The Tab Operation Node gives you automated control over browser tabs in your workflows. It handles three core actions: closing tabs you don't need, going back to previous pages. Think of it as your automated browser navigator—keeping your sessions clean and organized while you extract data across multiple pages.
+
+![Hero Dark Pn](/images/hero-dark.png)
+
+## **When Should You Use It?**
+
+Use the Tab Operation Node if you need to:
+
+- **Navigate between multiple pages** during data extraction (e.g., switching from a product list to individual product details)
+- **Clean up browser sessions** by closing tabs after data collection
+- **Return to previous pages** to continue scraping or verification
+- **Manage complex workflows** that open multiple tabs and need organized navigation
+
+## **Understanding the Three Operations**
+
+### **1.Close Tab**
+
+**What it does:** Closes the currently active browser tab.
+
+**Behavior:** If only one tab remains open, executing Close Tab will navigate to a blank page instead of closing the browser entirely.
+
+### **2.Go Back**
+
+**What it does:** Returns to the previous page in the current tab's browsing history.
+
+**Key behavior:** Executes navigation within the visible region's history and automatically loads the page.
+
+## **Key Features**
+
+- **Precise Tab Control:** Execute Close Tab, Go Back operations for accurate browser session management
+- **Smart Integration:** Automatically handles tab state changes and works seamlessly with Visit Page and other nodes
+- **Error Recovery:** Built-in fault tolerance with options to stop or skip when tabs are invalid, ensuring workflow stability
+
+## **How to Set Up Tab Operation Nodes (Step by Step)**
+
+### **Step 1: Add a Tab Operation Node**
+
+Click the **\+** button in your workflow, then select the specific operation you need from the "Tab Operation" group:
+
+- Close Tab
+- Go Back
+
+### **Step 2: Configure Close Tab Node**
+
+**Operation Description:** "Close current tab"
+
+**Error Handling:**
+
+- **Stop Task:** Stops the workflow immediately (recommended for critical operations)
+- **Skip:** Continues to the next node (useful for optional cleanup)
+
+### **Step 3: Configure Go Back Node**
+
+**Operation Description:** "Go back to previous tab"
+
+**Error Handling:**
+
+- **Stop Task:** Stops workflow if navigation history is empty
+- **Skip:** Continues workflow even if back navigation fails
+
+### 
+
+### **Step 4: Integrate with Other Nodes**
+
+Tab Operation nodes work best when combined with other workflow nodes:
+
+- **After Visit Page:** Use Close Tab to clean up after visiting detail pages
+- **Before Extract Data:** Use Switch Tab to navigate to the correct tab before extraction
+- **After Loop List:** Use Go Back to return to the main list after processing details
+
+## **Key Rules & Best Practices**
+
+- **One operation per node:** Don't try to close multiple tabs with a single Close Tab node
+- **Clear tab descriptions:** Be specific but flexible when describing tabs for switching
+- **Error handling matters:** Always configure appropriate error behavior for your use case
+- **Session awareness:** Remember that Tab Operation only works within the current browser session
+
+## **Quick Review**
+
+- **What happens if you execute Close Tab when only one tab is open?**
+- **When would you use Go Back instead of Close Tab?**
