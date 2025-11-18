@@ -47,3 +47,12 @@ Install our GitHub app from your [dashboard](https://dashboard.mintlify.com/sett
 ### seo配置
 - https://www.mintlify.com/docs/optimize/seo#common-meta-tags-reference
 
+## api.json生成对应文件
+> npx @mintlify/scraping@latest openapi-file zh/api/openapi.json -o zh/api/norma
+
+## 配置中心
+> https://dashboard.mintlify.com/hc-2ade1025/hc-2ade1025
+
+## 使用的是lucide 的icon库
+> https://lucide.dev/icons/
+> https://mintlify.b-cdn.net/v6.6.0/lucide/activity.svg
