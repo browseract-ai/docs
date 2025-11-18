@@ -17,6 +17,7 @@
         "groups": [
           {
             "group": "What is BrowserAct",
+            "icon": "graduation-cap",
             "expanded": false,
             "pages": [
               "Learn/What is BrowserAct/Capabilities",
@@ -26,11 +27,15 @@
           },
           {
             "group": "Quick Start",
+            "icon": "rocket",
             "expanded": false,
             "pages": [
               {
                 "group": "Core Concepts",
-                "pages": ["Learn/Quick Start/Core Concepts/test"]
+                "icon": "",
+                "pages": [
+                  "Learn/Quick Start/Core Concepts/test"
+                ]
               },
               "Learn/Quick Start/Try it with Templates",
               "Learn/Quick Start/Use BrowserAct in n8n.Make.Zapier"
@@ -38,21 +43,29 @@
           },
           {
             "group": "Basics",
+            "icon": "mountain",
             "expanded": false,
             "pages": [
               {
                 "group": "Learn BrowserAct through simple tasks",
+                "icon": "",
                 "pages": [
                   "Learn/Basics/Learn BrowserAct through simple tasks/test"
                 ]
               },
               {
                 "group": "Node Types",
-                "pages": ["Learn/Basics/Node Types/test"]
+                "icon": "",
+                "pages": [
+                  "Learn/Basics/Node Types/test"
+                ]
               },
               {
                 "group": "Product Features",
-                "pages": ["Learn/Basics/Product Features/test"]
+                "icon": "",
+                "pages": [
+                  "Learn/Basics/Product Features/test"
+                ]
               }
             ]
           }
@@ -63,45 +76,71 @@
         "groups": [
           {
             "group": "Help by Feature",
+            "icon": "message-circle-question-mark",
             "expanded": false,
             "pages": [
               {
                 "group": "Everyday Questions",
-                "pages": ["Help/Help by Feature/Everyday Questions/test"]
+                "icon": "hand-helping",
+                "pages": [
+                  "Help/Help by Feature/Everyday Questions/test"
+                ]
               },
               {
                 "group": "Run failures & Errors",
-                "pages": ["Help/Help by Feature/Run failures & Errors/test"]
+                "icon": "shield-alert",
+                "pages": [
+                  "Help/Help by Feature/Run failures & Errors/test"
+                ]
               }
             ]
           },
           {
             "group": "Help by Task",
+            "icon": "book-open-check",
             "expanded": false,
             "pages": [
               {
-                "group": "Agent issues",
-                "pages": ["Help/Help by Task/Agent issues/test"]
+                "group": "Workflow issues",
+                "icon": "workflow",
+                "pages": [
+                  "Help/Help by Task/Agent issues/test"
+                ]
               },
               {
                 "group": "Billing & usage limits",
-                "pages": ["Help/Help by Task/Billing & usage limits/test"]
+                "icon": "receipt-text",
+                "pages": [
+                  "Help/Help by Task/Billing & usage limits/test"
+                ]
               },
               {
                 "group": "Credentials & authentication",
-                "pages": ["Help/Help by Task/Credentials & authentication/test"]
+                "icon": "shield-check",
+                "pages": [
+                  "Help/Help by Task/Credentials & authentication/test"
+                ]
               },
               {
                 "group": "Integrations",
-                "pages": ["Help/Help by Task/Integrations/test"]
+                "icon": "blocks",
+                "pages": [
+                  "Help/Help by Task/Integrations/test"
+                ]
               },
               {
                 "group": "Logs & diagnostics",
-                "pages": ["Help/Help by Task/Logs & diagnostics/test"]
+                "icon": "scroll-text",
+                "pages": [
+                  "Help/Help by Task/Logs & diagnostics/test"
+                ]
               },
               {
                 "group": "Template issues",
-                "pages": ["Help/Help by Task/Template issues/test"]
+                "icon": "layout-template",
+                "pages": [
+                  "Help/Help by Task/Template issues/test"
+                ]
               }
             ]
           }
