@@ -16,6 +16,27 @@
         "tab": "Learn",
         "groups": [
           {
+            "group": "What is BrowserAct",
+            "expanded": false,
+            "pages": [
+              "Learn/What is BrowserAct/Capabilities",
+              "Learn/What is BrowserAct/Use Cases",
+              "Learn/What is BrowserAct/Why BrowserAct"
+            ]
+          },
+          {
+            "group": "Quick Start",
+            "expanded": false,
+            "pages": [
+              {
+                "group": "Core Concepts",
+                "pages": ["Learn/Quick Start/Core Concepts/test"]
+              },
+              "Learn/Quick Start/Try it with Templates",
+              "Learn/Quick Start/Use BrowserAct in n8n.Make.Zapier"
+            ]
+          },
+          {
             "group": "Basics",
             "expanded": false,
             "pages": [
@@ -33,27 +54,6 @@
                 "group": "Product Features",
                 "pages": ["Learn/Basics/Product Features/test"]
               }
-            ]
-          },
-          {
-            "group": "Quick Start",
-            "expanded": false,
-            "pages": [
-              {
-                "group": "Core Concepts",
-                "pages": ["Learn/Quick Start/Core Concepts/test"]
-              },
-              "Learn/Quick Start/Try it with Templates",
-              "Learn/Quick Start/Use BrowserAct in n8n.Make.Zapier"
-            ]
-          },
-          {
-            "group": "What is BrowserAct",
-            "expanded": false,
-            "pages": [
-              "Learn/What is BrowserAct/Capabilities",
-              "Learn/What is BrowserAct/Use Cases",
-              "Learn/What is BrowserAct/Why BrowserAct"
             ]
           }
         ]
