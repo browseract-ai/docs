@@ -1,0 +1,150 @@
+---
+title: "Core Concepts"
+sidebarTitle: "Core Concepts"
+description: "In BrowserAct, everything comes from three ideas: workflows, nodes, and runs."
+---
+
+Before you dive into BrowserAct, we’ll quickly introduce three key concepts: **workflow**, **node**, and **task**.
+
+Any time you want to turn a repetitive web operation (e.g. checking prices, scraping data, syncing lists) into an automated process in BrowserAct, you’ll be using these three:
+
+- **Workflow** – the end-to-end process designed to achieve a specific business goal.
+- **Node** – one small concrete step inside that process.
+- **Task** – one actual run of that process, including its inputs, execution, and results.
+
+In the rest of this section, we’ll look at what each of them means and how they map to the way you already work in a browser.
+
+![Gemini Generated Image 6tfmo56tfmo56tfm Jp](/images/Gemini_Generated_Image_6tfmo56tfmo56tfm.jpg)
+
+---
+
+## 1. What is a workflow?
+
+> **Workflow = the complete sequence of steps that lets BrowserAct follow your instructions and “do the work” on web pages for you.**
+
+From a business perspective:
+
+- Each workflow represents a **clear business goal**, such as “scrape Google News”, “collect TikTok hashtag videos”, or “get Google Maps business listings”.
+- Every card you see in the **Templates** gallery (e.g. _YouTube Comments Scraper_, _Google Maps Scraper_) is essentially a pre-built workflow.
+
+### From manual work to a workflow
+
+Suppose you do this manually every day:
+
+> Open an e-commerce site → search for “shoes” → go through all pages → copy product name, price, and link → paste into a spreadsheet
+
+Seen as a workflow, you only keep the key steps:
+
+1. Open the product listing page
+2. Search by a keyword (for example, “shoes”)
+3. Go through all listing pages
+4. Collect each product’s name, price, and link
+5. Save the collected data into a table
+
+In BrowserAct, you turn these steps into one complete workflow, for example:
+
+> **“E-commerce Product Price Scraper” workflow**
+
+After that you can:
+
+- Use the **same workflow** with different inputs (for example, different keywords or start URLs)
+- Click **Run**, and BrowserAct will follow this route automatically to finish the job for you
+
+**In short:**
+
+- From the system’s point of view, a workflow is a set of nodes connected in order.
+- From the business point of view, a workflow represents **the business goal itself** that you want to achieve.
+
+![Gemini Generated Image 6tfmo56tfmo56tfm Jp](/images/Gemini_Generated_Image_6tfmo56tfmo56tfm.jpg)
+
+---
+
+## 2. What is a node?
+
+Once you have a complete workflow, you can look one level deeper.
+
+> **Node = the smallest execution unit inside a workflow — a single instruction that tells the browser to do one specific thing.**
+
+Using the same example:\
+At the workflow level, you might have a step called:
+
+> “Search by keyword”
+
+When this actually runs, it must be broken down into smaller instructions:
+
+- Fill the keyword into the search input box
+- Click the search button
+
+In BrowserAct, these become **multiple nodes**, not just one.
+
+### Manual actions vs. nodes
+
+Here’s how common manual actions map to node types:
+
+| Manual action                       | Typical node in BrowserAct       |
+| :---------------------------------- | :------------------------------- |
+| Open a URL                          | **Open Page** node               |
+| Type text into a search box         | **Fill Input** node              |
+| Click a “Search” button             | **Click Element** node           |
+| Scroll down the page                | **Scroll Page** node             |
+| Click “Next page”                   | **Pagination / Click Next** node |
+| Read title, price, or other fields  | **Extract Data / Fields** node   |
+| Repeat the same steps for each item | **Loop / For Each Item** node    |
+
+On the workflow canvas, each small block you see is one node.
+
+So you can think of it like this:
+
+- The **workflow** describes which steps are needed to reach a business goal (search → browse pages → extract data → save result).
+- **Nodes** break these steps down into browser-level actions (which input to fill, which button to click, how to loop, which fields to extract, etc.).
+
+**In short:**
+
+> A workflow explains **how the whole thing goes from A to B**.\
+> Nodes define **what exactly happens at each step on the web page**.
+
+![Gemini Generated Image H9hb2jh9hb2jh9hb Jp](/images/Gemini_Generated_Image_h9hb2jh9hb2jh9hb.jpg)
+
+---
+
+## 3. What is a task?
+
+Now we have:
+
+- A **workflow** – a complete process design (business goal + a set of nodes)
+- **Nodes** – the individual instructions inside that process
+
+Next comes the **task**.
+
+> **_When you click “Run” on a workflow and it executes from start to finish, that single run is called a task._**
+
+Each task has its own:
+
+- **Input**
+  - For example: is the keyword “shoes” or “hats”? What is the start URL?
+- **Execution details**
+  - Which nodes were run, in what order, and where (if anywhere) it failed
+- **Result**
+  - The data collected
+  - Logs and status (success / failure)
+- **Resource usage**
+  - How many credits this run consumed
+
+The same workflow can generate many tasks. For example:
+
+- Run once today to **scrape this week’s new products** → Task #1
+- Run again tomorrow on the same workflow to **scrape next week’s new products** → Task #2
+
+**In short:**
+
+> A **task** is one concrete execution of a workflow at a specific time, with specific inputs, and its full record of what happened and what was produced.
+
+![Gemini Generated Image S8a6ycs8a6ycs8a6 Jp](/images/Gemini_Generated_Image_s8a6ycs8a6ycs8a6.jpg)
+
+---
+
+You can now go to the **Templates** gallery, pick any workflow, and use this mental model to see:
+
+- Which business goal the workflow represents
+- How it is built from nodes
+- And what tasks are created each time you run it.
