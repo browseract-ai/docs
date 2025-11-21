@@ -1,3 +1,143 @@
 ---
 title: "Use BrowserAct in n8n.Make"
+description: "Once you have a BrowserAct workflow running reliably, you can trigger it from n8n or Make and plug it into your larger automations."
 ---
+
+![Gemini Generated Image 9q2jxk9q2jxk9q2j Jp](/images/Gemini_Generated_Image_9q2jxk9q2jxk9q2j.jpg)
+
+### Prerequisites
+
+Before you start:
+
+- You have a **BrowserAct account**.
+- In BrowserAct, you’ve gone to **Integrations → API** and created an **API Key**.
+- You have this API key ready to paste into n8n / Make as a credential.
+
+---
+
+## Using BrowserAct in n8n
+
+BrowserAct can be used in n8n in **two ways**:
+
+- via the **official, verified integration**\
+  – see: [BrowserAct integration on ](https://n8n.io/integrations/browseract)[n8n.io](http://n8n.io)
+- via the **community node** (for self-hosted / custom deployments)\
+  – see: [n8n-nodes-browseract on npm](https://www.npmjs.com/package/n8n-nodes-browseract)
+
+> The configuration inside the node is the same in spirit for both options:\
+> you pick a workflow, then map inputs into its parameters, and consume its outputs.
+
+### 1. Connect n8n to BrowserAct
+
+**Official integration**
+
+1. In n8n, add a **BrowserAct** node to any workflow.
+2. In the node’s **Credentials** section, create a new credential.
+3. Paste your BrowserAct **API Key** and save.
+
+**Community node**
+
+1. Install the community package `n8n-nodes-browseract` into your n8n instance (follow the instructions in the npm README).
+2. Restart n8n if needed.
+3. Add the **BrowserAct** node provided by the community package.
+4. In its **Credentials**, paste your BrowserAct API key.
+
+### 2. Pick the workflow to run
+
+In the BrowserAct node’s **Parameters** panel:
+
+- Set **Resource** to `Workflow` (or the equivalent option).
+- Set **Operation** to `Run a workflow`.
+- Choose **Search Workflows From**:
+  - `Template Marketplace` – to use a template workflow, or
+  - `My Workflows` – to use a workflow you created in BrowserAct.
+- In **Workflow**, select the workflow you want to run (for example `Google Maps Scraper` or any custom workflow).
+
+### 3. Configure the input parameters
+
+After you select a workflow, the node’s **Input Parameters** section is generated **dynamically** from that workflow’s **Start node**.
+
+- A maps workflow might expose: `datalimit`, `URL`, `Area`, `Keyword`.
+- A research workflow might expose: `target_url`, `search_keywords`, `data_limit`.
+- An e-commerce workflow might expose: `asin_list`, `marketplace`, `min_price_change`, etc.
+
+This means:
+
+> Different workflows → different input parameter fields in n8n.\
+> You don’t define these in n8n; they come from the workflow definition in BrowserAct.
+
+Now map your data:
+
+- Use options like **Mapping Column Mode**, **Field to match on**, and **Values to Update** (the individual parameter fields).
+- Map fields from previous nodes (sheet columns, webhook fields, CRM data, etc.) into the corresponding BrowserAct parameters (`URL`, `Area`, `Keyword`, …).
+
+### 4. Run and use the output
+
+- Execute the BrowserAct node (or run the whole n8n workflow).
+- n8n sends your mapped inputs to BrowserAct, which runs the selected workflow.
+- The node returns **structured JSON items** (one item per scraped record, or whatever your workflow outputs).
+
+You can then:
+
+- Write the data to **Google Sheets / databases**.
+- Pass it through **Routers / IF nodes** for branching logic.
+- Send **emails, Slack messages, webhooks**, or trigger any other downstream process.
+
+  ![image.png](/images/image.png)
+
+---
+
+## Using BrowserAct in Make
+
+BrowserAct also has an official integration in **Make**:\
+[BrowserAct integration on Make](https://www.make.com/en/integrations/browser-act)
+
+### 1. Connect Make to BrowserAct
+
+1. In Make, add any **BrowserAct** module to your scenario.
+2. In the module’s **Connection** field, create a new connection.
+3. Paste your BrowserAct **API Key** and save.
+
+### 2. Add a BrowserAct module to your scenario
+
+1. In your scenario, insert a **BrowserAct** module.
+2. Select the action **Run a workflow**.
+3. Place it after the module that should provide context (for example a scheduler, Google Sheets, a webhook, etc.).
+
+### 3. Select the workflow and inputs
+
+In the BrowserAct module’s settings:
+
+- **Search Workflows From**: choose `Template Marketplace` or `My Workflows`.
+- **Workflow**: pick the workflow you want to run (for example `Google Scholar Research Scraper-0911`).
+
+After you choose a workflow, the **Input Parameters** section is generated from that workflow’s **Start node**, just like in n8n:
+
+- For example: `target_url`, `search_keywords`, `data_limit`, or any other inputs that workflow defines.
+
+You can then:
+
+- Enter fixed values (good for scheduled “same config every time” runs), or
+- Map values from earlier modules (for example URL and keyword from a spreadsheet row or webhook payload).
+
+### 4. Use the returned data
+
+When the scenario runs:
+
+- Make calls BrowserAct with the mapped parameters.
+- BrowserAct executes the workflow and returns **bundles** of structured data to the next module.
+
+You can then:
+
+- Store the data in **Sheets / databases / Airtable / Notion**.
+- Trigger **emails, Slack/Teams messages**, or create **CRM records**.
+- Chain more modules to continue your business logic.
+
+  ![image.png](/images/image.png)
+
+---
+
+In both n8n and Make, the pattern is:
+
+- **BrowserAct**: owns the web automation logic and defines the input parameters per workflow.
+- **n8n / Make**: decide when to run that workflow, where inputs come from, and how to use the outputs in your overall automation.
