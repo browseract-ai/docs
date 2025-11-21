@@ -31,13 +31,7 @@
             "icon": "rocket",
             "expanded": false,
             "pages": [
-              {
-                "group": "Core Concepts",
-                "icon": "",
-                "pages": [
-                  "Learn/Quick Start/Core Concepts/test"
-                ]
-              },
+              "Learn/Quick Start/CoreConcepts",
               "Learn/Quick Start/Try it with Templates",
               "Learn/Quick Start/Use BrowserAct in n8n.Make.Zapier"
             ]
