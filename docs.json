@@ -15,23 +15,11 @@
   "tabs": [
     {
       "tab": "Learn",
+      "pages": [
+        "Learn/Introduction",
+        "Learn/Core-Concepts"
+      ],
       "groups": [
-        {
-          "group": "Introduction",
-          "icon": "sparkles",
-          "expanded": true,
-          "pages": [
-            "Learn/Instruction"
-          ]
-        },
-        {
-          "group": "What is BrowserAct",
-          "icon": "graduation-cap",
-          "expanded": false,
-          "pages": [
-            "Learn/What-is-BrowserAct"
-          ]
-        },
         {
           "group": "Quick Start",
           "icon": "rocket",
@@ -159,6 +147,7 @@
     }
   ]
 }
+
 ,
   "logo": {
     "light": "/logo/light.png",
