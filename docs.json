@@ -17,6 +17,9 @@
       "tab": "Learn",
       "groups": [
         {
+          "group": "Overview",
+          "icon": "sparkles",
+          "expanded": true,
           "pages": [
             "Learn/Introduction",
             "Learn/Core-Concepts"
@@ -149,6 +152,7 @@
     }
   ]
 }
+
 ,
   "logo": {
     "light": "/logo/light.png",
