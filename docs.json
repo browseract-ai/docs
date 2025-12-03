@@ -14,59 +14,6 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Learn",
-        "groups": [
-          {
-            "group": "What is BrowserAct",
-            "icon": "graduation-cap",
-            "expanded": false,
-            "pages": [
-              "Learn/What is BrowserAct/Capabilities",
-              "Learn/What is BrowserAct/Use Cases",
-              "Learn/What is BrowserAct/Why BrowserAct"
-            ]
-          },
-          {
-            "group": "Quick Start",
-            "icon": "rocket",
-            "expanded": false,
-            "pages": [
-              "Learn/Quick Start/CoreConcepts",
-              "Learn/Quick Start/Try it with Templates",
-              "Learn/Quick Start/Use BrowserAct in n8n.Make.Zapier"
-            ]
-          },
-          {
-            "group": "Basics",
-            "icon": "mountain",
-            "expanded": false,
-            "pages": [
-              {
-                "group": "Learn BrowserAct through simple tasks",
-                "icon": "",
-                "pages": [
-                  "Learn/Basics/Learn BrowserAct through simple tasks/test"
-                ]
-              },
-              {
-                "group": "Node Types",
-                "icon": "",
-                "pages": [
-                  "Learn/Basics/Node Types/test"
-                ]
-              },
-              {
-                "group": "Product Features",
-                "icon": "",
-                "pages": [
-                  "Learn/Basics/Product Features/test"
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
         "tab": "Help",
         "groups": [
           {
@@ -96,7 +43,7 @@
             "expanded": false,
             "pages": [
               {
-                "group": "Workflow issues",
+                "group": "Agent issues",
                 "icon": "workflow",
                 "pages": [
                   "Help/Help by Task/Agent issues/test"
