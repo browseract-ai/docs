@@ -96,7 +96,7 @@
             "expanded": false,
             "pages": [
               {
-                "group": "Workflow issues",
+                "group": "Agent issues",
                 "icon": "workflow",
                 "pages": [
                   "Help/Help by Task/Agent issues/test"
