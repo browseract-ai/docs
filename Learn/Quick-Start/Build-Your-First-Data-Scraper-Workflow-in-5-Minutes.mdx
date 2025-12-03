@@ -1,0 +1,146 @@
+---
+description: "Build a complete Google Maps scraper in 5 minutes to master the core concepts of Workflows, Nodes, and Inputs."
+sidebarTitle: "Your First Workflow"
+title: "Build Your First "Data Scraper" Workflow in 5 Minutes"
+---
+
+The best way to master BrowserAct is to build a workflow yourself.
+
+This guide walks you through creating your first BrowserAct workflow: **Automatically scraping local restaurant data from Google Maps for a specific region and exporting it as a CSV file.**
+
+By completing this exercise, you will understand the core concepts of BrowserAct (Workflows, Nodes, Input Parameters, and Outputs) and gain the ability to design new automation scenarios on your own.
+
+In BrowserAct, a **Workflow** is a process composed of a series of **Nodes**. These nodes instruct the AI on which page to open, what text to enter, which elements to click, and how to extract and output data.
+
+---
+
+## Example Overview: What Are We Building?
+
+**Goal:** Scrape Local Restaurant Data
+
+**Input Parameters:**
+
+- **Country:** (e.g., `USA`)
+- **Area:** Region/City (e.g., `Avalon, CA`)
+
+**Automated Browser Actions:**
+
+1. Open `https://www.google.com/maps`
+2. Enter `{Country} {Area}` into the search bar.
+3. Click the **Search** button (Magnifying glass).
+4. Click **"Nearby"**.
+5. Select **"Restaurant"**.
+6. Extract restaurant information from the list.
+
+Output Result:
+
+A CSV File containing the following fields:
+
+- Name
+- Full Address
+- Star Rating
+- Review Count
+- Average Price Per Person Range
+
+---
+
+## Step-by-Step Setup (Node Orchestration)
+
+### Step 1: Start – Define Input Parameters
+
+1. Open the **Start** node.
+2. Add two **Input Parameters**:
+   - **Name:** `Country` | **Type:** Text | **Example:** `USA`
+   - **Name:** `Area` | **Type:** Text | **Example:** `Avalon, CA`
+
+### Step 2: Visit Page – Open Google Maps
+
+1. Add a **Visit Page** node.
+2. **URL:** Enter `https://www.google.com/maps`.
+
+### Step 3: Input Text – Search for Area
+
+1. Add an **Input Text** node.
+2. **Location:** Target the **Search Bar** at the top of the page.
+3. **Text to Input:** Enter `{Country} {Area}`.
+
+### Step 4: Click Element – Navigate to Restaurants
+
+1. **Click Element_1:** Target and click the **Search button** (Magnifying glass icon).
+2. **Click Element_2:** Target and click the **"Nearby"** button.
+3. **Click Element_3:** Select the **"Restaurant"** category.
+
+### Step 5: Extract Data – Scrape List Data
+
+1. Add an **Extract Data** node.
+2. Select one restaurant in the left-hand list as a sample.
+3. Configure the data fields to extract:
+   - `name`
+   - `full_address`
+   - `star_rating`
+   - `review_count`
+   - `average_price_per_person_range`
+
+### Step 6: Finish: Output Data – Export to CSV
+
+1. Add a **Finish: Output Data** node.
+2. **Output Format:** Select **CSV**.
+3. **File Option:** Check **"Output as a file"**.
+
+---
+
+## Run & Verify
+
+1. Click **Run** to start the workflow.
+2. Enter the example run parameters:
+   - **Country:** `USA`
+   - **Area:** `Avalon, CA`
+3. Watch as the workflow sequentially executes the 7 nodes.
+4. Once finished, download the CSV file. You should see data similar to:
+
+Code snippet
+
+```
+name,full_address,star_rating,review_count,average_price_per_person_range
+Bluewater Avalon,306 Crescent Ave,4.3,2342,$30–50
+Buffalo Nickel Inc,57 Pebbly Beach Rd,4.6,646,$20–30
+...
+```
+
+---
+
+## How to Design a Workflow?
+
+You can use a fixed **"Three-Layer Model"** to design any BrowserAct process:
+
+### 1. Goal Layer: What result do I want?
+
+- **Example:** A CSV list of restaurants in a specific area.
+
+### 2. Planning Layer: Break it down into stages
+
+- **Stage 1: Identify Target Scope**
+  - Use `Country` + `Area` to determine the scraping range.
+- **Stage 2: Locate Content**
+  - Open Google Maps → Search Area → Click Nearby → Click Restaurant.
+- **Stage 3: Extract Output**
+  - Extract required fields from the list → Export as CSV.
+
+### 3. Node Layer: Map the plan to nodes
+
+- **Start**
+  - → **Visit Page** (`https://www.google.com/maps`)
+    - → **Input Text** (`{Country} {Area}`)
+      - → **Click Element** (Search)
+        - → **Click Element** (Nearby)
+          - → **Click Element** (Restaurant)
+            - → **Extract Data**
+              - → **Finish: Output Data** (CSV)
+
+---
+
+## What's Next?
+
+- **Reuse:** Change the `Country` / `Area` inputs to scrape different cities using the exact same workflow.
+- **Filter:** Add logic before **Extract Data** to keep only high-rated restaurants.
+- **Apply:** Use this "Stage 1–3 + Node Layer" paradigm for other scenarios, such as hotel listings, job boards, or e-commerce products.
