@@ -15,11 +15,13 @@
   "tabs": [
     {
       "tab": "Learn",
-      "pages": [
-        "Learn/Introduction",
-        "Learn/Core-Concepts"
-      ],
       "groups": [
+        {
+          "pages": [
+            "Learn/Introduction",
+            "Learn/Core-Concepts"
+          ]
+        },
         {
           "group": "Quick Start",
           "icon": "rocket",
@@ -147,6 +149,7 @@
     }
   ]
 }
+
 
 ,
   "logo": {
