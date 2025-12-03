@@ -35,42 +35,37 @@
           ]
         },
         {
-          "group": "Basics",
-          "icon": "mountain",
+          "group": "Case Studies",
+          "icon": "lightbulb",
           "expanded": false,
           "pages": [
-            {
-              "group": "Case Studies",
-              "icon": "lightbulb",
-              "pages": [
-                "Learn/Basics/Case-Study/Case-1-Deep-Extraction-from-List-Page-to-Detail-Page",
-                "Learn/Basics/Case-Study/Case-2-Automatic-Pagination-and-Data-Collection-from-Multi-Page-Lists",
-                "Learn/Basics/Case-Study/Case-3-Automatic-Expansion-and-Collection-on-Long-Load-More-Lists",
-                "Learn/Basics/Case-Study/Case-4-Precise-Collection-from-Lists-with-Condition-Based-Filtering",
-                "Learn/Basics/Case-Study/Case-5-Precise-Scraping-with-Multi-Dimensional-Filtering"
-              ]
-            },
-            {
-              "group": "Node Types",
-              "icon": "workflow",
-              "pages": [
-                "Learn/Basics/Node-Types/Click-Element-Item-Node",
-                "Learn/Basics/Node-Types/Click-Element-Node",
-                "Learn/Basics/Node-Types/Condition-Node",
-                "Learn/Basics/Node-Types/Extract-Data-Item-Node",
-                "Learn/Basics/Node-Types/Extract-Data-Node",
-                "Learn/Basics/Node-Types/Input-Text-Node",
-                "Learn/Basics/Node-Types/Loop-List-Node",
-                "Learn/Basics/Node-Types/Loop-Node",
-                "Learn/Basics/Node-Types/Output-Data-Node",
-                "Learn/Basics/Node-Types/Pagination-Node",
-                "Learn/Basics/Node-Types/Scroll-Page-Node",
-                "Learn/Basics/Node-Types/Scroll-to-Element-Node",
-                "Learn/Basics/Node-Types/Tab-Operation-Node",
-                "Learn/Basics/Node-Types/Visit-Node",
-                "Learn/Basics/Node-Types/Wait-Node"
-              ]
-            }
+            "Learn/Basics/Case-Study/Case-1-Deep-Extraction-from-List-Page-to-Detail-Page",
+            "Learn/Basics/Case-Study/Case-2-Automatic-Pagination-and-Data-Collection-from-Multi-Page-Lists",
+            "Learn/Basics/Case-Study/Case-3-Automatic-Expansion-and-Collection-on-Long-Load-More-Lists",
+            "Learn/Basics/Case-Study/Case-4-Precise-Collection-from-Lists-with-Condition-Based-Filtering",
+            "Learn/Basics/Case-Study/Case-5-Precise-Scraping-with-Multi-Dimensional-Filtering"
+          ]
+        },
+        {
+          "group": "Node Types",
+          "icon": "workflow",
+          "expanded": false,
+          "pages": [
+            "Learn/Basics/Node-Types/Click-Element-Item-Node",
+            "Learn/Basics/Node-Types/Click-Element-Node",
+            "Learn/Basics/Node-Types/Condition-Node",
+            "Learn/Basics/Node-Types/Extract-Data-Item-Node",
+            "Learn/Basics/Node-Types/Extract-Data-Node",
+            "Learn/Basics/Node-Types/Input-Text-Node",
+            "Learn/Basics/Node-Types/Loop-List-Node",
+            "Learn/Basics/Node-Types/Loop-Node",
+            "Learn/Basics/Node-Types/Output-Data-Node",
+            "Learn/Basics/Node-Types/Pagination-Node",
+            "Learn/Basics/Node-Types/Scroll-Page-Node",
+            "Learn/Basics/Node-Types/Scroll-to-Element-Node",
+            "Learn/Basics/Node-Types/Tab-Operation-Node",
+            "Learn/Basics/Node-Types/Visit-Node",
+            "Learn/Basics/Node-Types/Wait-Node"
           ]
         }
       ]
