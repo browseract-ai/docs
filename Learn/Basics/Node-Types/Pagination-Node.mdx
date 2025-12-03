@@ -1,0 +1,38 @@
+---
+title: "Pagination Node"
+sidebarTitle: "Pagination"
+description: "Handles navigation for multi-page content by automatically clicking "Next" or "Previous" buttons."
+---
+
+Overview
+
+The Pagination node is used to automatically turn pages in multi-page content, such as clicking "Next Page" or "Previous Page" buttons. It works with extraction nodes to implement batch collection across multiple pages.
+
+**Use Cases**
+
+- Multi-page search results or product lists on e-commerce sites.
+- Multi-page job lists on recruitment sites.
+- Paginated archive lists on news sites or forums.
+
+**Core Capabilities**
+
+- Supports **Next Page** or **Previous Page** navigation.
+- Can generate multi-page loops when combined with Extract Data, Loop List, Loop, and Scroll nodes.
+- Option to terminate the task or skip and continue upon pagination failure.
+
+**Configuration Steps**
+
+1. Add a **Pagination** node.
+2. Select the direction in **Direction**:
+   - **Next Page**
+   - **Previous Page**
+3. Configure error handling strategy:
+   - **Stop Task:** Terminate the workflow if pagination fails (e.g., reached the last page).
+   - **Skip and Continue:** Ignore the current pagination error and proceed to subsequent nodes.
+4. Usually place Pagination after **Extract Data** to ensure current page data is collected before turning the page.
+
+**Recommendations**
+
+- Each Pagination node executes only one page turn action. For batch pagination, combine with **Loop** / **Loop List**.
+- If the pagination button is not in the current visible area, use **Scroll Page** or **Scroll to Element** first to scroll to the pagination area.
+- For scenarios with an uncertain number of pages, recommend using **Loop** with "Data count/Button status" as the exit condition.

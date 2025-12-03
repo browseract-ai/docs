@@ -1,0 +1,35 @@
+---
+title: "Extract Data Item Node"
+description: "A specific child node for Loop List that captures data fields from the currently focused list item."
+---
+
+Overview
+
+Extract Data Item is a specialized child node designed for use inside a Loop List. It extracts specified fields from the currently focused single list item and compiles these fields into structured data.
+
+**Use Cases**
+
+- Extracting "Name, Price, Image, Rating" fields for each product in a product list.
+- Extracting "Title, Summary, Date, Likes" information in a post list.
+- Extracting "Job Title, Company, Location, Salary Range" in a job list.
+
+**Core Capabilities**
+
+- Batch extracts multiple fields from the current list item.
+- Supports filling unified placeholder values (e.g., None) for missing fields.
+- Supports filtering criteria configuration to keep only data meeting specific conditions (e.g., posted within the last N days).
+
+**Configuration Steps**
+
+1. Add an **Extract Data Item** node inside a **Loop List**.
+2. Configure **Data Fields** prompts to clearly describe the fields to extract, for example:
+   - "Extract from current job item: Job Title, Company Name, Post Date, Salary Range. If missing, fill N/A."
+3. (Optional) Configure **Filtering Criteria**, for example:
+   - "Only keep jobs posted within the last 3 days."
+4. Upon execution, Loop List runs Extract Data Item for each list item and aggregates the data into a table/dataset.
+
+**Recommendations**
+
+- It is best to configure only one Extract Data Item node per Loop List to maintain a clear structure.
+- Clearer field descriptions lead to more stable extraction results; state field names and meanings clearly.
+- If the page structure is complex, consider splitting into multiple Loop List + Extract Data Item sets to extract by region.

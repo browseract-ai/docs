@@ -1,0 +1,40 @@
+---
+title: "Loop Node"
+sidebarTitle: "Loop"
+description: "Repeats a sequence of actions (like pagination or scrolling) until a specific condition is met."
+---
+
+Overview
+
+The Loop node is a general-purpose cycle engine used to repeat a specific process flow until an exit condition is met. Unlike Loop List (which iterates through list items), Loop is better suited for repeating "cross-page or cross-action" tasks, such as turning pages or scrolling + extracting.
+
+**Use Cases**
+
+- Repeating "Pagination + Extraction" operations across multiple pages until a target data count is reached.
+- Looping "Scroll + Extraction" on infinite scroll pages until "No more data" appears.
+- Repeatedly clicking a "Load More" button until specific text appears or a condition is met.
+
+**Core Capabilities**
+
+- Supports natural language descriptions for exit conditions (e.g., "Until 50 items are collected").
+- Supports setting a maximum iteration count (default 10, max 999) to prevent infinite loops.
+- Supports selecting condition check timing (Before Loop / After Loop).
+- Supports choosing "Stop Task" or "Skip Current Loop" on errors.
+
+**Configuration Steps**
+
+1. Add a **Loop** node.
+2. Configure the exit condition description, for example:
+   - "Until the collected product count reaches {item_limit}"
+   - "Stop when the text 'No more results' appears at the bottom of the page"
+3. Set **Max Iterations** (e.g., 10, 20) as a safety cap.
+4. Select check timing:
+   - **Before Loop:** Check condition before execution; if met, the loop body is not executed.
+   - **After Loop:** Execute the loop at least once, then check if it should continue.
+5. Add child nodes inside the Loop (such as Scroll, Extract Data, Pagination, etc.) to form the loop body.
+
+**Recommendations**
+
+- Prioritize clear, determinable exit conditions. Avoid vague descriptions like "Until all data is scraped."
+- During development and debugging, set specific Max Iterations low (e.g., 2) to test workflow correctness before scaling up.
+- Loop is oriented towards controlling "action-level repetition," whereas item-by-item processing is better handled by **Loop List**.

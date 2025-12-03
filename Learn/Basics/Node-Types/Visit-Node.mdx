@@ -1,0 +1,40 @@
+---
+title: "Visit Page Node"
+sidebarTitle: "Visit Page"
+description: "Opens a specific URL in the current or a new tab to initiate an automation workflow."
+---
+
+Overview
+
+The Visit Page node is used to open a target webpage in the browser and serves as the starting point for most browser automation workflows. You can specify a URL to load in either the current tab or a new tab, laying the foundation for subsequent clicks, inputs, scrolling, and data extraction.
+
+**Use Cases**
+
+- Initiating any web data scraping process (product list pages, search result pages, forum lists, etc.).
+- Starting e-commerce price monitoring or content monitoring tasks.
+- Serving as the entry point for a workflow, followed by actions like clicking, inputting, or scrolling.
+
+**Core Capabilities**
+
+- Opens a specified URL in the current tab or a new tab.
+- Supports dynamic URL generation using parameters (variables).
+- Configurable exception handling (e.g., terminate the task if the page fails to open).
+
+**Configuration Steps**
+
+1. Click **\+** in the workflow and select the **Visit Page** node.
+2. In the **URL** input field:
+   - Directly enter or paste a complete URL (must start with `http://` or `https://`), e.g., `https://www.browseract.com/`.
+   - Enter `/` to reference variables output by preceding nodes (e.g., `{{target_url}}`) for dynamic navigation.
+3. Select the access mode:
+   - **Current Tab Access:** Open the page in the active tab.
+   - **New Tab Execution:** Open the page in a new tab to maintain environment isolation.
+4. Configure exception handling as needed:
+   - Set to **Stop Task** if access fails or loading fails.
+
+**Recommendations**
+
+- Each Visit Page node should only be responsible for "opening one page"; do not mix in actions like clicking or scrolling.
+- It is generally recommended to place the Visit Page node after the **Start** node and before all interaction nodes.
+- For batch tasks (multiple URL lists), it is recommended to combine this with parameters and Loop nodes.
+- Before running officially, test the URL in a standard browser to ensure it opens correctly.

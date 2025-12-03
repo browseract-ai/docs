@@ -1,0 +1,37 @@
+---
+title: "Click Element Item Node"
+sidebarTitle: "Click Element Item"
+description: "A specific child node for Loop List that clicks a link or button within the currently focused list item."
+---
+
+Overview
+
+Click Element Item is a specialized child node designed for use inside a Loop List. It is used to click a specific element within the current list item, such as clicking a title to enter a detail page or clicking a "View Details" button.
+
+**Use Cases**
+
+- Clicking video titles one by one in a video list to enter detail pages for further data collection.
+- Clicking every news headline in a news list to scrape the full article content.
+- Clicking product images or titles in a product list to get more specifications or reviews.
+
+**Core Capabilities**
+
+- Locates click targets within the currently focused list item using natural language.
+- Triggers page navigation or content expansion.
+- Supports continuing with **Extract Data** or other operations after clicking.
+
+**Configuration Steps**
+
+1. Add a **Click Element Item** node inside a **Loop List**.
+2. Describe the element to click in **Element Description**, for example:
+   - "Click the title link of the current job item"
+   - "Click the thumbnail of the current video item"
+   - "Click the View Details button in the current product item"
+3. After clicking, you can attach **Extract Data** or other nodes within the same loop to complete scraping on the detail page.
+
+**Recommendations**
+
+- Click Element Item can only be used within a Loop List; it cannot be used independently.
+- Each node clicks only once. If multiple elements need clicking, chain multiple Click Element Item nodes within the Loop List.
+- Emphasize "Current Item" in the description to avoid accidentally clicking other areas of the page.
+- For scenarios requiring return to the list page after navigation, combine with **Tab Operation** or **Go Back** actions.

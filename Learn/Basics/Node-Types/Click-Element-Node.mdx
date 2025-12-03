@@ -1,0 +1,40 @@
+---
+title: "Click Element Node"
+sidebarTitle: "Click Element"
+description: "Simulates a mouse click on any button, link, or icon identified by a natural language description."
+---
+
+Overview
+
+The Click Element node is used to simulate user click operations on a page. You simply describe the element you want to click (button, link, icon, etc.) using natural language, and the system will automatically locate and click it.
+
+**Use Cases**
+
+- Clicking buttons like "Login," "Search," "Next Page," or "Submit."
+- Triggering searches, submitting forms, expanding content, or opening pop-ups.
+- Navigating pages via navigation menus or pagination.
+
+**Core Capabilities**
+
+- Locates target elements within the current visible area based on natural language descriptions.
+- Simulates real user clicking behavior to trigger page navigation or events.
+- Supports exception handling (how to proceed if the element is not found or cannot be clicked).
+
+**Configuration Steps**
+
+1. Add a **Click Element** node to the workflow.
+2. In **Element Description**, describe the target element and its position using natural language, for example:
+   - ✅ "The blue Start free trial button in the top right corner of the page"
+   - ✅ "The Submit button at the bottom of the form"
+   - Avoid vague or compound action descriptions, such as:
+     - ❌ "Click login button" (insufficient information)
+     - ❌ "Click the search button, then click the confirm button" (contains multiple actions)
+3. Configure exception handling:
+   - If the element cannot be found or clicking fails, set to **Stop Task**.
+
+**Recommendations**
+
+- Try to include: Element Type + Position + Text/Color features in the description.
+- Each Click Element node performs only one click. Use multiple nodes or combine with a Loop for multiple clicks.
+- If the target element is not in the current visible area, use **Scroll** nodes first to bring it into view.
+- It is recommended to place Click Element nodes after Visit Page, Input Text, or Scroll nodes.
