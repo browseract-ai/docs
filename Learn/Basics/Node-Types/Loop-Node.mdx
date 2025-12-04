@@ -8,6 +8,8 @@ Overview
 
 The Loop node is a general-purpose cycle engine used to repeat a specific process flow until an exit condition is met. Unlike Loop List (which iterates through list items), Loop is better suited for repeating "cross-page or cross-action" tasks, such as turning pages or scrolling + extracting.
 
+![Gemini_Generated_Image_7jw8xh7jw8xh7jw8.png](/images/Gemini_Generated_Image_7jw8xh7jw8xh7jw8.png)
+
 **Use Cases**
 
 - Repeating "Pagination + Extraction" operations across multiple pages until a target data count is reached.
@@ -25,7 +27,7 @@ The Loop node is a general-purpose cycle engine used to repeat a specific proces
 
 1. Add a **Loop** node.
 2. Configure the exit condition description, for example:
-   - "Until the collected product count reaches {item_limit}"
+   - "Until the collected product count reaches item_limit"
    - "Stop when the text 'No more results' appears at the bottom of the page"
 3. Set **Max Iterations** (e.g., 10, 20) as a safety cap.
 4. Select check timing:
