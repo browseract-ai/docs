@@ -1,0 +1,105 @@
+---
+title: "Troubleshooting"
+sidebarTitle: "Troubleshooting"
+---
+
+### Login Credentials Fail in BrowserAct
+
+**Step 1: Test manually**
+
+- Open private/incognito window
+- Visit website
+- Log in with same credentials
+- Do they work?
+
+**Step 2: Check 2FA**
+
+- Is Authenticator app set up?
+- Verify secret key (no extra spaces)
+- Ensure codes are generating correctly
+
+**Step 3: Re-save credentials**
+
+1. Credential Center → Delete credential
+2. Add it again (careful with spaces!)
+3. Re-authorize for your workflow
+
+**Step 4: Verify authorization**
+
+- Credential Center → Your credential → Authorized tab
+- Status shows "Authorized"?
+- Used in correct workflow?
+
+**Still stuck?** Contact us with: Workflow ID, task ID, 2FA screenshot
+
+---
+
+### Workflow Breaks After Website Changes
+
+**Quick fix:**
+
+1. Open failing workflow
+2. Re-select element on updated page
+3. Test again
+
+**Prevent future breaks:**
+
+- Test workflows weekly
+
+---
+
+### Extracted No Data
+
+**Quick Diagnostics & Solutions:**
+
+[**1.Data**](http://1.Data)\*\* Outside Visible Area\*\*
+
+**Issue:** "Extract from visible area" is enabled, but the target data is below the fold or requires scrolling **Solution:** Add a "Scroll" action before extraction to bring the data into view
+
+---
+
+[**2.Data**](http://2.Data)\*\* on Different Page\*\*
+
+**Issue:** Target data is on a detail page, but you're currently on the listing page **Solution:** Add a "Click" action to navigate to the detail page before extracting
+
+---
+
+**3.Wrong Extraction Node Used**
+
+**Issue:** Used `Extract Data Item` when extracting page-level data **Solution:**
+
+- scraping a full page or capturing all items at once → **Extract Data** Inside Loop List → **Extract Data Item**
+
+---
+
+[**4.Data**](http://4.Data)\*\* Not Fully Loaded\*\*
+
+**Issue:** Page uses dynamic loading; data shows "Loading..." when extraction runs **Solution:** Add a "Wait" action for 2-5 seconds before extraction
+
+---
+
+**Login Required**
+
+**Issue:** Data is hidden or shows "Please log in" message for unauthenticated users **Solution:** Add login steps at the beginning of your workflow
+
+---
+
+### Best Practice: Configure Login Flow
+
+**Recommended approach:**
+
+Use a **Conditional Node:**
+
+```
+1. Visit website
+2. Conditional: "Is login button visible?"
+   ├─ YES → Click login → Use credentials → Log in
+   └─ NO → Skip to business logic
+3. Continue workflow
+```
+
+This handles:
+
+- Optional login sites
+- Already-logged-in sessions
+- Dynamic login flows

@@ -1,0 +1,101 @@
+---
+title: "Integrations & APIs Guide"
+sidebarTitle: "Guide"
+---
+
+### Supported Platforms
+
+**Official integrations:**
+
+✅ [Make.com](http://Make.com) (native node)  ✅ n8n (cloud node)  ✅ REST API (any platform)
+
+📅 **Coming:** Zapier native integration
+
+Other platforms? Use our [REST API](https://claude.ai/chat/35710794-9eff-407f-b0c6-0eb474494e77#api)
+
+---
+
+### Get Your API Key
+
+1. **Dashboard** → **Integrations & API**
+2. Click **"Create New API Key"**
+3. Copy and use it
+
+---
+
+### API Specs
+
+**No rate limits**
+
+**Task limits:**
+
+- Free users: 1 task per run
+- Paid users: 20 concurrent tasks
+
+**Session duration:** Max 7 hours per task
+
+**Webhook support:**
+
+- Triggered on: completion, failure, cancellation
+- Must respond within 30 seconds
+- Auto-retries on 5xx errors (max 3 times)
+
+---
+
+### Import Data to Google Sheets
+
+[******Via Make.com (easiest):******](http://Make.com)
+
+1. Create Make scenario
+2. Add BrowserAct module (Run workflow)
+3. Connect BrowserAct account + select workflow
+4. Add JSON Parse module
+5. Add Google Sheets "Add Row" module
+6. Map fields to columns
+7. Test → Save
+
+→ [Detailed walkthrough](https://claude.ai/chat/35710794-9eff-407f-b0c6-0eb474494e77#sheets-tutorial)
+
+---
+
+### Schedule Automated Runs
+
+[******Use Make.com scheduling:******](http://Make.com)
+
+1. Create scenario with BrowserAct module
+2. Click clock icon → **"Scheduling"**
+3. Pick frequency:
+   1. Every 1 hour / 6 hours / day
+   2. Every day at 8:00 AM
+   3. Every Monday at 9:00 AM
+   4. Custom cron expressions
+1. Save & activate
+
+**Examples:**
+
+- 📊 Price monitoring – Daily at 8 AM
+- 📰 Brand monitoring – Every 6 hours
+- 📈 Reports – Every Monday 9 AM
+
+→ [Full scheduling guide](https://claude.ai/chat/35710794-9eff-407f-b0c6-0eb474494e77#scheduling)
+
+---
+
+### Share Workflows as JSON
+
+**Export workflow:**
+
+1. Open scenario
+2. Click "..." → **"Export Blueprint"**
+3. JSON file downloads
+4. Share with others
+
+**Import workflow:**
+
+1. Create new scenario
+2. Click "..." → **"Import Blueprint"**
+3. Select JSON file
+4. Configure modules
+5. Test & activate
+
+Works in Make and n8n.

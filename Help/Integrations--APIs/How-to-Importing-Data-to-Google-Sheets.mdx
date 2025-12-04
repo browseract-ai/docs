@@ -1,0 +1,157 @@
+---
+title: "How to Importing Data to Google Sheets"
+description: "This tutorial shows how to automatically import data extracted by BrowserAct to Google Sheets via Make.com."
+---
+
+### Prerequisites
+
+**1.Ensure Data Format is JSON**  In BrowserAct workflow's Output Data node, ensure format is set to JSON.
+
+**2.Prepare Google Sheets**
+
+- Create new Google Sheets
+- Set column headers (matching extracted data fields)
+- Note Sheet name and ID
+
+### [Make.com](http://Make.com) Integration Steps
+
+#### **Step 1: Create Make Scenario**
+
+Log in to [Make.com](http://Make.com) and Click "Create a new scenario"
+
+![image (6).png](/images/image\(6\).png)
+
+#### **Step 2: Add BrowserAct Module**
+
+**2.1 Add Module**
+
+1. Click + to add module
+2. Search "BrowserAct"
+3. Select "Run a workflow"
+
+**2.2 Configure BrowserAct Connection**
+
+1. Click "Add" to create a new connection
+2. Enter your BrowserAct API Key
+3. Click "Save"
+
+**2.3 Select Workflow**
+
+1. Select your workflow from the dropdown
+2. Configure required input parameters (if any)
+3. Click "OK"
+
+⚠️ Important: Ensure your BrowserAct workflow output format is JSON
+
+![image (7).png](/images/image\(7\).png)
+
+#### **Step 3: Set Up JSON Processing**
+
+**3.1 Add JSON Module**
+
+1. Click + to add new module
+2. Search "JSON"
+3. Select "Parse JSON"
+
+**3.2 Configure JSON Parser**
+
+Generate data structure:
+
+1. Open BrowserAct，go to workflow execution history (Activity log)，find successful execution record
+2. Copy complete JSON output data
+3. Return to [Make.com](http://Make.com)，In JSON Parse module, click "Generate"
+4. Paste copied JSON data into "Sample data" field, click "Save"
+
+![image (8).png](/images/image\(8\).png)
+
+**Configure JSON string field:**
+
+1. In "JSON string" field
+2. Click to select BrowserAct module output
+3. Select field containing data (usually output.string)
+
+![image (9).png](/images/image\(9\).png)
+
+#### **Step 4: Connect Google Sheets**
+
+**4.1 Add Google Sheets Module**
+
+1. Click + to add a new module. Search "Google Sheets"- "Add a Row"
+2. **Configure Google Sheets Connection**
+
+- Click "Add" to create a new connection
+- Authorize [Make.com](http://Make.com) to access your Google account
+- Select target Google Sheets
+- Select target Sheet (worksheet)
+
+![image (10).png](/images/image\(10\).png)
+
+**4.2 Map Data Fields**
+
+Important concepts:
+
+- **Columns:** Define Google Sheets column order
+- **Values:** Map data to corresponding columns
+
+![image (11).png](/images/image\(11\).png)
+
+#### **Step 5: Test Run**
+
+**5.1 Run Test**
+
+1. Click "Run once" at bottom
+2. Observe execution process
+3. Check output of each module
+
+![image (12).png](/images/image\(12\).png)
+
+**5.2 Verify Results**
+
+1. Open your Google Sheets
+2. Confirm data added correctly
+3. Check data format and content
+
+**5.3 Handle Multiple Records**
+
+**<u>If your BrowserAct workflow returns multiple records (array),you need to additerators :</u>**
+
+**Configure iterator:**
+
+1. Add Iterator module between JSON Parse and Google Sheets
+2. Select array field from JSON Parse output
+3. Each iteration automatically adds rows to Google Sheets
+
+### Common Troubleshooting
+
+**Issue 1: JSON Parse Failed**  Error: Invalid JSON
+
+Solutions:
+
+1. Confirm BrowserAct output format is JSON
+2. Check JSON data is complete
+
+**Issue 2: Field Mapping Error**  Error: Field not found
+
+Solutions:
+
+1. Re-generate JSON data structure
+2. Confirm field names match exactly
+3. Check case sensitivity
+
+**Issue 3: Data Not Added to Sheets**  Possible causes:
+
+- Google Sheets connection expired
+- Sheet name changed
+- Insufficient permissions
+
+Solutions:
+
+1. Re-authorize Google Sheets connection
+2. Confirm Sheet name and ID correct
+3. Check Google account permissions
+
+Expected results:
+
+- ✅ Data automatically transfers from BrowserAct to Google Sheets
+- ✅ New row added each run
+- ✅ Data format correct, fields correspond

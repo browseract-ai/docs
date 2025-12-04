@@ -77,73 +77,86 @@
         "tab": "Help",
         "groups": [
           {
-            "group": "Help by Feature",
-            "icon": "message-circle-question-mark",
+            "group": "Workflow & Node",
+            "icon": "workflow",
             "expanded": false,
             "pages": [
-              {
-                "group": "Everyday Questions",
-                "icon": "hand-helping",
-                "pages": [
-                  "Help/Help by Feature/Everyday Questions/test"
-                ]
-              },
-              {
-                "group": "Run failures & Errors",
-                "icon": "shield-alert",
-                "pages": [
-                  "Help/Help by Feature/Run failures & Errors/test"
-                ]
-              }
+              "Help/Workflows--Nodes"
             ]
           },
           {
-            "group": "Help by Task",
-            "icon": "book-open-check",
+            "group": "Authentication & Credentials",
+            "icon": "shield-check",
             "expanded": false,
             "pages": [
-              {
-                "group": "Workflow issues",
-                "icon": "workflow",
-                "pages": [
-                  "Help/Help by Task/Agent issues/test"
-                ]
-              },
-              {
-                "group": "Billing & usage limits",
-                "icon": "receipt-text",
-                "pages": [
-                  "Help/Help by Task/Billing & usage limits/test"
-                ]
-              },
-              {
-                "group": "Credentials & authentication",
-                "icon": "shield-check",
-                "pages": [
-                  "Help/Help by Task/Credentials & authentication/test"
-                ]
-              },
-              {
-                "group": "Integrations",
-                "icon": "blocks",
-                "pages": [
-                  "Help/Help by Task/Integrations/test"
-                ]
-              },
-              {
-                "group": "Logs & diagnostics",
-                "icon": "scroll-text",
-                "pages": [
-                  "Help/Help by Task/Logs & diagnostics/test"
-                ]
-              },
-              {
-                "group": "Template issues",
-                "icon": "layout-template",
-                "pages": [
-                  "Help/Help by Task/Template issues/test"
-                ]
-              }
+              "Help/Authentication-and-Credentials"
+            ]
+          },
+          {
+            "group": "Billing & Credits",
+            "icon": "receipt-text",
+            "expanded": false,
+            "pages": [
+              "Help/Billing--Credits"
+            ]
+          },
+          {
+            "group": "Integrations -- APIs",
+            "icon": "blocks",
+            "expanded": false,
+            "pages": [
+              "Help/Integrations--APIs/Integrations--API",
+              "Help/Integrations--APIs/-How-to-Setting-Up-Scheduled-Tasks-for-BrowserAct",
+              "Help/Integrations--APIs/How-to-Importing-Data-to-Google-Sheets",
+              "Help/Integrations--APIs/How-to-Share-and-Use-Workflows-in-n8n-Using-JSON-Files"
+            ]
+          },
+          {
+            "group": "Runtime Environment",
+            "icon": "cpu",
+            "expanded": false,
+            "pages": [
+              "Help/Runtime-Environment"
+            ]
+          },
+          {
+            "group": "Troubleshooting",
+            "icon": "bug",
+            "expanded": false,
+            "pages": [
+              "Help/Troubleshooting"
+            ]
+          },
+          {
+            "group": "Frequently Asked Questions",
+            "icon": "help-circle",
+            "expanded": false,
+            "pages": [
+              "Help/Frequently-Asked-Questions"
+            ]
+          },
+          {
+            "group": "Support & Community",
+            "icon": "users",
+            "expanded": false,
+            "pages": [
+              "Help/Support--Community"
+            ]
+          },
+          {
+            "group": "Tutorials & Resources",
+            "icon": "book-open",
+            "expanded": false,
+            "pages": [
+              "Help/Tutorials--Resources"
+            ]
+          },
+          {
+            "group": "Still Need Help?",
+            "icon": "message-circle-question-mark",
+            "expanded": false,
+            "pages": [
+              "Help/Still-Need-Help"
             ]
           }
         ]

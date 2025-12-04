@@ -1,0 +1,105 @@
+---
+title: "How to Setting Up Scheduled Tasks for BrowserAct"
+description: "This tutorial shows how to set up automatic scheduled execution for BrowserAct workflows via Make.com."
+---
+
+### Why Scheduled Tasks?
+
+Common use cases:
+
+- 📊 Price monitoring - Scrape competitor product prices daily
+- 📰 Brand monitoring - Monitor social media brand mentions hourly
+- 📈 Market analysis - Auto-generate industry data reports weekly
+- 📦 Inventory tracking - Check target product stock daily
+- ✍️ Content updates - Regularly scrape latest articles from news sites
+
+### Basic Concepts
+
+[**Make.com**](http://Make.com)\*\* Scheduled Triggers\*\*  [Make.com](http://Make.com) provides flexible scheduling features that can:
+
+- ✅ Run at fixed intervals (hourly, daily, etc.)
+- ✅ Run at specific times (every day at 8:00 AM)
+- ✅ Run on specific dates (every Monday at 9:00 AM)
+- ✅ Custom Cron expressions (advanced users)
+
+### Quick Start: 3 Steps to Set Up Scheduled Tasks
+
+#### **Step 1: Create Make Scenario**
+
+1. Log in to [Make.com](http://Make.com)
+2. Create a new Scenario
+3. Name scenario (e.g., "Daily Price Monitor")
+
+![image (3).png](/images/image\(3\).png)
+
+#### **Step 2: Add BrowserAct Module as First Module**
+
+**2.1 Add Module**
+
+1. Click + to add module
+2. Search "BrowserAct"
+3. Select "Run a workflow"
+
+**2.2 Configure BrowserAct**
+
+1. Connect your BrowserAct account
+2. Select workflow to run
+3. Configure input parameters (if any)
+
+⚠️ Important: Ensure workflow output format is JSON for subsequent processing
+
+![image (4).png](/images/image\(4\).png)
+
+#### **Step 3: Add Scheduled Trigger for BrowserAct**
+
+**3.1 Add Schedule**
+
+1. Click clock icon on BrowserAct module
+2. Select "Scheduling"
+
+**3.2 Configure Run Frequency**
+
+![image (5).png](/images/image\(5\).png)
+
+**Option A: Fixed Intervals**  Example configurations:
+
+- Every 1 hour
+- Every 6 hours
+- Every 1 day
+
+**Option B: Specific Times**  Example configurations:
+
+- Every day at 8:00 AM
+- Every day at 6:00 PM
+
+**Option C: Specific Dates and Times**  Example configurations:
+
+- Every Monday at 9:00 AM
+- Every 1st of month at 10:00 AM
+- On weekdays at 8:00 AM
+
+**3.3 Save Settings**
+
+1. Confirm schedule configuration
+2. Click "OK" to save
+3. Activate scenario (turn on switch in top right)
+
+Your BrowserAct workflow is now scheduled to run automatically. [Make.com](http://Make.com) will trigger it according to your configured schedule.
+
+**Want to Do More with Your Data?**
+
+Don't stop here! You can add more modules after BrowserAct to:
+
+- **Send email notifications** with scraped data
+- **Save to Google Sheets** for tracking and analysis
+- **Store in databases** like Airtable or MySQL
+- **Send Slack/Discord alerts** when conditions are met
+- **Trigger other workflows** based on results
+
+Simply click the **\+** button after your BrowserAct module to explore hundreds of available integrations.
+
+### **Next Steps:**
+
+- Monitor your scheduled runs in [Make.com](http://Make.com)'s execution history
+- Check BrowserAct's Activity Log to verify completions
+- Join Discord for automation ideas and support

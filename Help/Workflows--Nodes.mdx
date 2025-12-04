@@ -1,0 +1,80 @@
+---
+title: "Workflow & Node"
+sidebarTitle: "Workflow & Node"
+---
+
+### Loop vs Loop List
+
+**Use the right one:**
+
+| **Feature**      | **Loop**                                     | **Loop List**      |
+| :--------------: | :------------------------------------------: | :----------------: |
+| **Purpose**      | Repeat page actions                          | Iterate list items |
+| **What it does** | Navigate pages, click buttons                | Extract each item  |
+| **Scope**        | Entire page                                  | Single item        |
+| **Exits when**   | Element appears/disappears or max iterations | All items done     |
+
+**Real examples:**
+
+- ✅ **Loop:** Browse 5 pages of search results
+- ✅ **Loop List:** Extract 20 products on current page
+
+→ [Loop List case study: ](https://claude.ai/chat/35710794-9eff-407f-b0c6-0eb474494e77#case-looplist) [Amazon scraper](https://docs.browseract.com/Learn/Basics/Case-Study/Case-1-Deep-Extraction-from-List-Page-to-Detail-Page)
+
+→ [Loop case study: ](https://claude.ai/chat/35710794-9eff-407f-b0c6-0eb474494e77#case-loop)[Himalayas Job scraper](https://docs.browseract.com/Learn/Basics/Case-Study/Case-2-Automatic-Pagination-and-Data-Collection-from-Multi-Page-Lists)
+
+---
+
+### Extract Data vs Extract Data Item
+
+**When to use each:**
+
+| **Node Type**     | **Usage Location** | **Extraction Scope**              |
+| :---------------: | :----------------: | :-------------------------------: |
+| Extract Data      | Anywhere           | Entire page / visible area        |
+| Extract Data Item | Inside Loop List   | The currently focused single item |
+
+**Simple rule:**
+
+```
+scraping a full page or capturing all items at once → Extract Data
+Inside Loop List → Extract Data Item
+```
+
+---
+
+### Extract List to Detail Pages
+
+**How to build this workflow:**
+
+1. **Visit Page** – Go to list page
+2. **Loop List** – Iterate through items
+3. **Extract Data Item** – Get basic info from each item
+4. **Click Element Item** – Click to open detail page
+5. **Extract Data** – Get detailed info from detail page
+6. **Output Data** – Save results
+
+→ [Complete case study](https://docs.browseract.com/Learn/Basics/Case-Study/Case-1-Deep-Extraction-from-List-Page-to-Detail-Page)
+
+---
+
+### Workflow vs Intelligent Agent
+
+**Choose based on your needs:**
+
+**Decision:**
+
+- **Use Workflow** when you know exact steps
+- **Use Agent** when you want AI to figure it out
+
+---
+
+### View Execution Logs
+
+**Access logs:**
+
+1. **Dashboard** → **Activity Log**
+2. Click any task to see:
+   1. Screenshots of each step
+   2. Extracted data preview
+   3. Error messages (if any)
