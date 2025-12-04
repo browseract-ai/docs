@@ -16,8 +16,8 @@ In this example, we open an eBay search result page for laptops and check the fi
 
 **Key Logic:**
 
-1. **Loop List:** Responsbile for focusing on each product card sequentially.
-2. **Condition:** Performs a judgment on each product.
+1. [**Loop List**](/Learn/Basics/Node-Types/Loop-List-Node)**:** Responsbile for focusing on each product card sequentially.
+2. [**Condition**](/Learn/Basics/Node-Types/Condition-Node)**:** Performs a judgment on each product.
    - **True:** Execute subsequent scraping nodes.
    - **False:** Do nothing, automatically skipping to the next product.
 
@@ -31,7 +31,7 @@ Although this case uses eBay, this **"List Traversal + Condition Filtering"** lo
 
 ## 2. Detailed Steps
 
-### 1. Visit Page (Open Search Results)
+### 1. [Visit Page](/Learn/Basics/Node-Types/Visit-Node) (Open Search Results)
 
 - **Objective:** Simulates opening a browser and entering the eBay search URL.
 - **Configuration:**
@@ -39,9 +39,9 @@ Although this case uses eBay, this **"List Traversal + Condition Filtering"** lo
   - **Tab:** Select **Current Tab Access**.
   - **In Abnormal Situation:** Keep **Stop Task**.
 
-> _[Image: Visit Page configuration showing the eBay URL]_
+![PixPin_2025-12-04_11-32-51.png](/images/PixPin_2025-12-04_11-32-51.png)
 
-### 2. Loop List (Traverse Product List)
+### 2. [Loop List](/Learn/Basics/Node-Types/Loop-List-Node) (Traverse Product List)
 
 - **Objective:** Tell the AI: "This entire area is the product list. Please process items one by one."
 - **Configuration:**
@@ -52,9 +52,9 @@ Although this case uses eBay, this **"List Traversal + Condition Filtering"** lo
 
 > **Tip:** As long as the Loop List region is selected accurately, the subsequent logic can be reused regardless of how complex the list is.
 
-> _[Image: Loop List configuration showing the list region selection]_
+![PixPin_2025-12-04_11-32-59.png](/images/PixPin_2025-12-04_11-32-59.png)
 
-### 3. Condition (Check for Bulk Discount)
+### 3. [Condition](/Learn/Basics/Node-Types/Condition-Node) (Check for Bulk Discount)
 
 - **Important:** This node must be placed **inside** the **Loop List** node. This ensures the condition applies to the "currently focused product card."
 - **Objective:** Check the description area of the current product: Is there a bulk purchase discount prompt like _"Save up to 10% when you buy more"_?
@@ -65,9 +65,9 @@ Although this case uses eBay, this **"List Traversal + Condition Filtering"** lo
   - **True Branch:** The product has the discount text → Considered a "matching item," proceed to scrape.
   - **False Branch:** The product lacks this text → Do nothing, automatically return to Loop List to check the next item.
 
-> _[Image: Condition configuration showing the specific text check]_
+![PixPin_2025-12-04_11-35-49.png](/images/PixPin_2025-12-04_11-35-49.png)
 
-### 4. Extract Data Item (True Branch: Scrape Matching Items)
+### 4. [Extract Data Item](/Learn/Basics/Node-Types/Extract-Data-Item-Node) (True Branch: Scrape Matching Items)
 
 - **Context:** This node is placed on the **True** branch of the Condition node.
 - **Objective:** Copy the core information of this "discounted product."
@@ -81,7 +81,7 @@ Although this case uses eBay, this **"List Traversal + Condition Filtering"** lo
 
 > **Note:** The **Extract Data Item** only applies to the "current item." The Loop List handles moving the focus to the next item automatically.
 
-> _[Image: Extract Data Item configuration showing fields selected]_
+![PixPin_2025-12-04_11-36-01.png](/images/PixPin_2025-12-04_11-36-01.png)
 
 ### 5. Finish (Output Results)
 
@@ -93,7 +93,7 @@ Although this case uses eBay, this **"List Traversal + Condition Filtering"** lo
 
 > **Result:** The final export will be a list containing only the "Discounted Items" with their names and prices.
 
-> _[Image: Finish configuration showing the output settings]_
+![PixPin_2025-12-04_11-36-09.png](/images/PixPin_2025-12-04_11-36-09.png)
 
 ## 3. Human Operation vs. AI Nodes
 
