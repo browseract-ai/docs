@@ -24,7 +24,7 @@ Using the Crutchfield TV product list as an example, we will demonstrate how to 
 
 ## 2. Detailed Steps
 
-### 1. Visit Page (Open TV Product List)
+### 1. [Visit Page](/Learn/Basics/Node-Types/Visit-Node) (Open TV Product List)
 
 - **Objective:** Open the Crutchfield TV list page directly, avoiding the need to navigate step-by-step from the homepage.
 - **Configuration:**
@@ -32,9 +32,9 @@ Using the Crutchfield TV product list as an example, we will demonstrate how to 
   - **Tab:** Select **Current Tab Access**.
   - **In Abnormal Situation:** Keep **Stop Task** (if the list page cannot be accessed, there is no point in continuing).
 
-> _[Image: Visit Page configuration showing the Crutchfield URL and Current Tab Access selection]_
+![PixPin_2025-12-04_11-30-25.png](/images/PixPin_2025-12-04_11-30-25.png)
 
-### 2. Loop List (Traverse List + Auto-click Load More)
+### 2. [Loop List](/Learn/Basics/Node-Types/Loop-List-Node) (Traverse List + Auto-click Load More)
 
 - **Core Logic:** This node is the heart of this pattern.
 - **Objective:** Tell the AI: "This entire area is a product list. Please process items one by one. If a 'Load More' button appears at the bottom, click it automatically to load more products until the limit is reached or there is no more content."
@@ -46,9 +46,9 @@ Using the Crutchfield TV product list as an example, we will demonstrate how to 
   - **In Abnormal Situation:** Keep **Stop Task**.
   - **Note:** You do **not** need a separate "Pagination" node. The **Loop List** node handles both the traversal and the "Load More" clicking action automatically.
 
-> _[Image: Loop List configuration showing the list region selection and "Auto-click Load More" checked]_
+![PixPin_2025-12-04_11-30-31.png](/images/PixPin_2025-12-04_11-30-31.png)
 
-### 3. Extract Data Item (Scrape Fields for Each Product)
+### 3. [Extract Data Item](/Learn/Basics/Node-Types/Extract-Data-Item-Node) (Scrape Fields for Each Product)
 
 - **Important:** This node must be placed **inside** the **Loop List** node so that it executes automatically for every product in the list.
 - **Objective:** For the currently focused TV product card, extract specific fields such as Name, Price, and Rating.
@@ -62,7 +62,7 @@ Using the Crutchfield TV product list as an example, we will demonstrate how to 
 
 > **Effect:** Every time the Loop List moves to a new product card, it triggers this **Extract Data Item** node to append that product's info to the result set.
 
-> _[Image: Extract Data Item configuration showing fields like Product Name and Price]_
+![PixPin_2025-12-04_11-30-37.png](/images/PixPin_2025-12-04_11-30-37.png)
 
 ### 4. Finish: Output Data (Export All Products)
 
@@ -72,7 +72,7 @@ Using the Crutchfield TV product list as an example, we will demonstrate how to 
   - **Output as a file:** Check this if you want a direct download. Uncheck if you only need the data in the logs/API response.
   - **In Abnormal Situation:** Keep **Stop Task**.
 
-> _[Image: Finish configuration showing CSV selected as the output format]_
+![PixPin_2025-12-04_11-30-42.png](/images/PixPin_2025-12-04_11-30-42.png)
 
 ## 3. Human Operation vs. AI Nodes
 
