@@ -129,7 +129,7 @@
           },
           {
             "group": "Frequently Asked Questions",
-            "icon": "help-circle",
+            "icon": "circle-question",
             "expanded": false,
             "pages": [
               "Help/Frequently-Asked-Questions"
