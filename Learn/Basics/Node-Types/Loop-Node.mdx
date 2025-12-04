@@ -12,8 +12,8 @@ The Loop node is a general-purpose cycle engine used to repeat a specific proces
 
 **Use Cases**
 
-- Repeating "Pagination + Extraction" operations across multiple pages until a target data count is reached.
-- Looping "Scroll + Extraction" on infinite scroll pages until "No more data" appears.
+- Repeating "[Pagination](/Learn/Basics/Node-Types/Pagination-Node) + [Extraction](/Learn/Basics/Node-Types/Extract-Data-Node)" operations across multiple pages until a target data count is reached.
+- Looping "[Scroll](/Learn/Basics/Node-Types/Scroll-Page-Node) + [Extraction](/Learn/Basics/Node-Types/Extract-Data-Node)" on infinite scroll pages until "No more data" appears.
 - Repeatedly clicking a "Load More" button until specific text appears or a condition is met.
 
 **Core Capabilities**
@@ -35,8 +35,10 @@ The Loop node is a general-purpose cycle engine used to repeat a specific proces
    - **After Loop:** Execute the loop at least once, then check if it should continue.
 5. Add child nodes inside the Loop (such as Scroll, Extract Data, Pagination, etc.) to form the loop body.
 
+![PixPin_2025-12-04_14-23-11.png](/images/PixPin_2025-12-04_14-23-11.png)
+
 **Recommendations**
 
 - Prioritize clear, determinable exit conditions. Avoid vague descriptions like "Until all data is scraped."
 - During development and debugging, set specific Max Iterations low (e.g., 2) to test workflow correctness before scaling up.
-- Loop is oriented towards controlling "action-level repetition," whereas item-by-item processing is better handled by **Loop List**.
+- Loop is oriented towards controlling "action-level repetition," whereas item-by-item processing is better handled by [**Loop List**](/Learn/Basics/Node-Types/Loop-List-Node).

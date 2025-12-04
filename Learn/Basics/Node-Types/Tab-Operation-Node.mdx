@@ -1,3 +1,9 @@
+---
+title: "Tab Operation Node"
+sidebarTitle: "Tab Operation"
+description: "Manages browser tab history and state, performing actions like Go Back or Close Tab."
+---
+
 Overview
 
 The Tab Operation node manages browser tabs within an automation process, such as closing the current tab or navigating back to the previous page. This helps keep the browsing context clean and controllable in multi-page, multi-step scenarios.
@@ -32,9 +38,11 @@ ation primarily covers Close Tab and Go Back operations.
    - **Stop Task:** Terminate the task when the operation cannot be executed (e.g., no history to go back to).
    - **Skip:** Ignore the error and continue executing subsequent nodes.
 
+![PixPin_2025-12-04_14-35-25.png](/images/PixPin_2025-12-04_14-35-25.png)
+
 **Recommendations**
 
-- In **Loop List + Click Element Item** scenarios, a common pattern is:
+- In [**Loop List**](/Learn/Basics/Node-Types/Loop-List-Node)** + **[**Click Element Item**](/Learn/Basics/Node-Types/Click-Element-Item-Node) scenarios, a common pattern is:
   - List Click → Detail Page Extraction → **Go Back / Close Tab** → Continue to next item.
 - If using multi-tab mode (Visit Page selects New Tab), use Close Tab to close specific tabs after processing to remove clutter.
 - Note that Tab Operation actions only affect tabs within the current session; they do not affect other browser windows on the user's local machine.

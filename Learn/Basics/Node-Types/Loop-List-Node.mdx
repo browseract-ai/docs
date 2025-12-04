@@ -32,12 +32,14 @@ The Loop List node is used to iterate through every item in a specific "list are
      - Uncheck: If the list auto-loads or only the current page is needed.
    - **Max Focused Loop Items:** Maximum number of items to process (e.g., 10, 20, 50), set according to business needs.
 3. Add child nodes inside the Loop List:
-   - **Extract Data Item:** Extract fields from the current list item.
-   - **Click Element Item:** Click a button or link within the current list item.
+   - [**Extract Data Item**](/Learn/Basics/Node-Types/Extract-Data-Item-Node)**:** Extract fields from the current list item.
+   - [**Click Element Item**](/Learn/Basics/Node-Types/Click-Element-Item-Node)**:** Click a button or link within the current list item.
+
+![PixPin_2025-12-04_14-22-01.png](/images/PixPin_2025-12-04_14-22-01.png)
 
 **Recommendations**
 
 - Only one Loop List node is allowed per hierarchy level; maximum 3 levels of nesting.
-- Loop List requires at least one child node (**Extract Data Item** or **Click Element Item**).
+- Loop List requires at least one child node ([**Extract Data Item**](/Learn/Basics/Node-Types/Extract-Data-Item-Node) or [**Click Element Item**](/Learn/Basics/Node-Types/Click-Element-Item-Node)).
 - Setting **Max Focused Loop Items** too high may result in excessive execution time; match it to actual requirements.
-- For infinite scroll lists, combine with **Scroll** nodes and the "Load More" option.
+- For infinite scroll lists, combine with [**Scroll**](/Learn/Basics/Node-Types/Scroll-Page-Node) nodes and the "Load More" option.

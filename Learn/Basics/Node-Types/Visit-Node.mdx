@@ -34,9 +34,11 @@ The Visit Page node is used to open a target webpage in the browser and serves a
 4. Configure exception handling as needed:
    - Set to **Stop Task** if access fails or loading fails.
 
+![PixPin_2025-12-04_14-36-34.png](/images/PixPin_2025-12-04_14-36-34.png)
+
 **Recommendations**
 
 - Each Visit Page node should only be responsible for "opening one page"; do not mix in actions like clicking or scrolling.
 - It is generally recommended to place the Visit Page node after the **Start** node and before all interaction nodes.
-- For batch tasks (multiple URL lists), it is recommended to combine this with parameters and Loop nodes.
+- For batch tasks (multiple URL lists), it is recommended to combine this with parameters and [Loop](/Learn/Basics/Node-Types/Loop-Node) nodes.
 - Before running officially, test the URL in a standard browser to ensure it opens correctly.
