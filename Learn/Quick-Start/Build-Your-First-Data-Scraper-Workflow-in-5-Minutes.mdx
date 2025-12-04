@@ -67,13 +67,13 @@ _All steps below are performed on the Workflow Build page._
 1. On the canvas, click the **Start** node.
 2. In **Input Parameters**, add:
    - **Name:** `Country` | **Default Value:** `USA`
-   - **Name:** `Area` | **Default Value:** `Avalon, CA`
+   - **Name:** `Area` | **Default Value::** `Avalon, CA`
 
 ![image-20251203204306840.png](/images/image-20251203204306840.png)
 
 ### Step 2 – Visit Page: Open Google Maps
 
-1. Click **\+** on the canvas (or right-click) and choose **Visit Page**.
+1. Click **\+** on the canvas (or right-click) and choose [**Visit Page**](/Learn/Basics/Node-Types/Visit-Node).
 2. Connect it after **Start**.
 3. Set URL to:
 
@@ -86,7 +86,7 @@ _All steps below are performed on the Workflow Build page._
 
 ### Step 3 – Input Text: Search for the Location
 
-1. Add an **Input Text** node and connect it after **Visit Page**.
+1. Add an [**Input Text**](/Learn/Basics/Node-Types/Input-Text-Node) node and connect it after **Visit Page**.
 2. In the page preview/selector, target the **top search bar**.
 3. In Text to Input, enter: Country Area
 
@@ -96,7 +96,7 @@ _All steps below are performed on the Workflow Build page._
 
 ### Step 4 – Click Element: Navigate to Restaurants
 
-Use one or more **Click Element** nodes to perform these three clicks in order:
+Use one or more [**Click Element**](/Learn/Basics/Node-Types/Click-Element-Node) nodes to perform these three clicks in order:
 
 1. **Search:** Click the magnifying-glass icon.
 2. **Nearby:** Click the “Nearby” button.
@@ -106,7 +106,7 @@ Use one or more **Click Element** nodes to perform these three clicks in order:
 
 ### Step 5 – Extract Data: Scrape the Restaurant List
 
-1. Add an **Extract Data** node after the last Click Element node.
+1. Add an [**Extract Data**](/Learn/Basics/Node-Types/Extract-Data-Node) node after the last Click Element node.
 2. In the left restaurant list, select **one full restaurant item** as the sample.
 3. Configure fields to extract:
    - `name`
@@ -119,7 +119,7 @@ Use one or more **Click Element** nodes to perform these three clicks in order:
 
 ### Step 6 – Finish: Output Data as CSV
 
-1. Add a **Finish: Output Data** node and connect it after **Extract Data**.
+1. Add a **Finish: Output Data** node and connect it after [**Extract Data**.](/Learn/Basics/Node-Types/Extract-Data-Node)
 2. In the output settings:
    - **Output Format:** CSV
    - **Enable:** “Output as a file”
@@ -163,17 +163,17 @@ Buffalo Nickel Inc,57 Pebbly Beach Rd,4.6,646,$20–30
 ## 5. Common Roadblocks (Quick Fixes)
 
 - **CSV is empty or has very few rows:**
-  - Check the sample in **Extract Data**: it should be a full list item, not a tiny sub-element.
-  - **Wait for load:** Add a short wait (sleep) before Extract Data if the list loads slowly.
+  - Check the sample in [**Extract Data**](/Learn/Basics/Node-Types/Extract-Data-Node): it should be a full list item, not a tiny sub-element.
+  - **Wait for load:** Add a short [wait](/Learn/Basics/Node-Types/Wait-Node) before Extract Data if the list loads slowly.
 - **Click Element does nothing:**
-  - Re-select the actual clickable element (button/text) in the Click Element node.
+  - Re-select the actual clickable element (button/text) in the [Click Element node](/Learn/Basics/Node-Types/Click-Element-Node).
   - Confirm node order: Search → Nearby → Restaurant.
 - **Run error and not sure why:**
   - Check URL in Visit Page is exactly `https://www.google.com/maps`.
   - Ensure Run parameters (Country/Area) are filled.
-  - Ensure no node has missing config (selectors, fields, etc.).
+  - Ensure no node has missing config ([Click Element](/Learn/Basics/Node-Types/Click-Element-Node), etc.).
 
-> **Support:** If it still fails, contact support via **“Contact Us” / “Help Center”** with:
+> **Support:** If it still fails, contact support via [**Discord**](https://discord.com/invite/UpnCKd7GaU) with:
 >
 > - A short description of your goal.
 > - Screenshot of the failing error.
@@ -190,12 +190,6 @@ Now that this workflow runs:
    Run again with:
    - _Country:_ USA, _Area:_ New York
    - _Country:_ Japan, _Area:_ Shibuya
-2. Clone the pattern for a new scenario
-
-   Use the same structure (Visit → Search → Filter → Extract → Finish) for:
-   - Hotel listings
-   - Job boards
-   - Product lists on e-commerce sites
 
 **If you can build this workflow, run it successfully, and change inputs to scrape another city, you’re ready to design your own BrowserAct workflows.**
 
