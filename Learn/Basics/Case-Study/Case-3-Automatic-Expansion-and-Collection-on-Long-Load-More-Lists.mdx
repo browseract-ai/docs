@@ -2,9 +2,8 @@
 title: "Case 3: Auto-expanding Long List and Scraping"
 sidebarTitle: "Case 3: Load More & Infinite Scroll"
 description: "Automate data extraction from long lists that require clicking "Load More" or scrolling, using Crutchfield as an example."
+
 ---
-
-
 
 ## 1. Case Overview
 
@@ -80,14 +79,14 @@ Using the Crutchfield TV product list as an example, we will demonstrate how to 
 
 To better understand the workflow, compare how a human operates versus how the AI nodes are structured.
 
-| **Your Action (Human Operation)**                                | **Corresponding AI Node**                  | **Function Description**                                                      |
-| :--------------------------------------------------------------- | :----------------------------------------- | :---------------------------------------------------------------------------- |
-| **Open** Crutchfield's TV list page.                             | **Visit Page**                             | Opens the target list directly, skipping homepage navigation.                 |
-| **Browse** the list from top to bottom.                          | **Loop List**                              | Locks onto the product list area and traverses items sequentially.            |
-| **Look** at the current product and copy Name, Price, Rating.    | **Extract Data Item** (Child of Loop List) | Extracts fields from the currently focused card and adds them to the results. |
-| **Scroll** to the bottom, see "Load More," and click it.         | **Loop List** (Built-in Auto-click)        | Automatically detects and clicks "Load More" to append items.                 |
-| **Continue** scrolling and copying new items as they appear.     | **Loop List** (Driver)                     | Drives the "Expand + Traverse" process within the same page.                  |
-| **Stop** when enough items are collected, and organize the list. | **Finish: Output Data**                    | Exports all collected results (CSV/JSON).                                     |
+| **Your Action (Human Operation)**                            | **Corresponding AI Node**                  | **Function Description**                                     |
+| :----------------------------------------------------------- | :----------------------------------------- | :----------------------------------------------------------- |
+| **Open** Crutchfield's TV list page.                         | **Visit Page**                             | Opens the target list directly, skipping homepage navigation. |
+| **Browse** the list from top to bottom.                      | **Loop List**                              | Locks onto the product list area and traverses items sequentially. |
+| **Look** at the current product and copy Name, Price, Rating. | **Extract Data Item** (Child of Loop List) | Extracts fields from the currently focused card and adds them to the results. |
+| **Scroll** to the bottom, see "Load More," and click it.     | **Loop List** (Built-in Auto-click)        | Automatically detects and clicks "Load More" to append items. |
+| **Continue** scrolling and copying new items as they appear. | **Loop List** (Driver)                     | Drives the "Expand + Traverse" process within the same page. |
+| **Stop** when enough items are collected, and organize the list. | **Finish: Output Data**                    | Exports all collected results (CSV/JSON).                    |
 
 ## 4. Summary
 
