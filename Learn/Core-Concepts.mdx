@@ -2,7 +2,6 @@
 title: "Core Concepts"
 description: "An overview of BrowserAct's AI-powered automation platform and its core concepts: Workflow, Node, and Task."
 sidebarTitle: "Core Concepts"
-
 ---
 
 These three concepts form a logical hierarchy that moves from **Design** to **Execution**:
@@ -41,15 +40,15 @@ BrowserAct deconstructs complex user behaviors into granular, browser-level acti
 
 To automate a web task, you map your physical interactions to specific BrowserAct nodes:
 
-| **Manual Interaction**    | **BrowserAct Node** |
-| :------------------------ | :------------------ |
-| Open a URL                | **Visit Page**      |
-| Type text into a field    | **Input Text**      |
-| Click a button or link    | **Click Element**   |
-| Scroll the viewport       | **Scroll Page**     |
-| Navigate to the next page | **Pagination**      |
-| Copy text or data         | **Extract Data**    |
-| Repeat actions for a list | **Loop**            |
+| **Manual Interaction**    | **BrowserAct Node**                                              |
+| :------------------------ | :--------------------------------------------------------------- |
+| Open a URL                | [**Visit Page**](/Learn/Basics/Node-Types/Visit-Node)            |
+| Type text into a field    | [**Input Text**](/Learn/Basics/Node-Types/Input-Text-Node)       |
+| Click a button or link    | [**Click Element**](/Learn/Basics/Node-Types/Click-Element-Node) |
+| Scroll the viewport       | [**Scroll Page**](/Learn/Basics/Node-Types/Scroll-Page-Node)     |
+| Navigate to the next page | [**Pagination**](/Learn/Basics/Node-Types/Pagination-Node)       |
+| Copy text or data         | [**Extract Data**](/Learn/Basics/Node-Types/Extract-Data-Node)   |
+| Repeat actions for a list | [**Loop**](/Learn/Basics/Node-Types/Loop-Node)                   |
 
 **Key Distinction:** A Workflow defines **what** the business goal is, while Nodes define **how** the browser executes each step technically.
 
@@ -74,10 +73,10 @@ Every Task comprises four distinct components:
 
 ## Summary
 
-| **Concept**  | **Definition** | **Function**                                                 |
-| :----------- | :------------- | :----------------------------------------------------------- |
-| **Workflow** | The Blueprint  | Defines the complete logic and business objective.           |
-| **Node**     | The Unit       | Represents a specific technical action (Click, Type, Scroll). |
+| **Concept**  | **Definition** | **Function**                                                          |
+| :----------- | :------------- | :-------------------------------------------------------------------- |
+| **Workflow** | The Blueprint  | Defines the complete logic and business objective.                    |
+| **Node**     | The Unit       | Represents a specific technical action (Click, Type, Scroll).         |
 | **Task**     | The Instance   | Represents a single execution event with specific inputs and results. |
 
 ## What's Next?
