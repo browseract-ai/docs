@@ -38,18 +38,6 @@
             ]
           },
           {
-            "group": "Case Studies",
-            "icon": "lightbulb",
-            "expanded": false,
-            "pages": [
-              "Learn/Basics/Case-Study/Case-1-Deep-Extraction-from-List-Page-to-Detail-Page",
-              "Learn/Basics/Case-Study/Case-2-Automatic-Pagination-and-Data-Collection-from-Multi-Page-Lists",
-              "Learn/Basics/Case-Study/Case-3-Automatic-Expansion-and-Collection-on-Long-Load-More-Lists",
-              "Learn/Basics/Case-Study/Case-4-Precise-Collection-from-Lists-with-Condition-Based-Filtering",
-              "Learn/Basics/Case-Study/Case-5-Precise-Scraping-with-Multi-Dimensional-Filtering"
-            ]
-          },
-          {
             "group": "Node Types",
             "icon": "workflow",
             "expanded": false,
@@ -70,6 +58,18 @@
               "Learn/Basics/Node-Types/Visit-Node",
               "Learn/Basics/Node-Types/Wait-Node"
             ]
+          },
+          {
+            "group": "Case Studies",
+            "icon": "lightbulb",
+            "expanded": false,
+            "pages": [
+              "Learn/Basics/Case-Study/Case-1-Deep-Extraction-from-List-Page-to-Detail-Page",
+              "Learn/Basics/Case-Study/Case-2-Automatic-Pagination-and-Data-Collection-from-Multi-Page-Lists",
+              "Learn/Basics/Case-Study/Case-3-Automatic-Expansion-and-Collection-on-Long-Load-More-Lists",
+              "Learn/Basics/Case-Study/Case-4-Precise-Collection-from-Lists-with-Condition-Based-Filtering",
+              "Learn/Basics/Case-Study/Case-5-Precise-Scraping-with-Multi-Dimensional-Filtering"
+            ]
           }
         ]
       },
@@ -77,85 +77,35 @@
         "tab": "Help",
         "groups": [
           {
-            "group": "Workflow & Node",
-            "icon": "workflow",
+            "group": "Using BrowserAct",
+            "icon": "life-buoy",
             "expanded": false,
             "pages": [
-              "Help/Workflows--Nodes"
-            ]
-          },
-          {
-            "group": "Authentication & Credentials",
-            "icon": "shield-check",
-            "expanded": false,
-            "pages": [
-              "Help/Authentication-and-Credentials"
-            ]
-          },
-          {
-            "group": "Billing & Credits",
-            "icon": "receipt-text",
-            "expanded": false,
-            "pages": [
-              "Help/Billing--Credits"
-            ]
-          },
-          {
-            "group": "Integrations -- APIs",
-            "icon": "blocks",
-            "expanded": false,
-            "pages": [
-              "Help/Integrations--APIs/Integrations--API",
-              "Help/Integrations--APIs/-How-to-Setting-Up-Scheduled-Tasks-for-BrowserAct",
-              "Help/Integrations--APIs/How-to-Importing-Data-to-Google-Sheets",
-              "Help/Integrations--APIs/How-to-Share-and-Use-Workflows-in-n8n-Using-JSON-Files"
-            ]
-          },
-          {
-            "group": "Runtime Environment",
-            "icon": "cpu",
-            "expanded": false,
-            "pages": [
-              "Help/Runtime-Environment"
-            ]
-          },
-          {
-            "group": "Troubleshooting",
-            "icon": "bug",
-            "expanded": false,
-            "pages": [
-              "Help/Troubleshooting"
-            ]
-          },
-          {
-            "group": "Frequently Asked Questions",
-            "icon": "circle-question",
-            "expanded": false,
-            "pages": [
+              "Help/Workflows--Nodes",
+              "Help/Authentication-and-Credentials",
+              "Help/Billing--Credits",
+              {
+                "group": "Integrations & APIs",
+                "icon": "blocks",
+                "pages": [
+                  "Help/Integrations--APIs/Integrations--API",
+                  "Help/Integrations--APIs/-How-to-Setting-Up-Scheduled-Tasks-for-BrowserAct",
+                  "Help/Integrations--APIs/How-to-Importing-Data-to-Google-Sheets",
+                  "Help/Integrations--APIs/How-to-Share-and-Use-Workflows-in-n8n-Using-JSON-Files"
+                ]
+              },
+              "Help/Runtime-Environment",
+              "Help/Troubleshooting",
               "Help/Frequently-Asked-Questions"
             ]
           },
           {
-            "group": "Support & Community",
-            "icon": "users",
+            "group": "More Resources & Support",
+            "icon": "messages-square",
             "expanded": false,
             "pages": [
-              "Help/Support--Community"
-            ]
-          },
-          {
-            "group": "Tutorials & Resources",
-            "icon": "book-open",
-            "expanded": false,
-            "pages": [
-              "Help/Tutorials--Resources"
-            ]
-          },
-          {
-            "group": "Still Need Help?",
-            "icon": "message-circle-question-mark",
-            "expanded": false,
-            "pages": [
+              "Help/Support--Community",
+              "Help/Tutorials--Resources",
               "Help/Still-Need-Help"
             ]
           }
