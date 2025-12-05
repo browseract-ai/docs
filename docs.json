@@ -23,18 +23,15 @@
             "group": "Overview",
             "icon": "sparkles",
             "expanded": true,
-            "pages": [
-              "learn/introduction",
-              "Learn/Core-Concepts"
-            ]
+            "pages": ["learn/introduction", "learn/core-concepts"]
           },
           {
             "group": "Quick Start",
             "icon": "rocket",
             "expanded": false,
             "pages": [
-              "Learn/Quick-Start/Build-Your-First-Data-Scraper-Workflow-in-5-Minutes",
-              "Learn/Quick-Start/Use-BrowserAct-in-n8n.Make.Zapier"
+              "learn/quick-start/build-your-first-data-scraper-workflow-in-5-minutes",
+              "learn/quick-start/use-browseract-in-n8n.make.zapier"
             ]
           },
           {
@@ -42,21 +39,21 @@
             "icon": "workflow",
             "expanded": false,
             "pages": [
-              "Learn/Basics/Node-Types/Click-Element-Item-Node",
-              "Learn/Basics/Node-Types/Click-Element-Node",
-              "Learn/Basics/Node-Types/Condition-Node",
-              "Learn/Basics/Node-Types/Extract-Data-Item-Node",
-              "Learn/Basics/Node-Types/Extract-Data-Node",
-              "Learn/Basics/Node-Types/Input-Text-Node",
-              "Learn/Basics/Node-Types/Loop-List-Node",
-              "Learn/Basics/Node-Types/Loop-Node",
-              "Learn/Basics/Node-Types/Output-Data-Node",
-              "Learn/Basics/Node-Types/Pagination-Node",
-              "Learn/Basics/Node-Types/Scroll-Page-Node",
-              "Learn/Basics/Node-Types/Scroll-to-Element-Node",
-              "Learn/Basics/Node-Types/Tab-Operation-Node",
-              "Learn/Basics/Node-Types/Visit-Node",
-              "Learn/Basics/Node-Types/Wait-Node"
+              "learn/basics/node-types/click-element-item-node",
+              "learn/basics/node-types/click-element-node",
+              "learn/basics/node-types/condition-node",
+              "learn/basics/node-types/extract-data-item-node",
+              "learn/basics/node-types/extract-data-node",
+              "learn/basics/node-types/input-text-node",
+              "learn/basics/node-types/loop-list-node",
+              "learn/basics/node-types/loop-node",
+              "learn/basics/node-types/output-data-node",
+              "learn/basics/node-types/pagination-node",
+              "learn/basics/node-types/scroll-page-node",
+              "learn/basics/node-types/scroll-to-element-node",
+              "learn/basics/node-types/tab-operation-node",
+              "learn/basics/node-types/visit-node",
+              "learn/basics/node-types/wait-node"
             ]
           },
           {
@@ -64,11 +61,11 @@
             "icon": "lightbulb",
             "expanded": false,
             "pages": [
-              "Learn/Basics/Case-Study/Case-1-Deep-Extraction-from-List-Page-to-Detail-Page",
-              "Learn/Basics/Case-Study/Case-2-Automatic-Pagination-and-Data-Collection-from-Multi-Page-Lists",
-              "Learn/Basics/Case-Study/Case-3-Automatic-Expansion-and-Collection-on-Long-Load-More-Lists",
-              "Learn/Basics/Case-Study/Case-4-Precise-Collection-from-Lists-with-Condition-Based-Filtering",
-              "Learn/Basics/Case-Study/Case-5-Precise-Scraping-with-Multi-Dimensional-Filtering"
+              "learn/basics/case-study/case-1-deep-extraction-from-list-page-to-detail-page",
+              "learn/basics/case-study/case-2-automatic-pagination-and-data-collection-from-multi-page-lists",
+              "learn/basics/case-study/case-3-automatic-expansion-and-collection-on-long-load-more-lists",
+              "learn/basics/case-study/case-4-precise-collection-from-lists-with-condition-based-filtering",
+              "learn/basics/case-study/case-5-precise-scraping-with-multi-dimensional-filtering"
             ]
           }
         ]
@@ -81,22 +78,22 @@
             "icon": "life-buoy",
             "expanded": false,
             "pages": [
-              "Help/Workflows--Nodes",
-              "Help/Authentication-and-Credentials",
-              "Help/Billing--Credits",
+              "help/workflows--nodes",
+              "help/authentication-and-credentials",
+              "help/billing--credits",
               {
                 "group": "Integrations & APIs",
                 "icon": "blocks",
                 "pages": [
-                  "Help/Integrations--APIs/Integrations--API",
-                  "Help/Integrations--APIs/-How-to-Setting-Up-Scheduled-Tasks-for-BrowserAct",
-                  "Help/Integrations--APIs/How-to-Importing-Data-to-Google-Sheets",
-                  "Help/Integrations--APIs/How-to-Share-and-Use-Workflows-in-n8n-Using-JSON-Files"
+                  "help/integrations--apis/integrations--api",
+                  "help/integrations--apis/-how-to-setting-up-scheduled-tasks-for-browseract",
+                  "help/integrations--apis/how-to-importing-data-to-google-sheets",
+                  "help/integrations--apis/how-to-share-and-use-workflows-in-n8n-using-json-files"
                 ]
               },
-              "Help/Runtime-Environment",
-              "Help/Troubleshooting",
-              "Help/Frequently-Asked-Questions"
+              "help/runtime-environment",
+              "help/troubleshooting",
+              "help/frequently-asked-questions"
             ]
           },
           {
@@ -104,9 +101,9 @@
             "icon": "messages-square",
             "expanded": false,
             "pages": [
-              "Help/Support--Community",
-              "Help/Tutorials--Resources",
-              "Help/Still-Need-Help"
+              "help/support--community",
+              "help/tutorials--resources",
+              "help/still-need-help"
             ]
           }
         ]
