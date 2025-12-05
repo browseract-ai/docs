@@ -6,12 +6,12 @@ sidebarTitle: "Case2: Paginated List Collection"
 
 ## 1. Case Overview
 
-This case demonstrates another high-frequency pattern in web automation: **Using the **[**Loop node**](/Learn/Basics/Node-Types/Loop-Node)** to repeatedly turn pages and collect data in a multi-page list until a specific condition is met.**
+This case demonstrates another high-frequency pattern in web automation: **Using the **[**Loop node**](/learn/basics/node-types/loop-node)** to repeatedly turn pages and collect data in a multi-page list until a specific condition is met.**
 
 The core logic is as follows:
 
 1. The AI opens a job listing page.
-2. Inside a [**Loop**](/Learn/Basics/Node-Types/Loop-Node), it repeatedly executes: **Collect current page data → Turn to next page → Wait for new page to load**.
+2. Inside a [**Loop**](/learn/basics/node-types/loop-node), it repeatedly executes: **Collect current page data → Turn to next page → Wait for new page to load**.
 3. The Loop automatically decides when to stop based on your settings (e.g., "until 50 job postings are collected").
 4. Finally, it exports all job information as structured data.
 
@@ -23,7 +23,7 @@ This case uses the "Customer Service Job List" from a remote work website as an 
 
 ## 2. Detailed Steps
 
-### 1. [Visit Page](/Learn/Basics/Node-Types/Visit-Node) (Open Job List)
+### 1. [Visit Page](/learn/basics/node-types/visit-node) (Open Job List)
 
 - **Objective:** Open the target job list page directly, rather than navigating from the homepage.
 - **Configuration:**
@@ -35,7 +35,7 @@ This case uses the "Customer Service Job List" from a remote work website as an 
 
 ![PixPin_2025-12-04_11-19-51.png](/images/PixPin_2025-12-04_11-19-51.png)
 
-### 2. [Loop](/Learn/Basics/Node-Types/Loop-Node) (Cycle Control: Paginating until 50 items are collected)
+### 2. [Loop](/learn/basics/node-types/loop-node) (Cycle Control: Paginating until 50 items are collected)
 
 - **Objective:** Repeat the entire set of actions "Collect Current Page → Next Page → Wait" until the condition you set is met: **Collect 50 job items** or reach the maximum number of cycles.
 - **Configuration:**
@@ -48,7 +48,7 @@ This case uses the "Customer Service Job List" from a remote work website as an 
 
 ![PixPin_2025-12-04_11-18-57.png](/images/PixPin_2025-12-04_11-18-57.png)
 
-### 3. [Extract Data](/Learn/Basics/Node-Types/Extract-Data-Node) (Collect Current Page Info)
+### 3. [Extract Data](/learn/basics/node-types/extract-data-node) (Collect Current Page Info)
 
 - **Note:** This node is a **child node** of the Loop, meaning it will execute once in every cycle.
 - **Objective:** On the current page, copy information from all visible job cards (e.g., Job Title, Publish Date) and append it to the existing dataset.
@@ -64,7 +64,7 @@ This case uses the "Customer Service Job List" from a remote work website as an 
 
 ![PixPin_2025-12-04_11-20-45.png](/images/PixPin_2025-12-04_11-20-45.png)
 
-### 4. [Pagination](/Learn/Basics/Node-Types/Pagination-Node) (Turn to Next Page)
+### 4. [Pagination](/learn/basics/node-types/pagination-node) (Turn to Next Page)
 
 - **Note:** Also a child node of the Loop. After collecting one page, flip to the next.
 - **Objective:** Find the pagination bar at the bottom of the page and click "Next" to enter the next page of the job list.
@@ -75,7 +75,7 @@ This case uses the "Customer Service Job List" from a remote work website as an 
 
 ![PixPin_2025-12-04_11-20-51.png](/images/PixPin_2025-12-04_11-20-51.png)
 
-### 5. [Wait](/Learn/Basics/Node-Types/Wait-Node) (Wait for New Page Load)
+### 5. [Wait](/learn/basics/node-types/wait-node) (Wait for New Page Load)
 
 - **Objective:** After clicking "Next Page," do not immediately resume collecting. Give the page some time to complete loading.
 - **Configuration:**
@@ -103,18 +103,18 @@ To better understand the workflow, compare how a human operates versus how the A
 
 | **Your Action (Human Operation)**                                                                | **Corresponding AI Node**                                              | **Function Description**                                                                                                  |
 | :----------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------ |
-| **Open browser**, enter the job list URL.                                                        | [**Visit Page**](/Learn/Basics/Node-Types/Visit-Node)                  | Starts the task, landing immediately on Page 1 of the list.                                                               |
-| **Set a goal:** Collect at least 50 jobs, or keep turning pages if not enough.                   | [**Loop**](/Learn/Basics/Node-Types/Loop-Node)                         | Sets the cycle rules and stop conditions (e.g., "Until 50 items are collected" or "Max 100 pages").                       |
-| **Browse** the job cards on the current page, noting down the title and date.                    | [**Extract Data**](/Learn/Basics/Node-Types/Extract-Data-Node)         | Batch scrapes fields (Job Title, Publish Date, etc.) from the current page and adds them to the dataset.                  |
-| **Scroll down** to the bottom and click the "Next" button.                                       | [**Pagination**](/Learn/Basics/Node-Types/Pagination-Node) (Next Page) | Automatically clicks the "Next Page" element in the pagination bar to navigate.                                           |
-| **Wait** for the new page of jobs to load.                                                       | [**Wait**](/Learn/Basics/Node-Types/Wait-Node)                         | Pauses to allow the page to stabilize and content to appear before the next collection round.                             |
-| **Repeat:** "Record jobs → Click Next → Wait" until total jobs ≥ 50 or the last page is reached. | [**Loop**](/Learn/Basics/Node-Types/Loop-Node) (Execution)             | Executes the sequence _Extract Data → Pagination → Wait_ repeatedly, checking the stop condition before/after each round. |
+| **Open browser**, enter the job list URL.                                                        | [**Visit Page**](/learn/basics/node-types/visit-node)                  | Starts the task, landing immediately on Page 1 of the list.                                                               |
+| **Set a goal:** Collect at least 50 jobs, or keep turning pages if not enough.                   | [**Loop**](/learn/basics/node-types/loop-node)                         | Sets the cycle rules and stop conditions (e.g., "Until 50 items are collected" or "Max 100 pages").                       |
+| **Browse** the job cards on the current page, noting down the title and date.                    | [**Extract Data**](/learn/basics/node-types/extract-data-node)         | Batch scrapes fields (Job Title, Publish Date, etc.) from the current page and adds them to the dataset.                  |
+| **Scroll down** to the bottom and click the "Next" button.                                       | [**Pagination**](/learn/basics/node-types/pagination-node) (Next Page) | Automatically clicks the "Next Page" element in the pagination bar to navigate.                                           |
+| **Wait** for the new page of jobs to load.                                                       | [**Wait**](/learn/basics/node-types/wait-node)                         | Pauses to allow the page to stabilize and content to appear before the next collection round.                             |
+| **Repeat:** "Record jobs → Click Next → Wait" until total jobs ≥ 50 or the last page is reached. | [**Loop**](/learn/basics/node-types/loop-node) (Execution)             | Executes the sequence _Extract Data → Pagination → Wait_ repeatedly, checking the stop condition before/after each round. |
 | **Organize** all recorded job info into a structured list.                                       | **Finish: Output Data**                                                | Exports all data collected throughout the entire loop process into a single JSON/CSV file.                                |
 
 ### Summary
 
 Whenever you encounter a **"Multi-Page List"** and your thought process is: "I want to turn pages one by one and copy the first N items," simply build the blocks following this Case 2 structure:
 
-1. **Outer Layer:** Use [**Loop**](/Learn/Basics/Node-Types/Loop-Node) to control "Pagination + Conditional Stop".
-2. **Inside Loop:** Place [**Extract Data**](/Learn/Basics/Node-Types/Extract-Data-Node)** → **[**Pagination**](/Learn/Basics/Node-Types/Pagination-Node)** → **[**Wait**](/Learn/Basics/Node-Types/Wait-Node).
+1. **Outer Layer:** Use [**Loop**](/learn/basics/node-types/loop-node) to control "Pagination + Conditional Stop".
+2. **Inside Loop:** Place [**Extract Data**](/learn/basics/node-types/extract-data-node)** → **[**Pagination**](/learn/basics/node-types/pagination-node)** → **[**Wait**](/learn/basics/node-types/wait-node).
 3. **Final Step:** Use **Finish** to export the results at once.

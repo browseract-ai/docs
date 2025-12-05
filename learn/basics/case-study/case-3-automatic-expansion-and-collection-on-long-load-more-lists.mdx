@@ -24,7 +24,7 @@ Using the Crutchfield TV product list as an example, we will demonstrate how to 
 
 ## 2. Detailed Steps
 
-### 1. [Visit Page](/Learn/Basics/Node-Types/Visit-Node) (Open TV Product List)
+### 1. [Visit Page](/learn/basics/node-types/visit-node) (Open TV Product List)
 
 - **Objective:** Open the Crutchfield TV list page directly, avoiding the need to navigate step-by-step from the homepage.
 - **Configuration:**
@@ -34,7 +34,7 @@ Using the Crutchfield TV product list as an example, we will demonstrate how to 
 
 ![PixPin_2025-12-04_11-30-25.png](/images/PixPin_2025-12-04_11-30-25.png)
 
-### 2. [Loop List](/Learn/Basics/Node-Types/Loop-List-Node) (Traverse List + Auto-click Load More)
+### 2. [Loop List](/learn/basics/node-types/loop-list-node) (Traverse List + Auto-click Load More)
 
 - **Core Logic:** This node is the heart of this pattern.
 - **Objective:** Tell the AI: "This entire area is a product list. Please process items one by one. If a 'Load More' button appears at the bottom, click it automatically to load more products until the limit is reached or there is no more content."
@@ -48,7 +48,7 @@ Using the Crutchfield TV product list as an example, we will demonstrate how to 
 
 ![PixPin_2025-12-04_11-30-31.png](/images/PixPin_2025-12-04_11-30-31.png)
 
-### 3. [Extract Data Item](/Learn/Basics/Node-Types/Extract-Data-Item-Node) (Scrape Fields for Each Product)
+### 3. [Extract Data Item](/learn/basics/node-types/extract-data-item-node) (Scrape Fields for Each Product)
 
 - **Important:** This node must be placed **inside** the **Loop List** node so that it executes automatically for every product in the list.
 - **Objective:** For the currently focused TV product card, extract specific fields such as Name, Price, and Rating.
