@@ -90,7 +90,6 @@
                 "group": "Integrations & APIs",
                 "icon": "blocks",
                 "pages": [
-                  "help/integrations--apis/integrations--api",
                   "help/integrations--apis/supported-platforms",
                   "help/integrations--apis/api-keys--authentication",
                   "help/integrations--apis/make--n8n-integrations",
