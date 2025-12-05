@@ -49,6 +49,7 @@
               "learn/basics/node-types/condition-node",
               "learn/basics/node-types/extract-data-Item-node",
               "learn/basics/node-types/extract-data-node",
+              "learn/basics/node-types/human-interaction-node",
               "learn/basics/node-types/input-text-node",
               "learn/basics/node-types/loop-list-node",
               "learn/basics/node-types/loop-node",
