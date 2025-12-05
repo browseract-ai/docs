@@ -13,7 +13,9 @@
   },
   "favicon": "/favicon.ico",
   "fonts": {},
-  "icons": { "library": "lucide" },
+  "icons": {
+    "library": "lucide"
+  },
   "navigation": {
     "tabs": [
       {
@@ -23,7 +25,10 @@
             "group": "Overview",
             "icon": "sparkles",
             "expanded": true,
-            "pages": ["learn/introduction", "learn/core-concepts"]
+            "pages": [
+              "learn/introduction",
+              "learn/core-concepts"
+            ]
           },
           {
             "group": "Quick Start",
@@ -42,7 +47,7 @@
               "learn/basics/node-types/click-element-item-node",
               "learn/basics/node-types/click-element-node",
               "learn/basics/node-types/condition-node",
-              "learn/basics/node-types/extract-data-item-node",
+              "learn/basics/node-types/extract-data-Item-node",
               "learn/basics/node-types/extract-data-node",
               "learn/basics/node-types/input-text-node",
               "learn/basics/node-types/loop-list-node",
@@ -86,8 +91,12 @@
                 "icon": "blocks",
                 "pages": [
                   "help/integrations--apis/integrations--api",
-                  "help/integrations--apis/-how-to-setting-up-scheduled-tasks-for-browseract",
+                  "help/integrations--apis/supported-platforms",
+                  "help/integrations--apis/api-keys--authentication",
+                  "help/integrations--apis/make--n8n-integrations",
                   "help/integrations--apis/how-to-importing-data-to-google-sheets",
+                  "help/integrations--apis/-how-to-setting-up-scheduled-tasks-for-browseract",
+                  "help/integrations--apis/how-to-share-and-use-workflows-in-make-using-json-files",
                   "help/integrations--apis/how-to-share-and-use-workflows-in-n8n-using-json-files"
                 ]
               },
