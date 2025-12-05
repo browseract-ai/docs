@@ -73,7 +73,7 @@ _All steps below are performed on the Workflow Build page._
 
 ### Step 2 – Visit Page: Open Google Maps
 
-1. Click **\+** on the canvas (or right-click) and choose [**Visit Page**](/Learn/Basics/Node-Types/Visit-Node).
+1. Click **\+** on the canvas (or right-click) and choose [**Visit Page**](/learn/basics/node-types/visit-node).
 2. Connect it after **Start**.
 3. Set URL to:
 
@@ -86,7 +86,7 @@ _All steps below are performed on the Workflow Build page._
 
 ### Step 3 – Input Text: Search for the Location
 
-1. Add an [**Input Text**](/Learn/Basics/Node-Types/Input-Text-Node) node and connect it after **Visit Page**.
+1. Add an [**Input Text**](/learn/basics/node-types/input-text-node) node and connect it after **Visit Page**.
 2. In the page preview/selector, target the **top search bar**.
 3. In Text to Input, enter: Country Area
 
@@ -96,7 +96,7 @@ _All steps below are performed on the Workflow Build page._
 
 ### Step 4 – Click Element: Navigate to Restaurants
 
-Use one or more [**Click Element**](/Learn/Basics/Node-Types/Click-Element-Node) nodes to perform these three clicks in order:
+Use one or more [**Click Element**](/learn/basics/node-types/click-element-node) nodes to perform these three clicks in order:
 
 1. **Search:** Click the magnifying-glass icon.
 2. **Nearby:** Click the “Nearby” button.
@@ -106,7 +106,7 @@ Use one or more [**Click Element**](/Learn/Basics/Node-Types/Click-Element-Node)
 
 ### Step 5 – Extract Data: Scrape the Restaurant List
 
-1. Add an [**Extract Data**](/Learn/Basics/Node-Types/Extract-Data-Node) node after the last Click Element node.
+1. Add an [**Extract Data**](/learn/basics/node-types/extract-data-node) node after the last Click Element node.
 2. In the left restaurant list, select **one full restaurant item** as the sample.
 3. Configure fields to extract:
    - `name`
@@ -119,7 +119,7 @@ Use one or more [**Click Element**](/Learn/Basics/Node-Types/Click-Element-Node)
 
 ### Step 6 – Finish: Output Data as CSV
 
-1. Add a **Finish: Output Data** node and connect it after [**Extract Data**.](/Learn/Basics/Node-Types/Extract-Data-Node)
+1. Add a **Finish: Output Data** node and connect it after [**Extract Data**.](/learn/basics/node-types/extract-data-node)
 2. In the output settings:
    - **Output Format:** CSV
    - **Enable:** “Output as a file”
@@ -163,15 +163,15 @@ Buffalo Nickel Inc,57 Pebbly Beach Rd,4.6,646,$20–30
 ## 5. Common Roadblocks (Quick Fixes)
 
 - **CSV is empty or has very few rows:**
-  - Check the sample in [**Extract Data**](/Learn/Basics/Node-Types/Extract-Data-Node): it should be a full list item, not a tiny sub-element.
-  - **Wait for load:** Add a short [wait](/Learn/Basics/Node-Types/Wait-Node) before Extract Data if the list loads slowly.
+  - Check the sample in [**Extract Data**](/learn/basics/node-types/extract-data-node): it should be a full list item, not a tiny sub-element.
+  - **Wait for load:** Add a short [wait](/learn/basics/node-types/wait-node) before Extract Data if the list loads slowly.
 - **Click Element does nothing:**
-  - Re-select the actual clickable element (button/text) in the [Click Element node](/Learn/Basics/Node-Types/Click-Element-Node).
+  - Re-select the actual clickable element (button/text) in the [Click Element node](/learn/basics/node-types/click-element-node).
   - Confirm node order: Search → Nearby → Restaurant.
 - **Run error and not sure why:**
   - Check URL in Visit Page is exactly `https://www.google.com/maps`.
   - Ensure Run parameters (Country/Area) are filled.
-  - Ensure no node has missing config ([Click Element](/Learn/Basics/Node-Types/Click-Element-Node), etc.).
+  - Ensure no node has missing config ([Click Element](/learn/basics/node-types/click-element-node), etc.).
 
 > **Support:** If it still fails, contact support via [**Discord**](https://discord.com/invite/UpnCKd7GaU) with:
 >

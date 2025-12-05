@@ -6,7 +6,7 @@ description: "Aggregates all collected data and exports it into formats like CSV
 
 Overview
 
-The Output Data node is the "closing node" of a workflow. It is specifically used to aggregate the results from all preceding [Extract Data](/Learn/Basics/Node-Types/Extract-Data-Node) / [Extract Data Item](/Learn/Basics/Node-Types/Extract-Data-Item-Node) nodes and export them into a specified data format.
+The Output Data node is the "closing node" of a workflow. It is specifically used to aggregate the results from all preceding [Extract Data](/learn/basics/node-types/extract-data-node) / [Extract Data Item](/learn/basics/node-types/extract-data-item-node) nodes and export them into a specified data format.
 
 ![Gemini_Generated_Image_dc10ovdc10ovdc10.png](/images/Gemini_Generated_Image_dc10ovdc10ovdc10.png)
 
@@ -37,6 +37,6 @@ The Output Data node is the "closing node" of a workflow. It is specifically use
 
 **Recommendations**
 
-- Ensure there is at least one [Extract Data](/Learn/Basics/Node-Types/Extract-Data-Node) / [Extract Data Item](/Learn/Basics/Node-Types/Extract-Data-Item-Node) node before Output Data; otherwise, the output will be empty.
+- Ensure there is at least one [Extract Data](/learn/basics/node-types/extract-data-node) / [Extract Data Item](/learn/basics/node-types/extract-data-item-node) node before Output Data; otherwise, the output will be empty.
 - If multiple different export formats are needed, convert formats via external tools; keep one Output Data node within the workflow.
 - When connecting to automation platforms (like Make, n8n), prioritize the JSON format.

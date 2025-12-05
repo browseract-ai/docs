@@ -46,7 +46,7 @@ This logic works for any common website (E-commerce, Recruitment, News, SaaS Das
 
 ![PixPin_2025-12-04_11-40-13.png](/images/PixPin_2025-12-04_11-40-13.png)
 
-### 2. [Visit Page](/Learn/Basics/Node-Types/Visit-Node) (Open Amazon Homepage)
+### 2. [Visit Page](/learn/basics/node-types/visit-node) (Open Amazon Homepage)
 
 - **Objective:** Open the Amazon homepage and prepare to search.
 - **Configuration:**
@@ -56,7 +56,7 @@ This logic works for any common website (E-commerce, Recruitment, News, SaaS Das
 
 ![PixPin_2025-12-04_11-40-19.png](/images/PixPin_2025-12-04_11-40-19.png)
 
-### 3. [Input Text](/Learn/Basics/Node-Types/Input-Text-Node) (Search Box Filter: Keyword = Laptop)
+### 3. [Input Text](/learn/basics/node-types/input-text-node) (Search Box Filter: Keyword = Laptop)
 
 - **Layer 1 Filtering:** Use the site's built-in search box to lock the scope to "Laptops."
 - **Objective:** Find the top search box, type "Laptop," and press Enter.
@@ -70,7 +70,7 @@ This logic works for any common website (E-commerce, Recruitment, News, SaaS Das
 
 ![PixPin_2025-12-04_11-40-26.png](/images/PixPin_2025-12-04_11-40-26.png)
 
-### 4. [Scroll to Element](/Learn/Basics/Node-Types/Scroll-to-Element-Node) (Scroll to Filter Area: HDD Size)
+### 4. [Scroll to Element](/learn/basics/node-types/scroll-to-element-node) (Scroll to Filter Area: HDD Size)
 
 - **Layer 2 Filtering - Step 1:** Bring the left filter panel into view.
 - **Objective:** Scroll down the page until the "Hard Drive Size" section appears on the left.
@@ -81,7 +81,7 @@ This logic works for any common website (E-commerce, Recruitment, News, SaaS Das
 
 ![PixPin_2025-12-04_11-40-33.png](/images/PixPin_2025-12-04_11-40-33.png)
 
-### 5. [Click Element](/Learn/Basics/Node-Types/Click-Element-Node) (Select HDD Size Filter)
+### 5. [Click Element](/learn/basics/node-types/click-element-node) (Select HDD Size Filter)
 
 - **Objective:** Under the "Hard Drive Size" category, click the desired capacity option (e.g., 1 TB).
 - **Configuration:**
@@ -93,7 +93,7 @@ This logic works for any common website (E-commerce, Recruitment, News, SaaS Das
 
 ![PixPin_2025-12-04_11-40-39.png](/images/PixPin_2025-12-04_11-40-39.png)
 
-### 6. [Scroll to Element](/Learn/Basics/Node-Types/Scroll-to-Element-Node) (Scroll to CPU Brand Filter Area)
+### 6. [Scroll to Element](/learn/basics/node-types/scroll-to-element-node) (Scroll to CPU Brand Filter Area)
 
 - **Objective:** Scroll down further until the CPU manufacturer filter section appears.
 - **Configuration:**
@@ -103,7 +103,7 @@ This logic works for any common website (E-commerce, Recruitment, News, SaaS Das
 
 ![PixPin_2025-12-04_11-40-46.png](/images/PixPin_2025-12-04_11-40-46.png)
 
-### 7. [Click Element](/Learn/Basics/Node-Types/Click-Element-Node) (Select CPU Brand Filter)
+### 7. [Click Element](/learn/basics/node-types/click-element-node) (Select CPU Brand Filter)
 
 - **Objective:** Under the CPU Manufacturer category, click the specified brand (e.g., Intel, or from a parameter).
 - **Configuration:**
@@ -115,7 +115,7 @@ This logic works for any common website (E-commerce, Recruitment, News, SaaS Das
 
 ![PixPin_2025-12-04_11-40-52.png](/images/PixPin_2025-12-04_11-40-52.png)
 
-### 8. [Loop List](/Learn/Basics/Node-Types/Loop-List-Node) (Traverse Filtered Product List)
+### 8. [Loop List](/learn/basics/node-types/loop-list-node) (Traverse Filtered Product List)
 
 - **Layer 3 Start:** In the filtered result list, perform "Content-Level Filtering."
 - **Objective:** Treat the middle product search results as a list and traverse each item sequentially.
@@ -127,7 +127,7 @@ This logic works for any common website (E-commerce, Recruitment, News, SaaS Das
 
 ![PixPin_2025-12-04_11-40-57.png](/images/PixPin_2025-12-04_11-40-57.png)
 
-### 9. [Extract Data Item](/Learn/Basics/Node-Types/Extract-Data-Item-Node) + Filtering Criteria (Content Filtering: Energy Efficiency Only)
+### 9. [Extract Data Item](/learn/basics/node-types/extract-data-item-node) + Filtering Criteria (Content Filtering: Energy Efficiency Only)
 
 - **Layer 3 Filtering:** Do not rely on the website anymore; perform content filtering during the **Scraping Phase**.
 - **Objective:** For the currently focused product card:
@@ -165,14 +165,14 @@ To better understand the workflow, compare how a human operates versus how the A
 | **Your Action (Human Operation)**                                                                                  | **Corresponding AI Node**                                                                     | **Function Description**                                                                    |
 | :----------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------ |
 | **Think:** "I want a 1TB HDD, Intel CPU laptop, specifically mentioning energy efficiency."                        | **Start** (Input Parameters)                                                                  | Abstract conditions into parameters (`hard_drive_size`, `cpu_manufacturer`) for easy reuse. |
-| **Open** Amazon homepage.                                                                                          | [**Visit Page**](/Learn/Basics/Node-Types/Visit-Node)                                         | Starts the entire operation.                                                                |
-| **Type** "Laptop" in top search box and press Enter.                                                               | [**Input Text**](/Learn/Basics/Node-Types/Input-Text-Node)                                    | **Layer 1 Filter:** Narrow scope from "All Site" to "Laptops."                              |
-| **Scroll down** to find the HDD filter on the left.                                                                | [**Scroll to Element** ](/Learn/Basics/Node-Types/Scroll-to-Element-Node)(HDD Size)           | Brings the filter section into view for reliable clicking.                                  |
-| **Check** "1 TB" in the HDD section.                                                                               | [**Click Element**](/Learn/Basics/Node-Types/Click-Element-Node) (HDD Option)                 | **Layer 2 Filter (Part 1):** Use website filter to limit storage capacity.                  |
-| **Scroll down** to find the CPU brand filter.                                                                      | [**Scroll to Element** ](/Learn/Basics/Node-Types/Scroll-to-Element-Node)(CPU Brand)          | Brings the CPU filter section into view.                                                    |
-| **Check** "Intel" in the CPU section.                                                                              | [**Click Element**](/Learn/Basics/Node-Types/Click-Element-Node) (CPU Option)                 | **Layer 2 Filter (Part 2):** Limit CPU brand.                                               |
-| **Look** at the filtered results, ready to check one by one.                                                       | [**Loop List**](/Learn/Basics/Node-Types/Loop-List-Node)                                      | Treats the middle product cards as a list and iterates through them.                        |
-| **Check each item:** Read description. If it mentions "Energy efficiency," write down Name/Price. Otherwise, skip. | [**Extract Data Item + Filtering Criteria**](/Learn/Basics/Node-Types/Extract-Data-Item-Node) | **Layer 3 Filter:** AI-based content filtering during scraping. Only saves matching items.  |
+| **Open** Amazon homepage.                                                                                          | [**Visit Page**](/learn/basics/node-types/visit-node)                                         | Starts the entire operation.                                                                |
+| **Type** "Laptop" in top search box and press Enter.                                                               | [**Input Text**](/learn/basics/node-types/input-text-node)                                    | **Layer 1 Filter:** Narrow scope from "All Site" to "Laptops."                              |
+| **Scroll down** to find the HDD filter on the left.                                                                | [**Scroll to Element** ](/learn/basics/node-types/scroll-to-element-node)(HDD Size)           | Brings the filter section into view for reliable clicking.                                  |
+| **Check** "1 TB" in the HDD section.                                                                               | [**Click Element**](/learn/basics/node-types/click-element-node) (HDD Option)                 | **Layer 2 Filter (Part 1):** Use website filter to limit storage capacity.                  |
+| **Scroll down** to find the CPU brand filter.                                                                      | [**Scroll to Element** ](/learn/basics/node-types/scroll-to-element-node)(CPU Brand)          | Brings the CPU filter section into view.                                                    |
+| **Check** "Intel" in the CPU section.                                                                              | [**Click Element**](/learn/basics/node-types/click-element-node) (CPU Option)                 | **Layer 2 Filter (Part 2):** Limit CPU brand.                                               |
+| **Look** at the filtered results, ready to check one by one.                                                       | [**Loop List**](/learn/basics/node-types/loop-list-node)                                      | Treats the middle product cards as a list and iterates through them.                        |
+| **Check each item:** Read description. If it mentions "Energy efficiency," write down Name/Price. Otherwise, skip. | [**Extract Data Item + Filtering Criteria**](/learn/basics/node-types/extract-data-item-node) | **Layer 3 Filter:** AI-based content filtering during scraping. Only saves matching items.  |
 | **Compile** the final list of matching laptops into a CSV.                                                         | **Finish: Output Data**                                                                       | Exports the multi-dimensionally filtered data into a structured file.                       |
 
 ### Summary

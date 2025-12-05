@@ -6,7 +6,7 @@ description: "Handles navigation for multi-page content by automatically clickin
 
 Overview
 
-The Pagination node is used to automatically turn pages in multi-page content, such as clicking "Next Page" or "Previous Page" buttons. It works with [extraction](/Learn/Basics/Node-Types/Extract-Data-Node) nodes to implement batch collection across multiple pages.
+The Pagination node is used to automatically turn pages in multi-page content, such as clicking "Next Page" or "Previous Page" buttons. It works with [extraction](/learn/basics/node-types/extract-data-node) nodes to implement batch collection across multiple pages.
 
 ![Gemini_Generated_Image_tj4an5tj4an5tj4a.png](/images/Gemini_Generated_Image_tj4an5tj4an5tj4a.png)
 
@@ -19,7 +19,7 @@ The Pagination node is used to automatically turn pages in multi-page content, s
 **Core Capabilities**
 
 - Supports **Next Page** or **Previous Page** navigation.
-- Can generate multi-page loops when combined with [Extract Data](/Learn/Basics/Node-Types/Extract-Data-Node), [Loop List](/Learn/Basics/Node-Types/Loop-List-Node), Loop, and [Scroll](/Learn/Basics/Node-Types/Scroll-Page-Node) nodes.
+- Can generate multi-page loops when combined with [Extract Data](/learn/basics/node-types/extract-data-node), [Loop List](/learn/basics/node-types/loop-list-node), Loop, and [Scroll](/learn/basics/node-types/scroll-page-node) nodes.
 - Option to terminate the task or skip and continue upon pagination failure.
 
 **Configuration Steps**
@@ -31,7 +31,7 @@ The Pagination node is used to automatically turn pages in multi-page content, s
 3. Configure error handling strategy:
    - **Stop Task:** Terminate the workflow if pagination fails (e.g., reached the last page).
    - **Skip and Continue:** Ignore the current pagination error and proceed to subsequent nodes.
-4. Usually place Pagination after [**Extract Data**](/Learn/Basics/Node-Types/Extract-Data-Node) to ensure current page data is collected before turning the page.
+4. Usually place Pagination after [**Extract Data**](/learn/basics/node-types/extract-data-node) to ensure current page data is collected before turning the page.
 
 ![PixPin_2025-12-04_14-26-18.png](/images/PixPin_2025-12-04_14-26-18.png)
 

@@ -14,7 +14,7 @@ The Extract Data node is used to extract structured data from the entire page or
 
 - Extracting all matching data from a full page at once (e.g., comment lists, article lists, product info).
 - Extracting a set of fields from a detail page (e.g., multiple specification fields on a product detail page).
-- Accumulating data from multiple pages when combined with [Pagination](/Learn/Basics/Node-Types/Pagination-Node) inside a [Loop](/Learn/Basics/Node-Types/Loop-Node).
+- Accumulating data from multiple pages when combined with [Pagination](/learn/basics/node-types/pagination-node) inside a [Loop](/learn/basics/node-types/loop-node).
 
 **Core Capabilities**
 
@@ -34,13 +34,13 @@ The Extract Data node is used to extract structured data from the entire page or
 4. (Optional) Configure filtering criteria, for example:
    - "Only keep reviews from the last 30 days."
    - "Only extract products with a price greater than 100."
-5. For cross-page extraction, place Extract Data inside a [Loop](/Learn/Basics/Node-Types/Loop-Node) or combine with [Pagination](/Learn/Basics/Node-Types/Pagination-Node).
+5. For cross-page extraction, place Extract Data inside a [Loop](/learn/basics/node-types/loop-node) or combine with [Pagination](/learn/basics/node-types/pagination-node).
 
 ![PixPin_2025-12-04_14-18-10.png](/images/PixPin_2025-12-04_14-18-10.png)
 
 **Recommendations**
 
 - For scenarios with complex page structures, consider using multiple Extract Data nodes to process different areas separately.
-- Each Extract Data node executes extraction only once. For multi-page extraction, combine with [Loop](/Learn/Basics/Node-Types/Loop-Node) + [Pagination](/Learn/Basics/Node-Types/Pagination-Node).
-- Consider adding a [**Wait**](/Learn/Basics/Node-Types/Wait-Node) node before extraction to ensure dynamic content has loaded.
+- Each Extract Data node executes extraction only once. For multi-page extraction, combine with [Loop](/learn/basics/node-types/loop-node) + [Pagination](/learn/basics/node-types/pagination-node).
+- Consider adding a [**Wait**](/learn/basics/node-types/wait-node) node before extraction to ensure dynamic content has loaded.
 - Field descriptions should be detailed, including field names and meanings, to facilitate subsequent use and maintenance.

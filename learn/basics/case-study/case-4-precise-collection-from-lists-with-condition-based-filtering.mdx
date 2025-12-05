@@ -41,7 +41,7 @@ Although this case uses eBay, this **"List Traversal + Condition Filtering"** lo
 
 ![PixPin_2025-12-04_11-32-51.png](/images/PixPin_2025-12-04_11-32-51.png)
 
-### 2. [Loop List](/Learn/Basics/Node-Types/Loop-List-Node) (Traverse Product List)
+### 2. [Loop List](/learn/basics/node-types/loop-list-node) (Traverse Product List)
 
 - **Objective:** Tell the AI: "This entire area is the product list. Please process items one by one."
 - **Configuration:**
@@ -54,7 +54,7 @@ Although this case uses eBay, this **"List Traversal + Condition Filtering"** lo
 
 ![PixPin_2025-12-04_11-32-59.png](/images/PixPin_2025-12-04_11-32-59.png)
 
-### 3. [Condition](/Learn/Basics/Node-Types/Condition-Node) (Check for Bulk Discount)
+### 3. [Condition](/learn/basics/node-types/condition-node) (Check for Bulk Discount)
 
 - **Important:** This node must be placed **inside** the **Loop List** node. This ensures the condition applies to the "currently focused product card."
 - **Objective:** Check the description area of the current product: Is there a bulk purchase discount prompt like _"Save up to 10% when you buy more"_?
@@ -67,7 +67,7 @@ Although this case uses eBay, this **"List Traversal + Condition Filtering"** lo
 
 ![PixPin_2025-12-04_11-35-49.png](/images/PixPin_2025-12-04_11-35-49.png)
 
-### 4. [Extract Data Item](/Learn/Basics/Node-Types/Extract-Data-Item-Node) (True Branch: Scrape Matching Items)
+### 4. [Extract Data Item](/learn/basics/node-types/extract-data-item-node) (True Branch: Scrape Matching Items)
 
 - **Context:** This node is placed on the **True** branch of the Condition node.
 - **Objective:** Copy the core information of this "discounted product."
