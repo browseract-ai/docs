@@ -24,7 +24,7 @@
             "icon": "sparkles",
             "expanded": true,
             "pages": [
-              "Learn/Introduction",
+              "learn/introduction",
               "Learn/Core-Concepts"
             ]
           },
