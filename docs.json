@@ -8,9 +8,6 @@
     "light": "#03bf80",
     "dark": "#03bf80"
   },
-  "background": {
-    "image": "/images/background.png"
-  },
   "favicon": "/favicon.ico",
   "fonts": {},
   "icons": {
