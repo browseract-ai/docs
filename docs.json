@@ -144,8 +144,6 @@
     "indexing": "all"
   },
   "integrations": {
-    "ga4": {
-      "measurementId": "G-W8NYCM9J41"
-    }
+
   }
 }
