@@ -19,21 +19,13 @@
         "tab": "Learn",
         "groups": [
           {
-            "group": "Overview",
+            "group": "Quick Start",
             "icon": "sparkles",
             "expanded": true,
             "pages": [
               "learn/introduction",
-              "learn/core-concepts"
-            ]
-          },
-          {
-            "group": "Quick Start",
-            "icon": "rocket",
-            "expanded": false,
-            "pages": [
-              "learn/quick-start/build-your-first-data-scraper-workflow-in-5-minutes",
-              "learn/quick-start/use-browseract-in-n8n.make.zapier"
+              "learn/core-concepts",
+              "learn/quick-start/build-your-first-data-scraper-workflow-in-5-minutes"
             ]
           },
           {
@@ -69,6 +61,16 @@
               "learn/basics/case-study/case-3-automatic-expansion-and-collection-on-long-load-more-lists",
               "learn/basics/case-study/case-4-precise-collection-from-lists-with-condition-based-filtering",
               "learn/basics/case-study/case-5-precise-scraping-with-multi-dimensional-filtering"
+            ]
+          },
+          {
+            "group": "Intergrations",
+            "icon": "blocks",
+            "expanded": false,
+            "pages": [
+              "learn/intergrations/n8n",
+              "learn/intergrations/make",
+              "learn/intergrations/mcp"
             ]
           }
         ]
@@ -144,7 +146,5 @@
   "seo": {
     "indexing": "all"
   },
-  "integrations": {
-
-  }
+  "integrations": {}
 }

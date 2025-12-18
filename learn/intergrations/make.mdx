@@ -1,0 +1,243 @@
+---
+title: "Integrate BrowserAct with Make"
+description: "Run your BrowserAct workflows from Make as part of your larger automation"
+---
+
+**📚 This is a How-To Guide** – You already have a working BrowserAct workflow, and you want to trigger it from Make. This guide shows you how.
+
+**⏱️ Estimated time:** 15-20 minutes
+
+## 🎯When Should You Use This?
+
+Use this guide if you want to:
+
+- **Trigger a BrowserAct workflow from a schedule** – Run daily, every hour, on specific days, etc.
+- **Trigger from external events** – Webhook, form submission, API call, etc.
+- **Use data from other platforms** – Google Sheets, Airtable, email, Salesforce, etc.
+- **Send results to downstream tools** – Email, Slack, database, CRM, Airtable, Notion, etc.
+- **Build end-to-end automations** – Data source → BrowserAct → Results → Action
+
+### ❌ You DON'T Need This If...
+
+You just want to run a workflow manually in BrowserAct. That's already easy – just click "Run"!
+
+### ✅ Prerequisites
+
+✓BrowserAct Account + Working Workflow
+
+✓Go to BrowserAct → Workflows → pick one that's Published and tested
+
+#### Your API Key Ready
+
+✓In BrowserAct: Settings → Integrations & API → "Generate API Key" → Copy it
+
+#### Make Account (Cloud)
+
+✓Make is cloud-only – sign up at [make.com](http://make.com) if you haven't already
+
+#### Basic Make Knowledge
+
+Know how to add modules and create basic scenarios in Make
+
+## 🔄How It Works (Visual Overview)
+
+Your Data Source (Sheets, Webhook, Schedule, Airtable) ↓  **Make** (Decides WHEN to run & WHERE data comes from) ↓  **BrowserAct** (Runs your web automation workflow) ↓  **Results** (Structured data back to Make) ↓  Your Destination (Email, Slack, Airtable, Notion, Database, etc.)
+
+![Pix Pin 2025 12 04 11 16 24](/images/PixPin_2025-12-04_11-16-24.png)
+
+## 🚀Integration Steps
+
+### Step 1: Create a New Scenario (or Open Existing)
+
+1. Log into Make
+2. Click **"Create a new scenario"** (or open an existing one)
+3. Add your trigger module (Scheduler, Webhook, Google Sheets, etc.)
+
+### Step 2: Add BrowserAct Module
+
+1. Click **"Add module"** after your trigger or another module
+2. Search for **"BrowserAct"**
+3. Click to add the BrowserAct module to your scenario
+
+### Step 3: Connect Your Account
+
+1. In the BrowserAct module, click the **Connection** dropdown
+2. Select **"Create a new connection"**
+3. Enter your BrowserAct API key
+4. Click **Save** to connect
+
+💡 **Make tests the connection automatically.** If you see a green checkmark ✓, you're connected!
+
+### Step 4: Choose Your Workflow
+
+1. Make sure **Action** is set to `Run a workflow`
+2. Choose **Search Workflows From**:
+   1. **My Workflows** – Your own workflows (most common)
+   2. **Template Marketplace** – Pre-built templates (optional)
+1. Select your BrowserAct workflow from the dropdown list
+
+### Step 5: Map Input Parameters
+
+After choosing a workflow, Make shows all input parameters it needs (like "City", "URL", "Keyword", etc).
+
+For each parameter:
+
+1. Enter a **fixed value** (if the same every time), OR
+2. Click the input field and **map from previous modules**:
+   1. From scheduler? Use fixed value or timestamp
+   2. From spreadsheet? Map the column
+   3. From webhook? Map the received field
+   4. From CRM? Map the contact field
+
+Example:
+
+City: map from [GoogleSheets.city](http://GoogleSheets.city)
+
+URL: map from [webhook.website](http://webhook.website)
+
+Keyword: enter fixed value "competitor"
+
+### Step 6: Test the Integration
+
+1. Click **"Run once"** button to test the module
+2. Make will execute BrowserAct with your test parameters
+3. You'll see the output panel showing your scraped data
+4. If you see results, you're ready! If there's an error, check troubleshooting below
+
+### Step 7: Deploy & Activate Scenario
+
+1. Click **"OK"** to accept the test results
+2. Click the toggle switch in the top-right to **turn on** your scenario
+3. Your Make scenario is now live and will run automatically!
+
+### Step 8: Add Downstream Modules (Optional)
+
+Now that your BrowserAct module runs, add more modules after it:
+
+- **Google Sheets** – Add rows with results
+- **Slack** – Send messages with data
+- **Email** – Email the results
+- **Airtable** – Create records
+- **Notion** – Create database entries
+- **Salesforce** – Create leads/opportunities
+- **Filter** – Conditional logic for branching
+
+Chain these modules to create your complete automation!
+
+## 📋Real-World Scenarios
+
+### Scenario 1: Daily Lead Generation Report
+
+**What happens:** Every morning at 9am, scrape leads and email the sales team
+
+Scheduler (trigger every day at 9am)
+
+↓
+
+BrowserAct (scrape leads from directory)
+
+↓
+
+Airtable (store leads)
+
+↓
+
+Email (send daily report)
+
+↓
+
+✅ Sales team gets leads automatically
+
+**Setup:** Scheduler → BrowserAct → Airtable → Email
+
+### Scenario 2: Form Submission → Data Enrichment → Salesforce
+
+**What happens:** Website form submitted → Get company data → Add to CRM
+
+Webhook (form submission)
+
+↓
+
+BrowserAct (lookup company info)
+
+↓
+
+Salesforce (create contact)
+
+↓
+
+✅ Leads automatically enriched in CRM
+
+**Setup:** Webhook → BrowserAct → Salesforce
+
+### Scenario 3: Monitor Price Changes & Alert
+
+**What happens:** Every hour, check prices, post to Slack if prices drop
+
+Scheduler (every hour)
+
+↓
+
+BrowserAct (get current prices)
+
+↓
+
+Filter (price dropped?)
+
+↓
+
+Slack (send alert)
+
+↓
+
+✅ Team notified of price changes
+
+**Setup:** Scheduler → BrowserAct → Filter → Slack
+
+## 🆘Troubleshooting
+
+#### ❌ "Authentication Failed" or "Invalid Credentials"
+
+Make can't connect to BrowserAct
+
+**Fix:** (1) Double-check your API key is correct (copy from BrowserAct Settings) (2) Make sure you didn't accidentally add spaces or extra characters (3) If the key is old, generate a new one in BrowserAct (4) Delete and recreate the connection in Make
+
+#### ❌ "Workflow Not Found"
+
+Make can't find your BrowserAct workflow
+
+**Fix:** (1) Make sure workflow is Published in BrowserAct (2) Refresh the workflow dropdown (click the circular refresh icon) (3) Double-check you're in "My Workflows" not "Templates" (4) Try re-connecting (delete connection, create new one)
+
+#### ❌ "Missing Required Parameter"
+
+Input parameters don't match what BrowserAct expects
+
+**Fix:** (1) Check that all required parameters have values (2) Verify parameter names exactly match (case-sensitive!) (3) Make sure mapped data is actually coming from previous modules (4) Click "Run once" to see what data is being sent
+
+#### ❌ Scenario Runs but BrowserAct Returns No Data
+
+Workflow executes but results are empty/null
+
+**Fix:** (1) Test the workflow directly in BrowserAct (does it work there?) (2) Check parameters are correct (try with same test data as BrowserAct) (3) The website might have changed (layouts, elements moved) (4) Check if website blocks automation (you might need proxy/delays)
+
+#### ❌ "Execution Timeout" Error
+
+Workflow takes too long to complete
+
+**Fix:** (1) Test if website loads slowly (manually check in browser) (2) In BrowserAct, add Wait nodes to give page time to load (3) Some sites block bots (try different approach or contact support) (4) Increase timeout in BrowserAct workflow settings if available
+
+### 🚀 What's Next?
+
+You now have basic Make integration. Consider these next steps:
+
+**1️⃣ Set Up Automation Schedule** Configure your Scheduler module to run regularly (daily, hourly, weekly, etc.)
+
+**2️⃣ Add More Downstream Modules** Send results to Slack, Email, Airtable, Notion, Salesforce, and more
+
+**3️⃣ Use Filter/Router for Logic** Add conditional logic to decide what to do based on the results
+
+**4️⃣ Batch Process with Repeater** Use Repeater module to loop through multiple items and process each with BrowserAct
+
+**5️⃣ Build Complex Workflows** Combine BrowserAct with Make's 1000+ apps to create sophisticated business automations
+
+**Resources:** • [BrowserAct API Reference](https://www.claudeusercontent.com/reference/api) • [Make Documentation](https://www.make.com/en/help/docs) • [More How-To Guides](https://www.claudeusercontent.com/learn/how-to-guides) • [BrowserAct Support](https://www.claudeusercontent.com/help)
