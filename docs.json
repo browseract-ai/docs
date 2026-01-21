@@ -83,9 +83,19 @@
             "icon": "life-buoy",
             "expanded": false,
             "pages": [
+              {
+                "group": "Credits & Subscription",
+                "icon": "badge-dollar-sign",
+                "expanded": true,
+                "pages": [
+                  "help/billing--credits",
+                  "help/using-browser-act/credits-and-subscription/untitled-page",
+                  "help/using-browser-act/credits-and-subscription/untitled-page-1",
+                  "help/using-browser-act/credits-and-subscription/untitled-page-2"
+                ]
+              },
               "help/workflows--nodes",
               "help/authentication-and-credentials",
-              "help/billing--credits",
               {
                 "group": "Integrations & APIs",
                 "icon": "blocks",
