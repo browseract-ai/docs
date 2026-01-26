@@ -1,0 +1,19 @@
+---
+title: "Best Practice"
+mode: "wide"
+---
+
+| **Scenario**                                      | **Recommended Mode** | **Proxy Suggestion**                           | **Configuration Logic**                                                                                                                | **Typical Examples**                                                                                |
+| :-----------------------------------------------: | :------------------: | :--------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------: |
+| **Social Media Account Management**               | Standard Browser     | Custom Proxy (Static IP)                       | Requires a persistent browser environment and login session. A stable, account-bound IP reduces re-authentication and lowers ban risk. | Reddit accounts<br />LinkedIn accounts<br />Instagram accounts                                      |
+| **E-commerce Price Comparison / Public Scraping** | Private Browser      | BrowserAct Proxy (Rotating Residential)        | Uses a clean environment on each run to avoid session tracking. IP rotation improves coverage while reducing overhead and proxy cost.  | Amazon product listings <br />Walmart / Target pricing pages<br />Public e-commerce category pages  |
+| **SEO / Multi-region Search**                     | Private Browser      | BrowserAct Proxy (Region-specific Residential) | Eliminates history and personalization bias. Region-based residential IPs return more accurate local search results.                   | Google Search (local SERPs)<br />Bing / DuckDuckGo results<br />Localized content visibility checks |
+| **High-frequency Flash Sales**                    | Standard Browser     | Custom Proxy (Static IP, Low Latency)          | Maintains login state and cart/session continuity. Low-latency IPs reduce page load time and improve response speed.                   | Limited-edition product drops<br />Ticketing platforms<br />Time-sensitive checkout workflows       |
+| **Staging / QA Environment Testing**              | Standard Browser     | Custom Proxy (Static IP)                       | Test environments often whitelist IPs. Static IPs simplify access control, debugging, and reproducibility.                             | Staging dashboards<br />Pre-production admin panels<br />Internal QA tools                          |
+| **Seller / Vendor Dashboard Automation**          | Standard Browser     | Custom Proxy (Static IP)                       | Marketplaces associate seller accounts with device and IP. Static IPs help maintain trust signals and session continuity.              | Amazon Seller Central<br />Shopify Admin<br />App marketplace vendor dashboards                     |
+
+### Key Rule of Thumb (Very Important)
+
+> **If an account expects you to “look like the same user over time”, use Custom Proxy (Static IP)** **If the task only cares about “what the page shows right now”, use BrowserAct Proxy** 
+
+This single rule helps users self-select the correct setup.

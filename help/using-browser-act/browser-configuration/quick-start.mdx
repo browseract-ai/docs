@@ -1,0 +1,83 @@
+---
+title: "Quick Start"
+description: "This guide helps you configure BrowserAct’s browser settings in under 3 minutes for most common automation scenarios."
+---
+
+### **1. Open Browser Settings**
+
+To access browser configuration:
+
+- Open the **Start** node in the workflow editor
+- Locate **Default Browser Settings** at the bottom of the Start node
+- Click **Settings** to open the browser configuration panel
+
+![Image](/images/image-2.png)
+
+![Image](/images/image-3.png)
+
+### **2. Choose Browser Mode**
+
+Select how BrowserAct manages browser data and sessions for your workflow.
+
+#### **Standard Browser（ Default）**
+
+**Persistent browser sessions** across runs
+
+Each workflow gets a **dedicated and stable browser environment**
+
+Cookies, cache, and login state are automatically preserved
+
+**Best for**
+
+- Logged-in accounts
+- Long-running automation tasks
+
+![Image](/images/image-3.png)
+
+#### **Private Browser**
+
+Use **Private Browser** only if:
+
+- You are scraping public pages
+- Logging is not required
+- Each run should start with a clean environment
+
+Private Browser runs in incognito mode and does not save any data after execution.
+
+![Image](/images/image-4.png)
+
+### **3. Configure Proxy**
+
+BrowserAct supports **two proxy options**, allowing you to control IP location and network identity.
+
+- **BrowserAct Proxy:**
+
+**Fastest and easiest option**
+
+- Built-in **global residential proxy network**
+- Automatically assigns a new IP on each run
+- Select a country or region directly — no manual setup required
+
+![Image](/images/image-5.png)
+
+**Custom Proxy:**
+
+Use this only if you already have your own proxy service.
+
+- Add your preferred HTTP or SOCKS5 proxy
+- Supports authentication and custom endpoints
+- Includes **Proxy Check** to validate connectivity before running tasks
+
+![Image](/images/image-6.png)
+
+### [**4.Save**](http://4.Save) Your Settings
+
+After completing your configuration, \*\*always click \*\*`Save` in the bottom-right corner to apply changes.
+
+Unsaved settings will not take effect.
+
+### One-line takeaway
+
+> **Standard Browser + BrowserAct Proxy → Save → Run.**
+
+You’re ready to execute your workflow.

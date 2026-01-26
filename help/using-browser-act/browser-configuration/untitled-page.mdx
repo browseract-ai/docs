@@ -1,0 +1,48 @@
+---
+title: "Browser Modes & Profiles"
+description: "This guide covers advanced browser controls for users running automation in production or at scale."
+---
+
+#### 1.Standard Browser
+
+- **Positioning**  Designed to simulate **long-term, stable real-user behavior**.
+- **How it works**
+
+Each workflow is assigned a **fixed Browser ID**
+
+Cookies, cache, and browsing history are automatically stored
+
+The same browser environment is reused across runs
+
+- Use **Standard Browser** when:
+- **Your workflow requires logging into an account and staying logged in**  (e.g. dashboards, admin panels, social platforms)
+- **The same workflow runs  repeatedly over time**  (daily, weekly, or event-triggered automation)
+- **You want websites to see a consistent, returning user**  instead of a new visitor on every run
+- **Session stability matters more than anonymity**  (fewer re-logins, fewer verification prompts)
+
+**Not recommended for**
+
+- High-frequency account switching
+- Strong anonymity or one-off scraping tasks
+
+![Image](/images/image-7.png)
+
+#### 2.Private Browser
+
+- **Positioning**  Designed for **fully isolated, temporary browser environments**.
+- **How it works**
+
+Each run starts with a clean browser instance
+
+No cookies, cache, or browsing history are saved
+
+Browser data is destroyed after the task completes
+
+Use **Private Browser** when:
+
+- **You are scraping or browsing public pages without login**  (search results, product listings, content pages)
+- **Each run should be fully isolated from previous runs**  (no cookies, no session reuse)
+- You want to avoid cross-session tracking or data accumulation
+- You are testing multiple scenarios where persistence is unnecessary
+
+**⚠️ Switching Reminder**: When switching from Standard Mode to Private Mode, the system will prompt: **"Historical browser data will be cleared."**

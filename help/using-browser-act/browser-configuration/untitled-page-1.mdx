@@ -1,0 +1,53 @@
+---
+title: "Proxy & Network Settings"
+description: "BrowserAct provides flexible proxy and network options to support both out-of-the-box usage and custom proxy integrations, depending on your workflow requirements."
+---
+
+#### 1.BrowserAct Proxy
+
+**Key benefits**
+
+- Built-in global residential proxy pool
+- IP is automatically rotated on each run
+- No credentials or manual configuration required
+
+Use **BrowserAct Proxy** when:
+
+- You want to get started quickly without managing proxy infrastructure
+- Your workflow needs IP rotation on each run by default
+- You are accessing region-specific content  (localized search results, country-based pricing, geo-restricted pages)
+- You prefer residential IPs with minimal configuration
+
+#### 2. Custom Proxy
+
+**Best suited for**
+
+- Users with existing third-party proxy providers
+- A specific IP must stay bound to an account or session
+
+**Configuration steps**
+
+- Select `Custom Proxy`
+- Click `+ Add Proxy`
+
+![Image](/images/image-8.png)
+
+- Enter protocol (HTTP / SOCKS5), server address, port, and credentials
+
+![Image](/images/image-9.png)
+
+- Click `Proxy Check` to validate the proxy
+
+![Image](/images/image-10.png)
+
+- **Click confirm**
+
+![Image](/images/image-11.png)
+
+After confirmation, the proxy will appear in the list, allowing for editing or deletion at any time.
+
+**Why Proxy Check matters**
+
+- Ensures the proxy is reachable
+- Displays the outbound IP and detected region
+- Prevents invalid proxies from being used in execution

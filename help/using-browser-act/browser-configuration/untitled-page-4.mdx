@@ -1,0 +1,59 @@
+---
+title: "Troubleshooting"
+description: "This will help you quickly diagnose and resolve browser configuration–related issues."
+---
+
+### **1. “Clear Browser Data” Is Disabled**
+
+**Cause**
+
+- A workflow task is currently running
+
+**Solution**
+
+- Stop the running task
+- Retry after the task completes
+
+![Image](/images/image-18.png)
+
+### 2.Proxy Check Failed
+
+- Incorrect proxy credentials
+- Wrong proxy protocol
+- Proxy IP is blocked or unavailable
+
+**Troubleshooting steps**
+
+Verify proxy username and password
+
+Confirm protocol (HTTP or SOCKS5)
+
+Try a different proxy endpoint
+
+![Image](/images/image-19.png)
+
+### 3.Detected Proxy Region Does Not Match Expectations
+
+**Cause**
+
+- Inaccurate geo metadata from the proxy provider
+
+**Solution**
+
+- Manually edit the `Region` field
+- Save settings and continue execution
+
+![Image](/images/image-20.png)
+
+### 4.Frequent Login or Verification Prompts When Running the Workflow
+
+**Possible reasons**
+
+- Using Private Browser for login-based workflows
+- Fingerprint is being reset too often
+
+**Recommended fixes**
+
+- Switch to Standard Browser
+- Use a stable Custom Proxy
+- Avoid unnecessary fingerprint regeneration

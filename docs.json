@@ -95,6 +95,18 @@
                 ]
               },
               "help/workflows--nodes",
+              {
+                "group": "Browser Configuration",
+                "icon": "globe",
+                "pages": [
+                  "help/using-browser-act/browser-configuration/quick-start",
+                  "help/using-browser-act/browser-configuration/untitled-page",
+                  "help/using-browser-act/browser-configuration/untitled-page-1",
+                  "help/using-browser-act/browser-configuration/untitled-page-2",
+                  "help/using-browser-act/browser-configuration/untitled-page-3",
+                  "help/using-browser-act/browser-configuration/untitled-page-4"
+                ]
+              },
               "help/authentication-and-credentials",
               {
                 "group": "Integrations & APIs",
