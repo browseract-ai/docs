@@ -1,4 +1,165 @@
 ---
-title: 'Files & Downloads'
+title: "Files & Downloads"
 ---
 
+The **Download** feature allows BrowserAct workflows to automatically download files from web pages during execution.
+
+It works by triggering download actions through interaction nodes, enabling automated file collection without manual steps.
+
+## What Is Download
+
+Files can be downloaded automatically during workflow execution whenever the workflow interacts with page elements that trigger a download.
+
+Downloads are supported in common interaction steps such as:
+
+- Click Element
+- Click Element Item
+- Visit Page
+- Go Back Tab
+- Human Interaction
+
+As long as a page contains a visible and clickable download button or link, the workflow can capture and download the file as part of the run.
+
+## What You Can Do
+
+Use Download to automate file collection from websites, such as:
+
+- Image downloads
+- Music and video downloads
+- PDF and document downloads
+- Dataset and resource downloads
+- Bulk content retrieval from listing pages
+
+## Supported Files
+
+BrowserAct supports downloading any file format available on the page.
+
+Examples include:
+
+- Images
+- Audio files
+- Documents
+- Archives
+- Other downloadable resources
+
+## Limits
+
+To ensure stable workflow execution, the following limits apply:
+
+**File size**
+
+- Maximum size per file: 50 MB
+
+**Download quantity**
+
+- Maximum downloads per workflow run: 100 files
+
+**Availability**
+
+- Download tasks remain available for up to 30 minutes after workflow execution
+
+**Retention**
+
+- Downloaded files are stored for 7 days
+- Files expire automatically after the retention period
+
+## Supported Scenarios
+
+Download works when:
+
+- A page contains a visible download button
+- Clicking triggers a direct file download
+
+Currently not supported:
+
+- Hover-triggered download buttons
+- Hidden download actions without clickable elements
+
+## Example Use Cases
+
+### Automated Pexels Image Download
+
+1. Visit Page https://www.pexels.com/
+2. Click Element  Click any image on the page
+3. Click Element  Click the download button
+
+![Image (13)](/images/image\(13\)-1.png)
+
+4. Retrieve downloaded files  Open Browser Download and download the file
+
+![Image (14)](/images/image\(14\)-1.png)
+
+### Automated Pixabay Music Download
+
+1. Visit Page https://pixabay.com/music/
+2. Loop List Music list at the bottom of the page
+3. Condition  Does the page display pop-up windows?
+4. Click Element  Close pop-up
+5. Click Element Item  Click the download button
+6. Wait  Wait 5 seconds
+
+![Image (15)](/images/image\(15\)-1.png)
+
+7. Retrieve downloaded files  Open Browser Download → Download All
+
+![Image (16)](/images/image\(16\).png)
+
+## FAQ
+
+### Why didn’t the download start?
+
+Possible reasons:
+
+- The download button is not directly clickable
+- The button requires hover interaction
+- A pop-up or login is blocking the download
+- The file exceeds the size limit
+
+Try:
+
+- Using Click Element Item
+- Adding a Wait step
+- Checking workflow logs
+
+### Why can’t I find my downloaded file?
+
+- Files are stored in **Browser Download**
+- Download tasks remain available for 30 minutes after execution
+- Files expire in 7 days
+
+### Can I download files that require login?
+
+Yes.
+
+If the workflow includes login steps and the session remains active, downloads will work normally.
+
+### Does BrowserAct support PDF / video / zip downloads?
+
+Yes. Any file format that can be downloaded directly from a webpage is supported.
+
+### **Why should I add a Wait step after triggering a download?**
+
+If multiple download actions are triggered too quickly, the previous request may not finish before a new one starts.  When this happens, the system may prioritize the latest request, which can result in only the most recent file being saved.
+
+Adding a Wait step after each download action gives the system enough time to complete the current download request and improves overall download reliability.
+
+# Integration with Workflows
+
+Download works as part of workflow execution and integrates with:
+
+### Workflow automation
+
+- Trigger downloads via interaction nodes
+- Run batch downloads via loops
+
+### Data pipelines
+
+- Combine downloads with scraping workflows
+- Automate file collection + data extraction
+
+### Storage & processing
+
+- Download files first, then process them via workflows
+- Integrate with downstream automation steps
+
+Download functionality enables workflows to retrieve files directly from websites through interactive steps. It eliminates the need for manual file collection and downloading.
