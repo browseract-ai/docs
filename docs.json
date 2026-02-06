@@ -17,6 +17,7 @@
     "tabs": [
       {
         "tab": "Learn",
+        "icon": "book-open",
         "groups": [
           {
             "group": "Quick Start",
@@ -77,12 +78,22 @@
       },
       {
         "tab": "Help",
+        "icon": "message-circle-question-mark",
         "groups": [
           {
             "group": "Using BrowserAct",
             "icon": "life-buoy",
             "expanded": false,
             "pages": [
+              {
+                "group": "Workflow & Nodes",
+                "icon": "network",
+                "pages": [
+                  "basics",
+                  "data-extraction",
+                  "files-and-downloads"
+                ]
+              },
               {
                 "group": "Credits & Subscription",
                 "icon": "badge-dollar-sign",
@@ -140,7 +151,8 @@
         ]
       },
       {
-        "tab": "API",
+        "tab": "API Reference",
+        "icon": "code-xml",
         "openapi": "openapi.json"
       }
     ]

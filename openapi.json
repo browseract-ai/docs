@@ -35,113 +35,6 @@
     }
   ],
   "paths": {
-    "/v2/workflow/stop-task": {
-      "put": {
-        "tags": [
-          "Tasks"
-        ],
-        "summary": "Cancel a running task",
-        "description": "Cancels a running task immediately.\n\n- Use this when you no longer need the result.\n- A canceled task **cannot** be resumed.\n\n**Tip:** If you only need to check progress, prefer `GET /v2/workflow/get-task-status`.",
-        "operationId": "stopTask",
-        "parameters": [
-          {
-            "name": "task_id",
-            "in": "query",
-            "description": "The `task_id` returned by `run-task` or `run-task-by-template`.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "minLength": 1
-            },
-            "example": "task_123456789"
-          },
-          {
-            "name": "biz_code",
-            "in": "query",
-            "description": "Optional business cancellation code (for your own tracking/analytics).",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "example": 1001
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK. The task was canceled (or was already in a terminal state)."
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseData"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseData"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v2/workflow/resume-task": {
-      "put": {
-        "tags": [
-          "Tasks"
-        ],
-        "summary": "Resume a paused task",
-        "description": "Resumes execution of a previously paused task.\n\n- The task will continue from where it was paused.\n- You **can't** resume a task that is `finished`, `failed`, or `canceled`.",
-        "operationId": "resumeTask",
-        "parameters": [
-          {
-            "name": "task_id",
-            "in": "query",
-            "description": "The `task_id` to resume.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "minLength": 1
-            },
-            "example": "task_123456789"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK. The task was resumed (or was already running)."
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseData"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseData"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/v2/workflow/run-task": {
       "post": {
         "tags": [
@@ -299,37 +192,25 @@
         }
       }
     },
-    "/v2/workflow/list-workflows": {
+    "/v2/workflow/get-task-status": {
       "get": {
         "tags": [
-          "Workflows"
+          "Tasks"
         ],
-        "summary": "List workflows",
-        "description": "Returns a paginated list of workflows in your workspace.\n\n### Pagination\nThis endpoint uses page-based pagination with `page` and `limit`.",
-        "operationId": "getWorkflowList",
+        "summary": "Retrieve a task status",
+        "description": "Returns just the current status of a task.\n\nThis endpoint is more lightweight than `GET /v2/workflow/get-task`.",
+        "operationId": "getTaskStatus",
         "parameters": [
           {
-            "name": "page",
+            "name": "task_id",
             "in": "query",
-            "description": "Page number to retrieve (starts at 1).",
-            "required": false,
+            "description": "Task ID returned by `run-task` or `run-task-by-template`.",
+            "required": true,
             "schema": {
-              "type": "integer",
-              "minimum": 1
+              "type": "string",
+              "minLength": 1
             },
-            "example": 1
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Number of workflows per page (max 500).",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 500
-            },
-            "example": 20
+            "example": "task_123456789"
           }
         ],
         "responses": {
@@ -338,7 +219,14 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PageRespApiWorkflowDto"
+                  "$ref": "#/components/schemas/TaskStatusResponse"
+                },
+                "examples": {
+                  "running": {
+                    "value": {
+                      "status": "running"
+                    }
+                  }
                 }
               }
             }
@@ -366,24 +254,25 @@
         }
       }
     },
-    "/v2/workflow/get-workflow": {
+    "/v2/workflow/get-task": {
       "get": {
         "tags": [
-          "Workflows"
+          "Tasks"
         ],
-        "summary": "Retrieve a workflow",
-        "description": "Fetches a workflow's configuration, including the **input parameter definitions** needed to run it.\n\nIf you only need a list of workflows, use `GET /v2/workflow/list-workflows`.",
-        "operationId": "getWorkflowConfig",
+        "summary": "Retrieve a task",
+        "description": "Returns comprehensive information about a task, including:\n- current `status`\n- step-level progress (`steps`)\n- output (if finished)\n- failure details (if failed)\n\nIf you only need the current status, use `GET /v2/workflow/get-task-status`.",
+        "operationId": "getTask",
         "parameters": [
           {
-            "name": "workflow_id",
+            "name": "task_id",
             "in": "query",
-            "description": "Workflow ID.",
+            "description": "Task ID returned by `run-task` or `run-task-by-template`.",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "minLength": 1
             },
-            "example": "wf_123456789"
+            "example": "task_123456789"
           }
         ],
         "responses": {
@@ -392,7 +281,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ApiWorkflowConfigDto"
+                  "$ref": "#/components/schemas/WorkflowTaskResponse"
                 }
               }
             }
@@ -507,19 +396,19 @@
         }
       }
     },
-    "/v2/workflow/get-task": {
-      "get": {
+    "/v2/workflow/resume-task": {
+      "put": {
         "tags": [
           "Tasks"
         ],
-        "summary": "Retrieve a task",
-        "description": "Returns comprehensive information about a task, including:\n- current `status`\n- step-level progress (`steps`)\n- output (if finished)\n- failure details (if failed)\n\nIf you only need the current status, use `GET /v2/workflow/get-task-status`.",
-        "operationId": "getTask",
+        "summary": "Resume a paused task",
+        "description": "Resumes execution of a previously paused task.\n\n- The task will continue from where it was paused.\n- You **can't** resume a task that is `finished`, `failed`, or `canceled`.",
+        "operationId": "resumeTask",
         "parameters": [
           {
             "name": "task_id",
             "in": "query",
-            "description": "Task ID returned by `run-task` or `run-task-by-template`.",
+            "description": "The `task_id` to resume.",
             "required": true,
             "schema": {
               "type": "string",
@@ -530,11 +419,130 @@
         ],
         "responses": {
           "200": {
+            "description": "OK. The task was resumed (or was already running)."
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseData"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseData"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/workflow/stop-task": {
+      "put": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Cancel a running task",
+        "description": "Cancels a running task immediately.\n\n- Use this when you no longer need the result.\n- A canceled task **cannot** be resumed.\n\n**Tip:** If you only need to check progress, prefer `GET /v2/workflow/get-task-status`.",
+        "operationId": "stopTask",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "query",
+            "description": "The `task_id` returned by `run-task` or `run-task-by-template`.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "example": "task_123456789"
+          },
+          {
+            "name": "biz_code",
+            "in": "query",
+            "description": "Optional business cancellation code (for your own tracking/analytics).",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1001
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK. The task was canceled (or was already in a terminal state)."
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseData"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseData"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/workflow/list-workflows": {
+      "get": {
+        "tags": [
+          "Workflows"
+        ],
+        "summary": "List workflows",
+        "description": "Returns a paginated list of workflows in your workspace.\n\n### Pagination\nThis endpoint uses page-based pagination with `page` and `limit`.",
+        "operationId": "getWorkflowList",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number to retrieve (starts at 1).",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "example": 1
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of workflows per page (max 500).",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500
+            },
+            "example": 20
+          }
+        ],
+        "responses": {
+          "200": {
             "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/WorkflowTaskResponse"
+                  "$ref": "#/components/schemas/PageRespApiWorkflowDto"
                 }
               }
             }
@@ -562,25 +570,24 @@
         }
       }
     },
-    "/v2/workflow/get-task-status": {
+    "/v2/workflow/get-workflow": {
       "get": {
         "tags": [
-          "Tasks"
+          "Workflows"
         ],
-        "summary": "Retrieve a task status",
-        "description": "Returns just the current status of a task.\n\nThis endpoint is more lightweight than `GET /v2/workflow/get-task`.",
-        "operationId": "getTaskStatus",
+        "summary": "Retrieve a workflow",
+        "description": "Fetches a workflow's configuration, including the **input parameter definitions** needed to run it.\n\nIf you only need a list of workflows, use `GET /v2/workflow/list-workflows`.",
+        "operationId": "getWorkflowConfig",
         "parameters": [
           {
-            "name": "task_id",
+            "name": "workflow_id",
             "in": "query",
-            "description": "Task ID returned by `run-task` or `run-task-by-template`.",
+            "description": "Workflow ID.",
             "required": true,
             "schema": {
-              "type": "string",
-              "minLength": 1
+              "type": "string"
             },
-            "example": "task_123456789"
+            "example": "wf_123456789"
           }
         ],
         "responses": {
@@ -589,14 +596,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TaskStatusResponse"
-                },
-                "examples": {
-                  "running": {
-                    "value": {
-                      "status": "running"
-                    }
-                  }
+                  "$ref": "#/components/schemas/ApiWorkflowConfigDto"
                 }
               }
             }
