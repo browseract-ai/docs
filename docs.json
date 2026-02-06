@@ -172,5 +172,11 @@
   "seo": {
     "indexing": "all"
   },
-  "integrations": {}
+  "integrations": {},
+  "api": {
+    "openapi": "https://api.browseract.com/v3/api-docs",
+    "playground": {
+      "display": "interactive"
+    }
+  }
 }
