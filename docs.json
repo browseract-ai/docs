@@ -141,7 +141,7 @@
       },
       {
         "tab": "API",
-        "openapi": "https://api.browseract.com/v3/api-docs"
+        "openapi": "docs.browseract.com/openapi.json"
       }
     ]
   },
@@ -174,7 +174,7 @@
   },
   "integrations": {},
   "api": {
-    "openapi": "https://api.browseract.com/v3/api-docs",
+    "openapi": "docs.browseract.com/openapi.json",
     "playground": {
       "display": "interactive"
     }
