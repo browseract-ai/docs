@@ -4,41 +4,135 @@ sidebarTitle: "Click Element"
 description: "Simulates a mouse click on any button, link, or icon identified by a natural language description."
 ---
 
-Overview
+Master BrowserAct's Click Element node to automate precise clicks on any visible element. Use natural language descriptions to identify buttons, links, and interactive elements without writing code. Perfect for form submissions, navigation, context menu interactions, and triggering page events.
 
-The Click Element node is used to simulate user click operations on a page. You simply describe the element you want to click (button, link, icon, etc.) using natural language, and the system will automatically locate and click it.
+![Gemini\_Generated\_Image\_5dchmi5dchmi5dch.png](/images/Gemini_Generated_Image_5dchmi5dchmi5dch.png)
 
-![Gemini_Generated_Image_5dchmi5dchmi5dch.png](/images/Gemini_Generated_Image_5dchmi5dchmi5dch.png)
+## What is the Click Element Node?
 
-**Use Cases**
+The Click Element Node executes precise click actions on visible elements within the current viewport based on your natural language description. Simply describe what you want to click (like "blue search button in the upper right corner"), and the system automatically detects and clicks the element. This node simulates human clicking behavior, triggers page navigation or events, and requires no code.
 
-- Clicking buttons like "Login," "Search," "Next Page," or "Submit."
-- Triggering searches, submitting forms, expanding content, or opening pop-ups.
-- Navigating pages via navigation menus or pagination.
+**Click Type Options**
 
-**Core Capabilities**
+The Click Element node now supports two click types:
 
-- Locates target elements within the current visible area based on natural language descriptions.
-- Simulates real user clicking behavior to trigger page navigation or events.
-- Supports exception handling (how to proceed if the element is not found or cannot be clicked).
+| **Click Type** | **Description** | **Default** |
+| :-- | :-- | :-- |
+| **Left-click** | Standard mouse left-click action. Used for buttons, links, form submissions, and most interactions. | ✅ Default |
+| **Right-click** | Mouse right-click action. Used for opening context menus, accessing additional options, or triggering right-click events. |  |
 
-**Configuration Steps**
+## When Should You Use It?
 
-1. Add a **Click Element** node to the workflow.
-2. In **Element Description**, describe the target element and its position using natural language, for example:
-   - ✅ "The blue Start free trial button in the top right corner of the page"
-   - ✅ "The Submit button at the bottom of the form"
-   - Avoid vague or compound action descriptions, such as:
-     - ❌ "Click login button" (insufficient information)
-     - ❌ "Click the search button, then click the confirm button" (contains multiple actions)
-3. Configure exception handling:
-   - If the element cannot be found or clicking fails, set to **Stop Task**.
+- **Left-click Use Cases**
 
-![PixPin_2025-12-04_14-13-52.png](/images/PixPin_2025-12-04_14-13-52.png)
+Use Left-click (default) when you need to:
 
-**Recommendations**
+• Navigate to the next page by clicking buttons (e.g., click a login button to enter the user dashboard)
 
-- Try to include: Element Type + Position + Text/Color features in the description.
-- Each Click Element node performs only one click. Use multiple nodes or combine with a Loop for multiple clicks.
-- If the target element is not in the current visible area, use [**Scroll**](/learn/basics/node-types/scroll-page-node) nodes first to bring it into view.
-- It is recommended to place Click Element nodes after [Visit Page](/learn/basics/node-types/visit-node), [Input Text](/learn/basics/node-types/input-text-node), or [Scroll nodes](/learn/basics/node-types/scroll-page-node).
+• Trigger search queries by clicking search buttons in the page header
+
+• Submit forms or interact with popup menus (e.g., click "Submit" to complete data entry)
+
+• Select checkboxes, radio buttons, or dropdown options
+
+• Click links to navigate between pages
+
+- **Right-click Use Cases**
+
+Use Right-click when you need to:
+
+• Trigger right-click events on interactive elements
+
+• Open links in new tabs via context menu
+
+• Access additional options not available through left-click
+
+## How to Set Up a Click Element Node (Step by Step)
+
+### 1.Insert the Node
+
+Click the **\+** button in your workflow, then select "**Click Element Node**" from the node library.
+
+### 2.Describe the Target Element
+
+**Description:**\
+Describe the element's location and characteristics.
+
+**Example:**
+
+_Search button in the upper right corner of the page_\
+_Submit button at the bottom of the form_\
+_Blue 'Continue' button on the right side_
+
+### **3. Select Click Type**
+
+Choose the appropriate click type for your action:
+
+• Left-click (Default): For standard click interactions
+
+• Right-click: For context menu access and right-click events
+
+### **4.Handle Errors (Optional)**
+
+In Abnormal situations: Select "Stop Task" from the dropdown to halt the workflow if the element cannot be found or clicked.
+
+**5.Connect with Other Nodes**
+
+Place the Click Element node after Visit Page nodes and before data extraction nodes.
+
+## Key Rules & Best Practices
+
+### **Rules**
+
+| **Rule** | **Description** |
+| :-- | :-- |
+| **Visible elements only** | The Click Element node can only interact with elements currently visible in the viewport. It cannot click hidden or dynamically loaded elements that haven't appeared yet. |
+| **One click per execution** | Each Click Element node performs only one click action. For multiple clicks, add multiple Click Element nodes. |
+| **Natural language required** | Describe the element using clear, natural language or parameter references. |
+| **Click type applies to all scenarios** | Both Left-click and Right-click follow the same element detection logic. |
+
+### **Best Practices**
+
+**Element Description Tips:**
+
+• Include element type: "button," "link," "icon," "checkbox," "image," etc.
+
+• Specify location: "upper right corner," "bottom of the form," "top navigation bar"
+
+• Mention distinctive features: color, text label, size
+
+• Use position references: "first," "second," "third," "next to"
+
+• Be specific: "Blue 'Continue' button on the right side" is better than "Continue button"
+
+## Quick Review
+
+1. **What does the Click Element node do?**
+
+Executes precise click actions on visible elements based on natural language descriptions.
+
+2. **Can you click elements that are not visible in the viewport?**
+
+No, only visible elements can be clicked.
+
+3. **How many clicks can one Click Element node perform?**
+
+One click per node.
+
+4. **When should you use Right-click?**
+
+When you need to access context menus, additional options, or trigger right-click events.
+
+5. **What information should you include in element descriptions?**
+
+Element type, location, distinctive features, and position references.
+
+## Next Steps
+
+The Click Element node is essential for interactive automation workflows—start building your first click automation now! With the new Right-click capability, you can now automate even more complex interactions including context menu operations.
+
+# Need help?
+
+• Join our [Discord community](https://discord.com/invite/UpnCKd7GaU) for live support
+
+• Email us at: [support@browseract.com](mailto:support@browseract.com)

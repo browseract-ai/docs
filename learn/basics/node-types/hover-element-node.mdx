@@ -2,4 +2,156 @@
 title: "Hover Element"
 ---
 
-behold
+Master BrowserAct's Hover Element node to automate precise mouse hover actions on any visible element. Use natural language descriptions to identify navigation menus, buttons, and interactive elements without writing code. Perfect for revealing dropdown menus, tooltips, hover cards, and triggering hover-based events.
+
+## What is the Hover Element Node?
+
+The Hover Element Node executes precise mouse hover (mouseover) actions on visible elements within the current viewport based on your natural language description. Simply describe what you want to hover over (like "Products menu item in the top navigation bar"), and the system automatically detects and hovers over the element. This node simulates human mouse movement behavior, triggers hover events, reveals hidden content, and requires no code.
+
+## When Should You Use It?
+
+Use the Hover Element Node when you need to:
+
+• Reveal dropdown menus: Hover over navigation items to expose sub-menu options before clicking
+
+• Show tooltips: Hover over icons or elements to reveal tooltip information for extraction
+
+• Activate hover cards: Hover over user profiles, product thumbnails, or links to show preview cards
+
+• Access mega menus: Large e-commerce sites often use mega menus that require hover to display
+
+• Reveal action buttons: Some interfaces show edit/delete buttons only when hovering over an item
+
+## How to Set Up a Hover Element Node (Step by Step)
+
+**1.Insert the Node**
+
+Click the \+ button in your workflow, then select "Hover Element" from the node library.
+
+**2.Describe the Target Element**
+
+In the Element Location Description field, describe the element's location and characteristics.
+
+**✅ Correct Examples:**
+
+• "Products" menu item in the top navigation bar
+
+• User avatar icon in the upper right corner
+
+• First product card in the search results
+
+• "More options" icon next to the file name
+
+• Category dropdown trigger in the sidebar
+
+**❌ Incorrect Examples:**
+
+• Hover over the Products menu (don't include "hover" in the description)
+
+• Move mouse to the avatar icon
+
+• Hover over Products menu, then click on Electronics (one action per node)
+
+**3.Handle Errors (Optional)**
+
+In Abnormal situations: Select "Stop Task" from the dropdown to halt the workflow if the element cannot be found.
+
+**4.Connect with Other Nodes**
+
+Place the Hover Element node after Visit Page nodes. Typically follow it with:
+
+• Click Element node: To click on revealed dropdown options
+
+• Extract Data node: To capture tooltip or hover card content
+
+• Wait node: To allow time for hover effects to complete
+
+## Examples
+
+**Revealing a Dropdown Menu**
+
+**Goal: **Hover over a navigation menu to reveal dropdown options, then click a sub-item.
+
+**Step 1: Add Visit Page node**
+
+• URL: [https://www.amazon.com/](https://www.amazon.com/)
+
+• Access Method: Current Tab Access
+
+• Error Handling: Stop Task
+
+**Step 2: Add Hover Element Node**
+
+• Element Description: "Gift Cards" menu item in the top navigation bar
+
+• Error Handling: Stop Task
+
+**Step 3: Add Click Element Node**
+
+• Element Description: "Shop all gift cards" option in the dropdown menu
+
+• Click Type: Left-click
+
+• Error Handling: Stop Task
+
+## Key Rules & Best Practices
+
+- **Rules:**
+
+| **Rule** | **Description** |
+| :-- | :-- |
+| Visible elements only | The Hover Element node can only interact with elements currently visible in the viewport. |
+| One hover per execution | Each Hover Element node performs only one hover action. |
+| Natural language required | Describe the element using clear, natural language. |
+| Hover state is temporary | The hover state persists until the next action. |
+
+**Best Practices - Element Description Tips:**
+
+• Include element type: "menu item," "icon," "button," "card," "row"
+
+• Specify location: "top navigation bar," "sidebar," "first row"
+
+• Mention distinctive features: text label, color, icon type
+
+• Use position references: "first," "second," "next to"
+
+**Workflow Tips:**
+
+| **Scenario** | **Recommended Approach** |
+| :-- | :-- |
+| Dropdown menus | Hover Element → Click Element |
+| Tooltip extraction | Hover Element → Wait (1s) → Extract Data |
+| Mega menus | Hover Element → Wait (0.5s) → Click Element |
+| Hidden action buttons | Hover Element → Click Element |
+
+## Quick Review
+
+1. **What does the Hover Element node do?**
+
+Executes precise mouse hover actions on visible elements, triggering hover events and revealing hidden content.
+
+2. **Can you hover over elements not visible in the viewport?**
+
+No, only visible elements can be hovered over.
+
+3. **How many hover actions per node?**
+
+One hover per node.
+
+4. **What typically follows a Hover Element node?**
+
+Click Element, Extract Data, or Wait nodes.
+
+5. **How long does the hover state persist?**
+
+Until the next action in the workflow is executed.
+
+## Next Steps
+
+The Hover Element node is essential for interacting with modern web interfaces that rely on hover-based interactions. Combine it with Click Element and Extract Data nodes to build powerful automation workflows.
+
+## Need help?
+
+• Join our [Discord community](https://discord.com/invite/UpnCKd7GaU)
+
+• Email us at: [support@browseract.com](mailto:support@browseract.com)
