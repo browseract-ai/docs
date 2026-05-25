@@ -1,32 +1,32 @@
 ---
-title: "Advanced capabilities"
-description: "Profile 导入、远程协助、代理、网络捕获、Cookie 和离线模式。"
+title: "Advanced Capabilities"
+description: "Use profile import, remote assist, proxy settings, network capture, cookies, and offline mode."
 ---
 
-# Advanced capabilities
+# Advanced Capabilities
 
-结论：高级能力用于补足核心浏览器循环，包括 Profile 导入、远程协助、代理、网络捕获、Cookie 迁移和离线测试。
+Advanced capabilities help the Agent handle real browser automation work: logged-in pages, blocked steps, network inspection, proxy settings, and safe testing.
 
-## Profile 导入
+## Profile import
 
 ```bash
 browser-act browser list-profiles
 browser-act browser import-profile <browser_id> <profile_id>
 ```
 
-Profile 导入会复制 Cookie、localStorage 和 IndexedDB，不会复制历史记录、书签、扩展、缓存或保存的密码。导入是快照，不是实时同步。
+Profile import copies login-related browser state such as cookies, localStorage, and IndexedDB. It does not copy history, bookmarks, extensions, cache, or saved passwords. The import is a snapshot, not live sync.
 
-导入前需要用户确认，因为它会复制登录相关状态。
+Ask for confirmation before importing a profile because it copies login-related state.
 
-## 远程协助
+## Remote assist
 
 ```bash
-browser-act --session s1 remote-assist --objective "完成 2FA 验证"
+browser-act --session s1 remote-assist --objective "Complete 2FA verification"
 ```
 
-CLI 返回实时远程 URL。用户可以在任意设备打开并接管浏览器。用户完成前，Agent 不应继续发送浏览器命令。
+The CLI returns a live remote URL. The user can open it in a browser and take over the automated browser. The Agent should wait until the user says the manual step is complete.
 
-## 代理配置
+## Proxy settings
 
 ```bash
 browser-act browser create --type stealth --name s1 --desc "..." --dynamic-proxy US
@@ -35,9 +35,9 @@ browser-act browser update <id> --custom-proxy socks5://host:port
 browser-act browser update <id> --no-proxy
 ```
 
-动态代理和自定义代理互斥，仅 stealth 浏览器支持代理配置。
+Dynamic proxy and custom proxy are mutually exclusive. Proxy settings apply to stealth browser only.
 
-## 网络捕获
+## Network capture
 
 ```bash
 browser-act --session s1 network requests
@@ -47,9 +47,9 @@ browser-act --session s1 network har start
 browser-act --session s1 network har stop ./capture.har
 ```
 
-用于发现页面背后的 API、调试认证流程和捕获 XHR/Fetch 数据。
+Use network capture to find API calls behind a page, debug authentication, or inspect XHR and fetch responses. HAR files can contain sensitive headers or request bodies, so review them before sharing.
 
-## Cookie 与离线模式
+## Cookies and offline mode
 
 ```bash
 browser-act --session s1 cookies export ./cookies.json
@@ -58,10 +58,9 @@ browser-act --session s1 network offline on
 browser-act --session s1 network offline off
 ```
 
-离线模式适合验证提交流程，不产生真实网络副作用。
+Offline mode can be used to test submit flows without sending real network requests.
 
-## 下一步
+## Next step
 
-- [Network capture workflow](/workflow/network-capture)
-- [Logged-in automation workflow](/workflow/logged-in-automation)
-- [Commands](/skill/commands)
+- [Commands](/skill/commands): See exact CLI syntax.
+- [Security Model](/skill/security): Review safety rules before using advanced capabilities.

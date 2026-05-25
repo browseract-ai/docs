@@ -1,23 +1,23 @@
 ---
 title: "Architecture"
-description: "Browser-act 的三类浏览器、统一 CLI 接口和浏览器选择模型。"
+description: "Understand BrowserAct browser types, sessions, and the shared CLI command model."
 ---
 
 # Architecture
 
-结论：Browser-act 用三类浏览器承接不同自动化场景，但它们共享同一套 CLI 交互接口。
+BrowserAct gives an Agent one CLI model for different browser environments. The Agent can use the same commands whether it opens a normal browser, a local Chrome connection, or a stealth browser.
 
-## 三类浏览器
+## Browser types
 
-| 类型 | 适合场景 | 关键权衡 |
+| Type | Best for | Main tradeoff |
 | --- | --- | --- |
-| `chrome` | 复用本地 Chrome/Edge 登录状态，在独立实例中运行 | Profile 是快照，不会实时同步 |
-| `chrome-direct` | 企业 SSO、证书、扩展、真实本地浏览器环境 | Agent 直接操作用户活跃 Chrome，权限最高 |
-| `stealth` | 反检测、代理、隐私模式、批量采集 | 需要 API Key 支持托管能力 |
+| `chrome` | Reusing local Chrome or Edge login state in a separate browser instance | Imported profile data is a snapshot, not live sync |
+| `chrome-direct` | Enterprise SSO, certificates, browser extensions, or the user's real Chrome environment | Highest permission level because the Agent controls the user's active Chrome |
+| `stealth` | Protected sites, proxy use, private mode, or large-scale collection | Hosted capabilities require an API Key |
 
-## 统一接口
+## Shared CLI model
 
-无论浏览器类型是什么，Agent 都用同一组命令操作：
+All browser types use the same basic interaction loop:
 
 ```bash
 browser-act --session s1 browser open <browser-id> https://example.com
@@ -27,33 +27,35 @@ browser-act --session s1 input 3 "text"
 browser-act --session s1 screenshot ./shot.png
 ```
 
-## 浏览器数据模型
+The Agent first reads page state, then acts on indexed elements.
 
-常见字段：
+## Browser data model
 
-| 字段 | 作用 |
+Common fields:
+
+| Field | Meaning |
 | --- | --- |
-| `id` | CLI 操作时使用的唯一标识 |
-| `name` | 人类可读名称 |
-| `type` | `chrome`、`chrome-direct` 或 `stealth` |
-| `desc` | Agent 用来语义匹配任务的浏览器描述 |
-| `confirm_before_use` | 每次使用前是否需要用户确认 |
+| `id` | The browser identifier used by CLI commands |
+| `name` | Human-readable browser name |
+| `type` | `chrome`, `chrome-direct`, or `stealth` |
+| `desc` | A natural-language description the Agent can use to pick a browser |
+| `confirm_before_use` | Whether the Agent must ask before using this browser |
 
-`desc` 是跨会话的用途记忆。用完浏览器后，可以追加新发现：
+`desc` helps the Agent choose the right browser. After a browser is used for a new purpose, the Agent can append to the description:
 
 ```bash
-browser-act browser update <id> --desc-append "也用于订单跟踪"
+browser-act browser update <id> --desc-append "Also used for order tracking"
 ```
 
-## 选择逻辑
+## Browser selection
 
-1. 先看 `desc` 是否明确匹配任务。
-2. 只有一个可用浏览器时，可以直接使用。
-3. 多个浏览器且无法判断时，Agent 应询问用户。
-4. 敏感浏览器或敏感操作必须先确认。
+1. Use a browser whose `desc` clearly matches the task.
+2. If there is only one available browser, use it when it is safe.
+3. If several browsers could match, ask the user.
+4. Ask before sensitive operations or when `confirm_before_use` is set.
 
-## 下一步
+## Next step
 
-- [Sessions](/skill/sessions): 理解并发隔离。
-- [Security](/skill/security): 理解确认门控。
-- [Advanced](/skill/advanced): Profile、代理和网络捕获。
+- [Sessions](/skill/sessions): Learn how tasks stay isolated.
+- [Security Model](/skill/security): Learn the confirmation rules.
+- [Advanced Capabilities](/skill/advanced): Use profiles, proxy settings, and network capture.

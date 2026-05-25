@@ -1,75 +1,88 @@
 ---
 title: "Installation"
-description: "安装 Browser-act CLI、配置可选认证，并验证 Skill runtime 可用。"
+description: "Install the BrowserAct CLI, connect the Skill, and verify that the runtime is available."
 ---
 
 # Installation
 
-结论：推荐让 Agent 安装 Browser-act Skill；手动路径是安装 `browser-act` CLI，再用 `browser-act --version` 和 `get-skills` 验证。
+This page helps you get BrowserAct ready for an Agent. You install the CLI, then verify that `get-skills` can return runtime-aware instructions.
 
-## Agent 集成
+## Agent setup
 
-把下面这句话交给支持 Skills 的 Agent：
+If your Agent supports Skills, give it this instruction:
 
 ```text
-帮我安装 browser-act，Skill 地址：https://github.com/browser-act/skills/blob/main/browser-act/SKILL.md ，安装成功后检测可用性。
+Install browser-act. Use this Skill URL: https://github.com/browser-act/skills/blob/main/browser-act/SKILL.md. After installation, verify that the CLI works.
 ```
 
-Agent 应完成三件事：下载入口 Skill、安装或升级 CLI、运行验证命令。
+The Agent should install or upgrade the BrowserAct CLI, add the entry Skill, and run a quick verification command.
 
-## 手动安装
+## Manual setup
+
+Install the CLI:
 
 ```bash
 uv tool install browser-act
-browser-act --version
 ```
 
-升级：
+Upgrade it later with:
 
 ```bash
 uv tool upgrade browser-act
 ```
 
-## 可选认证
+Check that the command is available:
 
-不认证也可以使用本地 `chrome` 和 `chrome-direct`。API Key 用于 stealth 浏览器、动态代理、验证码解决和 `stealth-extract` 等托管能力。
+```bash
+browser-act --version
+```
+
+## Optional authentication
+
+You can use local `chrome` and `chrome-direct` without an API Key. An API Key is used for hosted capabilities such as stealth browser, dynamic proxy, CAPTCHA solving, and `stealth-extract`.
 
 ```bash
 browser-act auth login
 browser-act auth poll
 ```
 
-也可以直接设置：
+You can also set a key directly:
 
 ```bash
 browser-act auth set <your-api-key>
 ```
 
-## 验证安装
+## Verify the Skill runtime
+
+Run:
 
 ```bash
 browser-act get-skills core --skill-version <version>
-browser-act browser list
 ```
 
-你应该能看到 CLI 状态、认证状态、可用浏览器和核心命令说明。
+You should see CLI status, authentication status, available browsers, active sessions, safety rules, and core command guidance.
 
-## 常见失败处理
+## Troubleshooting
 
-如果安装后找不到命令，先检查 `uv` 工具目录是否在 PATH 中：
+If the command is not found, check that the `uv` tool directory is on your PATH:
 
 ```bash
 uv tool dir
 ```
 
-诊断问题时上传日志：
+For diagnostics, upload logs:
 
 ```bash
 browser-act report-log
 ```
 
-## 平台要求
+## Requirements
 
 - Python 3.10+
-- Chrome/Chromium，用于 `chrome` 和 `chrome-direct`
-- API Key，仅在使用 stealth 托管能力时需要
+- Chrome or Chromium for `chrome` and `chrome-direct`
+- API Key only for hosted stealth capabilities
+
+## Next step
+
+- [Quickstart](/skill/quickstart): Run your first BrowserAct task.
+- [get-skills Runtime](/skill/get-skills-runtime): Learn why the Agent loads runtime instructions first.

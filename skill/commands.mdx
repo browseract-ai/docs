@@ -1,26 +1,26 @@
 ---
 title: "Commands"
-description: "Browser-act CLI 常用命令参考。"
+description: "A practical reference for common BrowserAct CLI commands."
 ---
 
 # Commands
 
-结论：Browser-act CLI 的核心是 `get-skills`、浏览器管理、命名 session、页面状态、交互、提取、网络和安全升级命令。
+This page lists the BrowserAct CLI commands most Agents need. Start with `get-skills`, then choose browser management, session, page state, interaction, extraction, network, or safety handoff commands.
 
-## 我想做什么
+## Common goals
 
-| 任务 | 命令路径 |
+| Goal | Command path |
 | --- | --- |
-| 加载 Agent 使用说明 | `get-skills core` |
-| 提取受保护页面 | `stealth-extract` |
-| 打开网页并交互 | `browser open -> state -> click/input` |
-| 填表单 | `state -> input/select -> click` |
-| 截图 | `screenshot`、`screenshot --full` |
-| 找页面背后的请求 | `network requests -> network request <id>` |
-| 处理验证码 | `solve-captcha -> remote-assist` |
-| 多任务并行 | 多个 `--session` |
+| Load Agent instructions | `get-skills core` |
+| Extract protected page content | `stealth-extract` |
+| Open a page and interact | `browser open -> state -> click/input` |
+| Fill a form | `state -> input/select -> click` |
+| Take a screenshot | `screenshot`, `screenshot --full` |
+| Inspect page requests | `network requests -> network request <id>` |
+| Handle CAPTCHA | `solve-captcha -> remote-assist` |
+| Run parallel tasks | Use multiple named `--session` values |
 
-## 全局选项
+## Global options
 
 ```bash
 browser-act --session <name> <command>
@@ -29,31 +29,31 @@ browser-act --format json <command>
 browser-act --no-auto-dialog --session <name> <command>
 ```
 
-## Skill 与系统
+## Skill and system
 
 ```bash
 browser-act get-skills core --skill-version <version>
 browser-act get-skills advanced
 browser-act get-skills main
 browser-act report-log
-browser-act feedback "问题或建议"
+browser-act feedback "Issue or suggestion"
 ```
 
-## 浏览器管理
+## Browser management
 
 ```bash
 browser-act browser list
-browser-act browser create --type chrome|chrome-direct|stealth --name "name" --desc "用途描述"
-browser-act browser update <id> --desc-append "追加用途"
+browser-act browser create --type chrome|chrome-direct|stealth --name "name" --desc "purpose"
+browser-act browser update <id> --desc-append "new purpose"
 browser-act browser delete <id>
 browser-act browser regions
 browser-act browser list-profiles
 browser-act browser import-profile <browser_id> <profile_id>
 ```
 
-创建、删除、Profile 导入、代理和隐私设置变更需要用户确认。
+Ask for confirmation before creating or deleting browsers, importing profiles, or changing proxy and privacy settings.
 
-## session 与导航
+## Session and navigation
 
 ```bash
 browser-act --session s1 browser open <browser-id> https://example.com
@@ -66,7 +66,7 @@ browser-act session list
 browser-act --session s1 session close s1
 ```
 
-## 页面观察与交互
+## Page state and interaction
 
 ```bash
 browser-act --session s1 state
@@ -82,7 +82,7 @@ browser-act --session s1 scroll down --amount 600
 browser-act --session s1 upload <index> ./file.pdf
 ```
 
-## 数据提取与等待
+## Data extraction and waiting
 
 ```bash
 browser-act --session s1 get title
@@ -95,7 +95,7 @@ browser-act --session s1 wait stable
 browser-act --session s1 wait selector --selector ".loaded" --timeout 10
 ```
 
-## 网络、Cookie、对话框
+## Network, cookies, and dialogs
 
 ```bash
 browser-act --session s1 network requests --type xhr,fetch
@@ -110,21 +110,21 @@ browser-act --session s1 dialog accept
 browser-act --session s1 dialog dismiss
 ```
 
-## stealth、验证码和认证
+## Stealth, CAPTCHA, and auth
 
 ```bash
 browser-act stealth-extract https://example.com
 browser-act stealth-extract https://example.com --content-type html
 browser-act stealth-extract https://example.com --dynamic-proxy US
 browser-act --session s1 solve-captcha
-browser-act --session s1 remote-assist --objective "完成验证码"
+browser-act --session s1 remote-assist --objective "Complete CAPTCHA"
 browser-act auth login
 browser-act auth poll
 browser-act auth set <api_key>
 browser-act auth clear
 ```
 
-## 下一步
+## Next step
 
-- [Workflow overview](/workflow/overview)
-- [Security model](/skill/security)
+- [Security Model](/skill/security): Review confirmation rules.
+- [Advanced Capabilities](/skill/advanced): Use profile, proxy, network capture, and remote assist features.

@@ -1,21 +1,23 @@
 ---
 title: "Quickstart"
-description: "用 Browser-act 完成第一次内容提取或浏览器交互。"
+description: "Run your first content extraction or browser interaction with BrowserAct CLI."
 ---
 
 # Quickstart
 
-结论：只读页面内容时先用 `stealth-extract`；需要交互时使用 `browser open -> state -> click/input -> state -> close` 循环。
+Use BrowserAct when an Agent needs to read, click, type, extract, or inspect a real browser page.
 
-## 60 秒内容提取
+Start with the simplest path that fits the job: use `stealth-extract` for read-only content extraction, and use a named session when the Agent needs to interact with a browser.
+
+## Extract page content
 
 ```bash
 browser-act stealth-extract https://example.com
 ```
 
-这会启动反检测浏览器、等待页面渲染、返回 markdown，并自动清理运行上下文。
+This opens a stealth browser, waits for the page to render, returns page content as markdown, and cleans up the run context.
 
-常用选项：
+Common options:
 
 ```bash
 browser-act stealth-extract https://example.com --content-type html
@@ -23,40 +25,40 @@ browser-act stealth-extract https://example.com --dynamic-proxy US
 browser-act stealth-extract https://example.com --output ./result.md
 ```
 
-## 完整浏览器自动化
+## Open a browser and interact
 
 ```bash
 browser-act browser list
 browser-act --session my-task browser open <browser-id> https://example.com
 browser-act --session my-task state
 browser-act --session my-task click 2
-browser-act --session my-task input 3 "hello@example.com"
+browser-act --session my-task state
 browser-act --session my-task session close my-task
 ```
 
-`state` 是 Agent 的观察入口。它返回当前 URL、标题和带索引的交互元素，后续命令直接使用这些索引。
+`state` is the Agent's main observation command. It returns the current URL, page title, and indexed interactive elements. The next command can use those indexes.
 
-## 工作循环
+## Basic loop
 
 ```text
-打开 -> 状态 -> 交互 -> 状态 -> 关闭
+open -> state -> act -> state -> close
 ```
 
-每一步都应该读取当前页面状态后再决定下一步。需要无脑串行执行时可以用 shell 的 `&&`，需要根据页面输出决策时分开运行。
+Read the page state before deciding what to do next. Use separate commands when the next step depends on page output.
 
-## 场景选择
+## Choose a path
 
-| 任务 | 推荐路径 |
+| Goal | Recommended path |
 | --- | --- |
-| 只提取页面内容 | `stealth-extract` |
-| 填表单、点击、登录 | `browser open` + session 命令 |
-| 使用已有登录态 | `chrome` + Profile 导入 |
-| 企业 SSO / 浏览器扩展 | `chrome-direct` |
-| 反爬网站或地域限制 | `stealth` 或 `stealth-extract` |
-| 验证码卡住 | `solve-captcha`，再升级到 `remote-assist` |
+| Read page content only | `stealth-extract` |
+| Click, type, submit forms, or log in | `browser open` with a named session |
+| Use existing login state | `chrome` with profile import |
+| Use enterprise SSO or browser extensions | `chrome-direct` |
+| Work with protected or geo-sensitive pages | `stealth browser` or `stealth-extract` |
+| Handle a CAPTCHA block | `solve-captcha`, then `remote assist` if needed |
 
-## 下一步
+## Next step
 
-- [Architecture](/skill/architecture): 选择浏览器类型。
-- [Sessions](/skill/sessions): 理解并发和隔离。
-- [Commands](/skill/commands): 查看完整命令参考。
+- [Architecture](/skill/architecture): Choose the right browser type.
+- [Sessions](/skill/sessions): Understand task isolation.
+- [Commands](/skill/commands): See the CLI reference.

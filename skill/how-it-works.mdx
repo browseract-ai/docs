@@ -1,49 +1,53 @@
 ---
-title: "How it works"
-description: "Browser-act 的两层 Skill 架构和 Agent 使用流程。"
+title: "How the Skill Works"
+description: "Understand the entry Skill, get-skills runtime, version matching, and safety rules."
 ---
 
-# How it works
+# How the Skill Works
 
-结论：Browser-act 不是把完整命令手册塞进 Skill，而是用轻量入口 Skill 引导 Agent 动态加载 `get-skills` runtime。
+BrowserAct Skill is intentionally small. It tells the Agent how to find BrowserAct, when to call `get-skills`, and how to follow safety rules before using the CLI.
 
-## 两层架构
+The detailed instructions come from the CLI at runtime.
+
+## Two layers
 
 ```text
-入口 Skill（稳定、轻量）
-  -> browser-act get-skills core --skill-version <version>
-运行时内容（环境感知、版本匹配）
-  -> 浏览器列表、活跃 session、命令规则、安全指令
+Entry Skill
+  -> stable, lightweight routing instructions
+
+get-skills runtime
+  -> current CLI version, browser list, sessions, auth status, commands, and safety rules
 ```
 
-入口 Skill 负责触发和路由，CLI 负责返回当前环境可执行的指令。
+The entry Skill stays stable. The runtime instructions change with your local environment and BrowserAct CLI version.
 
-## Agent 的实际流程
+## What the Agent does
 
-1. 用户提出浏览器自动化任务。
-2. Agent 通过入口 Skill 识别应使用 Browser-act。
-3. Agent 运行 `browser-act get-skills core --skill-version <version>`。
-4. CLI 返回环境状态、浏览器、session、认证和核心命令。
-5. Agent 选择浏览器和 session，必要时先向用户确认。
-6. Agent 执行浏览器命令。
-7. 任务完成后关闭 session，并按需要追加浏览器 `desc`。
+1. The user asks for browser automation.
+2. The Agent recognizes that BrowserAct can help.
+3. The Agent runs `browser-act get-skills core --skill-version <version>`.
+4. The CLI returns the current browser, session, auth, command, and safety context.
+5. The Agent chooses a browser and session.
+6. The Agent asks for confirmation before sensitive operations.
+7. The Agent runs CLI commands and closes the session when the task is done.
 
-## 为什么不把所有信息放进 Skill
+## Why runtime instructions matter
 
-- 版本会漂移，CLI 才知道当前可用命令。
-- 浏览器列表、API Key、活跃 session 是本机实时状态。
-- 大多数任务只需要 core 指令，高级能力按需加载即可。
-- Skill 保持小，Agent 上下文更稳定。
+- CLI commands can change over time.
+- Browser lists, API Key state, and active sessions are local runtime state.
+- Most tasks only need core instructions.
+- Advanced guidance can be loaded only when needed.
 
-## 命令示例
+## Example
 
 ```bash
-browser-act get-skills core --skill-version 2.0.2
-browser-act get-skills advanced
-browser-act get-skills main
+browser-act get-skills core --skill-version <version>
+browser-act browser list
+browser-act --session research browser open <browser-id> https://example.com
+browser-act --session research state
 ```
 
-## 下一步
+## Next step
 
-- [get-skills runtime](/skill/get-skills-runtime)
-- [Security](/skill/security)
+- [get-skills Runtime](/skill/get-skills-runtime): Learn what the runtime returns.
+- [Security Model](/skill/security): Understand confirmation rules.

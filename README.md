@@ -21,6 +21,6 @@ The local preview usually opens at `http://localhost:3000`.
 ## Information Architecture
 
 - `Skill`: installation, quickstart, get-skills runtime, browser/runtime model, capabilities, and CLI reference.
-- `Workflow`: task-oriented guides built from the real Browser-act CLI capabilities.
+- `Workflow`: existing Learn, Help, and API Reference content grouped under one top-level tab.
 
 The root `skill.md` is an agent-ready capability summary for this documentation site. It is not the installable Browser-act product Skill.

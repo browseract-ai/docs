@@ -1,29 +1,27 @@
 ---
-title: "Stealth and extraction"
-description: "Browser-act 的 stealth-extract、stealth 浏览器、代理和验证码升级路径。"
+title: "Stealth and Extraction"
+description: "Use stealth browser, stealth-extract, proxy settings, and human handoff for protected pages."
 ---
 
-# Stealth and extraction
+# Stealth and Extraction
 
-结论：只需要读取受保护页面时，用 `stealth-extract`；需要有状态交互时，使用 stealth 浏览器和命名 session。
+Use `stealth-extract` when the Agent only needs to read content from a page. Use a stealth browser when the task needs stateful interaction, clicks, input, or multi-step navigation.
 
-## 三层处理路径
+## Three levels of handling
 
 ```text
-环境层：减少验证触发
-执行层：自动解决验证
-人机层：远程或本地接力
+environment -> verification handling -> human handoff
 ```
 
-大多数内容提取走环境层即可；少数验证码先尝试 `solve-captcha`；更复杂的阻塞再升级到 `remote-assist`。
+Most read-only extraction starts at the environment level. If a verification step appears, the Agent can try `solve-captcha`. If the step needs human judgment, use headed mode or remote assist.
 
-## 零配置提取
+## Zero-setup extraction
 
 ```bash
 browser-act stealth-extract https://protected-site.com
 ```
 
-常用选项：
+Common options:
 
 ```bash
 browser-act stealth-extract https://example.com --content-type html
@@ -33,32 +31,35 @@ browser-act stealth-extract https://example.com --timeout 60
 browser-act stealth-extract https://example.com --output ./result.md
 ```
 
-## 完整 stealth 浏览器
+Use this path for read-only extraction. It opens a stealth browser, waits for content, returns the result, and cleans up.
+
+## Full stealth browser
+
+Use a stealth browser for protected pages that need interaction:
 
 ```bash
 browser-act browser create \
   --type stealth \
   --name "competitor-monitor" \
-  --desc "竞品价格监控" \
+  --desc "Competitor price monitoring" \
   --dynamic-proxy US
 
 browser-act --session monitor browser open <stealth-id> https://protected-site.com
 browser-act --session monitor state
 ```
 
-创建 stealth 浏览器、配置代理或切换隐私模式属于敏感操作，Agent 应先向用户确认。
+Creating a stealth browser, setting a proxy, or changing private mode is sensitive. Ask for user confirmation first.
 
-## 验证码升级
+## CAPTCHA and human handoff
 
 ```bash
 browser-act --session s1 solve-captcha
-browser-act --session s1 remote-assist --objective "请完成验证码验证"
+browser-act --session s1 remote-assist --objective "Please complete the CAPTCHA"
 ```
 
-调用 `remote-assist` 后，Agent 要暂停浏览器命令，直到用户说明手动步骤已经完成。
+After `remote-assist`, the Agent should stop sending browser commands until the user says the manual step is complete.
 
-## 下一步
+## Next step
 
-- [Protected content workflow](/workflow/protected-content)
-- [CAPTCHA handoff workflow](/workflow/captcha-handoff)
-- [Security](/skill/security)
+- [Advanced Capabilities](/skill/advanced): Use proxy, profile, network, and remote assist features.
+- [Security Model](/skill/security): Review confirmation and privacy rules.

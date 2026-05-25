@@ -7,17 +7,17 @@ description: "Browser-act is a Skill-powered browser automation CLI for AI agent
 
 Browser-act is a Skill-powered browser automation CLI for AI agents.
 
-Skill 是 Agent 的第一入口；CLI 是执行运行时；浏览器、session、profile、network 和 security 是运行对象与安全模型。首版文档按这个顺序组织，而不是按传统 Learn / Help / API reference 展开。
+Skill is the Agent entry layer. CLI Runtime is the execution layer. Browsers, sessions, profiles, network capture, and security rules define how the runtime is used safely.
 
-## 先理解这三层
+## Start with the three layers
 
-| 层 | 作用 | 你会看到的内容 |
+| Layer | What it does | Where to read |
 | --- | --- | --- |
-| Skill | 让 Agent 发现 Browser-act，并知道先加载运行时说明 | `skill/overview`、`skill/get-skills-runtime` |
-| CLI runtime | 执行浏览器自动化命令 | `browser-act get-skills`、`browser-act --session ...` |
-| Runtime objects | 控制真实浏览器状态与安全边界 | browser、session、profile、stealth、network、security |
+| Skill | Helps the Agent discover BrowserAct and load runtime-aware instructions first | `skill/overview`, `skill/get-skills-runtime` |
+| CLI Runtime | Performs browser automation commands | `browser-act get-skills`, `browser-act --session ...` |
+| Runtime objects | Control browser state and safety boundaries | browser, session, profile, stealth browser, network capture, security |
 
-## 最短路径
+## Shortest path
 
 ```bash
 browser-act get-skills core --skill-version <version>
@@ -27,9 +27,9 @@ browser-act --session my-task state
 browser-act --session my-task click 2
 ```
 
-## 从哪里开始
+## Where to start
 
-- [Skill overview](/skill/overview): 先理解 Browser-act 的 Agent 入口心智。
-- [Installation](/skill/installation): 安装 CLI、认证和验证可用性。
-- [Quickstart](/skill/quickstart): 60 秒跑通第一次内容提取或浏览器交互。
-- [Workflow overview](/workflow/overview): 按任务类型选择最短执行路径。
+- [Introduction](/skill/overview): Understand how BrowserAct Skill helps agents operate browsers.
+- [Installation](/skill/installation): Install the CLI and verify runtime instructions.
+- [Quickstart](/skill/quickstart): Run a first extraction or browser interaction.
+- [First workflow guide](/learn/quick-start/build-your-first-data-scraper-workflow-in-5-minutes): Open the existing Workflow learning material.
