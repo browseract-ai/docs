@@ -4,69 +4,38 @@ description: "BrowserAct Skill is the entry layer that teaches AI agents how to 
 mode: "wide"
 ---
 
-BrowserAct has two entry points:
+BrowserAct Skill lets AI agents use BrowserAct CLI safely.
 
-- Skill: for AI agents. It teaches an Agent how to safely use the BrowserAct CLI to operate browsers.
-- Workflow: for users and teams. It lets you build hosted browser automations on a visual canvas, using AI-driven nodes described in natural language.
+It tells an agent how to discover BrowserAct, load runtime-aware instructions with `get-skills`, follow safety rules, and operate browsers through the CLI.
 
-Skill helps AI agents operate browsers. Workflow helps users and teams turn repeated browser tasks into hosted, reusable, observable automation flows.
+Use this page to choose where to start.
 
 <Columns cols={2}>
   <Card title="Install the Skill" icon="download" href="/skill/installation" cta="Install">
-    Install BrowserAct Skill into your AI agent and verify the CLI is available.
+    Add BrowserAct Skill to your AI agent and verify the CLI is available.
+  </Card>
+  <Card title="Quickstart" icon="rocket" href="/skill/quickstart" cta="Start">
+    Run your first browser automation with BrowserAct CLI.
   </Card>
   <Card title="How the Skill works" icon="blocks" href="/skill/how-it-works" cta="Understand">
     Understand the entry Skill, get-skills runtime, version matching, and safety rules.
   </Card>
-  <Card title="CLI Runtime" icon="terminal" href="/skill/architecture" cta="Learn runtime">
-    Learn the browser, session, and command model behind BrowserAct automation.
-  </Card>
-  <Card title="Workflow" icon="route" href="/learn/quick-start/build-your-first-data-scraper-workflow-in-5-minutes" cta="Open workflow guide">
-    Build browser automations visually. Choose a node type, describe each step in natural language, and let BrowserAct AI operate the page.
+  <Card title="Workflow" icon="route" href="/learn/quick-start/build-your-first-data-scraper-workflow-in-5-minutes" cta="Go to Workflow">
+    Prefer a visual hosted workflow builder? Go to Workflow.
   </Card>
 </Columns>
 
-## Why Workflow exists for browser automation
+## What the Skill does
 
-Traditional browser automation often depends on scripts, selectors, and fixed flows. When a page changes, scripts can break. It is also hard for business users to build and maintain these automations on their own.
+- Loads the right instructions at runtime through `get-skills`.
+- Gives the agent the current browser, session, and CLI state.
+- Guides the agent to use BrowserAct CLI with safety confirmations for sensitive actions.
 
-BrowserAct Workflow turns browser automation into a hosted visual canvas. Users choose node types, describe what each node should do in natural language, and BrowserAct AI uses the current page state to drive the browser at runtime.
+## Skill and CLI Runtime
 
-Workflow is not documentation. It is designed to turn one-off web tasks into reusable, hosted, observable, and schedulable automation flows with execution history.
+Skill is the agent-facing instruction layer.
 
-## Example: natural-language browser node
-
-A script-based approach might look like this:
-
-```js
-click("#export-button")
-```
-
-In BrowserAct Workflow, a user can choose a Click node and write:
-
-```text
-Click the Export CSV button in the top-right corner of the page.
-```
-
-At runtime, AI reads the page state, finds the button that best matches the instruction, and clicks it.
-
-More node examples:
-
-- Extract node: Extract the order ID, amount, and status from the table.
-- Input node: Enter the customer email into the search box and submit the query.
-- Condition node: If the order status is Pending, route the run to a human review branch.
-
-## Skill / CLI / Workflow relationship
-
-| Layer | Definition |
-| --- | --- |
-| Skill | Agent entry layer. Gives agents browser automation capability. |
-| CLI Runtime | Execution layer. Performs browser operations. |
-| Workflow | Hosted orchestration layer. Turns repeated browser tasks into visual, natural-language, AI-driven automation flows. |
-
-Skill teaches the Agent how to use BrowserAct. `get-skills` gives the Agent runtime-aware instructions. CLI Runtime performs browser operations. Workflow productizes repeated browser automations as hosted node graphs.
-
-Workflow can use BrowserAct browser automation capabilities, but Workflow is not documentation, task guides, or API reference.
+CLI Runtime is the execution layer that actually opens pages, reads state, clicks, types, manages sessions, uses stealth mode, captures network requests, and handles handoff when needed.
 
 ## Minimum agent startup sequence
 
@@ -79,3 +48,9 @@ browser-act --session my-task session close my-task
 ```
 
 Ask for user confirmation before sensitive operations, such as creating or deleting browsers, importing profiles, changing proxy or privacy settings, or using a `confirm_before_use` browser.
+
+## Next step
+
+<Card title="Install the Skill" icon="download" href="/skill/installation" cta="Continue">
+  Set up BrowserAct Skill and verify that the CLI is available before running your first automation.
+</Card>
