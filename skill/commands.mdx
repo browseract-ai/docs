@@ -1,0 +1,130 @@
+---
+title: "Commands"
+description: "Browser-act CLI 常用命令参考。"
+---
+
+# Commands
+
+结论：Browser-act CLI 的核心是 `get-skills`、浏览器管理、命名 session、页面状态、交互、提取、网络和安全升级命令。
+
+## 我想做什么
+
+| 任务 | 命令路径 |
+| --- | --- |
+| 加载 Agent 使用说明 | `get-skills core` |
+| 提取受保护页面 | `stealth-extract` |
+| 打开网页并交互 | `browser open -> state -> click/input` |
+| 填表单 | `state -> input/select -> click` |
+| 截图 | `screenshot`、`screenshot --full` |
+| 找页面背后的请求 | `network requests -> network request <id>` |
+| 处理验证码 | `solve-captcha -> remote-assist` |
+| 多任务并行 | 多个 `--session` |
+
+## 全局选项
+
+```bash
+browser-act --session <name> <command>
+browser-act --format text <command>
+browser-act --format json <command>
+browser-act --no-auto-dialog --session <name> <command>
+```
+
+## Skill 与系统
+
+```bash
+browser-act get-skills core --skill-version <version>
+browser-act get-skills advanced
+browser-act get-skills main
+browser-act report-log
+browser-act feedback "问题或建议"
+```
+
+## 浏览器管理
+
+```bash
+browser-act browser list
+browser-act browser create --type chrome|chrome-direct|stealth --name "name" --desc "用途描述"
+browser-act browser update <id> --desc-append "追加用途"
+browser-act browser delete <id>
+browser-act browser regions
+browser-act browser list-profiles
+browser-act browser import-profile <browser_id> <profile_id>
+```
+
+创建、删除、Profile 导入、代理和隐私设置变更需要用户确认。
+
+## session 与导航
+
+```bash
+browser-act --session s1 browser open <browser-id> https://example.com
+browser-act --session s1 navigate https://example.com/next
+browser-act --session s1 navigate https://example.com/new --new-tab
+browser-act --session s1 back
+browser-act --session s1 forward
+browser-act --session s1 reload
+browser-act session list
+browser-act --session s1 session close s1
+```
+
+## 页面观察与交互
+
+```bash
+browser-act --session s1 state
+browser-act --session s1 screenshot ./shot.png
+browser-act --session s1 screenshot --full
+browser-act --session s1 click <index>
+browser-act --session s1 input <index> "text"
+browser-act --session s1 type "text"
+browser-act --session s1 keys Enter
+browser-act --session s1 select <index> "option"
+browser-act --session s1 hover <index>
+browser-act --session s1 scroll down --amount 600
+browser-act --session s1 upload <index> ./file.pdf
+```
+
+## 数据提取与等待
+
+```bash
+browser-act --session s1 get title
+browser-act --session s1 get html
+browser-act --session s1 get html --selector "main"
+browser-act --session s1 get text <index>
+browser-act --session s1 get value <index>
+browser-act --session s1 get markdown
+browser-act --session s1 wait stable
+browser-act --session s1 wait selector --selector ".loaded" --timeout 10
+```
+
+## 网络、Cookie、对话框
+
+```bash
+browser-act --session s1 network requests --type xhr,fetch
+browser-act --session s1 network request <request_id>
+browser-act --session s1 network clear
+browser-act --session s1 network har start
+browser-act --session s1 network har stop ./capture.har
+browser-act --session s1 cookies get
+browser-act --session s1 cookies export ./cookies.json
+browser-act --session s1 cookies import ./cookies.json
+browser-act --session s1 dialog accept
+browser-act --session s1 dialog dismiss
+```
+
+## stealth、验证码和认证
+
+```bash
+browser-act stealth-extract https://example.com
+browser-act stealth-extract https://example.com --content-type html
+browser-act stealth-extract https://example.com --dynamic-proxy US
+browser-act --session s1 solve-captcha
+browser-act --session s1 remote-assist --objective "完成验证码"
+browser-act auth login
+browser-act auth poll
+browser-act auth set <api_key>
+browser-act auth clear
+```
+
+## 下一步
+
+- [Workflow overview](/workflow/overview)
+- [Security model](/skill/security)

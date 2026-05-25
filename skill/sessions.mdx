@@ -1,0 +1,77 @@
+---
+title: "Sessions"
+description: "Browser-act 的命名 session、并行隔离和生命周期规则。"
+---
+
+# Sessions
+
+结论：session 是 Browser-act 的任务句柄。所有浏览器交互命令都应绑定到明确的 `--session` 名称。
+
+## 为什么要命名 session
+
+命名 session 解决三个问题：并行安全、所有权清晰、生命周期可控。
+
+```bash
+browser-act --session price-check browser open <browser-id> https://shop.example.com
+browser-act --session price-check state
+browser-act --session price-check click 5
+browser-act --session price-check session close price-check
+```
+
+## 生命周期
+
+```text
+创建 -> 使用 -> 关闭
+```
+
+首次 `browser open` 某个 session 名称时创建会话；后续同名命令复用同一个浏览器窗口；任务完成后显式关闭。
+
+```bash
+browser-act --session monitor browser open abc123 https://site.com
+browser-act --session monitor get markdown
+browser-act --session monitor session close monitor
+```
+
+## 并行会话
+
+一个浏览器可以承载多个 session。它们共享浏览器登录态，但页面导航、Tab 和网络捕获独立。
+
+```bash
+browser-act --session task-a browser open abc123 https://site.com/page1
+browser-act --session task-b browser open abc123 https://site.com/page2
+browser-act --session task-a click 3
+browser-act --session task-b input 1 "keyword"
+```
+
+同账号并行时，优先使用同一浏览器的多个 session，而不是重复创建浏览器。
+
+## 所有权规则
+
+`session list` 可以看到所有活跃 session，但 Agent 不应占用自己没有创建的 session。新任务应创建新名称。
+
+```bash
+browser-act session list
+```
+
+## 不需要 session 的命令
+
+这些命令是系统或浏览器管理级别，不需要 `--session`：
+
+- `browser list`、`browser create`、`browser update`、`browser delete`
+- `browser regions`、`browser list-profiles`
+- `session list`
+- `auth login`、`auth poll`、`auth set`、`auth clear`
+- `get-skills`、`report-log`、`feedback`
+- `stealth-extract`
+
+## 最佳实践
+
+- 用描述性名称，例如 `check-price`，不要用 `s1`。
+- 一个逻辑任务对应一个 session。
+- 用完显式关闭。
+- 不复用其他对话或其他 Agent 创建的 session。
+
+## 下一步
+
+- [Parallel sessions](/workflow/parallel-sessions)
+- [Commands](/skill/commands)

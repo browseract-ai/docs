@@ -1,0 +1,67 @@
+---
+title: "Advanced capabilities"
+description: "Profile 导入、远程协助、代理、网络捕获、Cookie 和离线模式。"
+---
+
+# Advanced capabilities
+
+结论：高级能力用于补足核心浏览器循环，包括 Profile 导入、远程协助、代理、网络捕获、Cookie 迁移和离线测试。
+
+## Profile 导入
+
+```bash
+browser-act browser list-profiles
+browser-act browser import-profile <browser_id> <profile_id>
+```
+
+Profile 导入会复制 Cookie、localStorage 和 IndexedDB，不会复制历史记录、书签、扩展、缓存或保存的密码。导入是快照，不是实时同步。
+
+导入前需要用户确认，因为它会复制登录相关状态。
+
+## 远程协助
+
+```bash
+browser-act --session s1 remote-assist --objective "完成 2FA 验证"
+```
+
+CLI 返回实时远程 URL。用户可以在任意设备打开并接管浏览器。用户完成前，Agent 不应继续发送浏览器命令。
+
+## 代理配置
+
+```bash
+browser-act browser create --type stealth --name s1 --desc "..." --dynamic-proxy US
+browser-act browser update <id> --dynamic-proxy JP
+browser-act browser update <id> --custom-proxy socks5://host:port
+browser-act browser update <id> --no-proxy
+```
+
+动态代理和自定义代理互斥，仅 stealth 浏览器支持代理配置。
+
+## 网络捕获
+
+```bash
+browser-act --session s1 network requests
+browser-act --session s1 network requests --type xhr,fetch
+browser-act --session s1 network request <request_id>
+browser-act --session s1 network har start
+browser-act --session s1 network har stop ./capture.har
+```
+
+用于发现页面背后的 API、调试认证流程和捕获 XHR/Fetch 数据。
+
+## Cookie 与离线模式
+
+```bash
+browser-act --session s1 cookies export ./cookies.json
+browser-act --session s2 cookies import ./cookies.json
+browser-act --session s1 network offline on
+browser-act --session s1 network offline off
+```
+
+离线模式适合验证提交流程，不产生真实网络副作用。
+
+## 下一步
+
+- [Network capture workflow](/workflow/network-capture)
+- [Logged-in automation workflow](/workflow/logged-in-automation)
+- [Commands](/skill/commands)

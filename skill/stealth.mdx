@@ -1,0 +1,64 @@
+---
+title: "Stealth and extraction"
+description: "Browser-act 的 stealth-extract、stealth 浏览器、代理和验证码升级路径。"
+---
+
+# Stealth and extraction
+
+结论：只需要读取受保护页面时，用 `stealth-extract`；需要有状态交互时，使用 stealth 浏览器和命名 session。
+
+## 三层处理路径
+
+```text
+环境层：减少验证触发
+执行层：自动解决验证
+人机层：远程或本地接力
+```
+
+大多数内容提取走环境层即可；少数验证码先尝试 `solve-captcha`；更复杂的阻塞再升级到 `remote-assist`。
+
+## 零配置提取
+
+```bash
+browser-act stealth-extract https://protected-site.com
+```
+
+常用选项：
+
+```bash
+browser-act stealth-extract https://example.com --content-type html
+browser-act stealth-extract https://example.com --dynamic-proxy US
+browser-act stealth-extract https://example.com --custom-proxy socks5://host:port
+browser-act stealth-extract https://example.com --timeout 60
+browser-act stealth-extract https://example.com --output ./result.md
+```
+
+## 完整 stealth 浏览器
+
+```bash
+browser-act browser create \
+  --type stealth \
+  --name "competitor-monitor" \
+  --desc "竞品价格监控" \
+  --dynamic-proxy US
+
+browser-act --session monitor browser open <stealth-id> https://protected-site.com
+browser-act --session monitor state
+```
+
+创建 stealth 浏览器、配置代理或切换隐私模式属于敏感操作，Agent 应先向用户确认。
+
+## 验证码升级
+
+```bash
+browser-act --session s1 solve-captcha
+browser-act --session s1 remote-assist --objective "请完成验证码验证"
+```
+
+调用 `remote-assist` 后，Agent 要暂停浏览器命令，直到用户说明手动步骤已经完成。
+
+## 下一步
+
+- [Protected content workflow](/workflow/protected-content)
+- [CAPTCHA handoff workflow](/workflow/captcha-handoff)
+- [Security](/skill/security)

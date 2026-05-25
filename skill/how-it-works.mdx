@@ -1,0 +1,49 @@
+---
+title: "How it works"
+description: "Browser-act 的两层 Skill 架构和 Agent 使用流程。"
+---
+
+# How it works
+
+结论：Browser-act 不是把完整命令手册塞进 Skill，而是用轻量入口 Skill 引导 Agent 动态加载 `get-skills` runtime。
+
+## 两层架构
+
+```text
+入口 Skill（稳定、轻量）
+  -> browser-act get-skills core --skill-version <version>
+运行时内容（环境感知、版本匹配）
+  -> 浏览器列表、活跃 session、命令规则、安全指令
+```
+
+入口 Skill 负责触发和路由，CLI 负责返回当前环境可执行的指令。
+
+## Agent 的实际流程
+
+1. 用户提出浏览器自动化任务。
+2. Agent 通过入口 Skill 识别应使用 Browser-act。
+3. Agent 运行 `browser-act get-skills core --skill-version <version>`。
+4. CLI 返回环境状态、浏览器、session、认证和核心命令。
+5. Agent 选择浏览器和 session，必要时先向用户确认。
+6. Agent 执行浏览器命令。
+7. 任务完成后关闭 session，并按需要追加浏览器 `desc`。
+
+## 为什么不把所有信息放进 Skill
+
+- 版本会漂移，CLI 才知道当前可用命令。
+- 浏览器列表、API Key、活跃 session 是本机实时状态。
+- 大多数任务只需要 core 指令，高级能力按需加载即可。
+- Skill 保持小，Agent 上下文更稳定。
+
+## 命令示例
+
+```bash
+browser-act get-skills core --skill-version 2.0.2
+browser-act get-skills advanced
+browser-act get-skills main
+```
+
+## 下一步
+
+- [get-skills runtime](/skill/get-skills-runtime)
+- [Security](/skill/security)

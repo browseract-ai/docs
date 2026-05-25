@@ -1,0 +1,62 @@
+---
+title: "Quickstart"
+description: "用 Browser-act 完成第一次内容提取或浏览器交互。"
+---
+
+# Quickstart
+
+结论：只读页面内容时先用 `stealth-extract`；需要交互时使用 `browser open -> state -> click/input -> state -> close` 循环。
+
+## 60 秒内容提取
+
+```bash
+browser-act stealth-extract https://example.com
+```
+
+这会启动反检测浏览器、等待页面渲染、返回 markdown，并自动清理运行上下文。
+
+常用选项：
+
+```bash
+browser-act stealth-extract https://example.com --content-type html
+browser-act stealth-extract https://example.com --dynamic-proxy US
+browser-act stealth-extract https://example.com --output ./result.md
+```
+
+## 完整浏览器自动化
+
+```bash
+browser-act browser list
+browser-act --session my-task browser open <browser-id> https://example.com
+browser-act --session my-task state
+browser-act --session my-task click 2
+browser-act --session my-task input 3 "hello@example.com"
+browser-act --session my-task session close my-task
+```
+
+`state` 是 Agent 的观察入口。它返回当前 URL、标题和带索引的交互元素，后续命令直接使用这些索引。
+
+## 工作循环
+
+```text
+打开 -> 状态 -> 交互 -> 状态 -> 关闭
+```
+
+每一步都应该读取当前页面状态后再决定下一步。需要无脑串行执行时可以用 shell 的 `&&`，需要根据页面输出决策时分开运行。
+
+## 场景选择
+
+| 任务 | 推荐路径 |
+| --- | --- |
+| 只提取页面内容 | `stealth-extract` |
+| 填表单、点击、登录 | `browser open` + session 命令 |
+| 使用已有登录态 | `chrome` + Profile 导入 |
+| 企业 SSO / 浏览器扩展 | `chrome-direct` |
+| 反爬网站或地域限制 | `stealth` 或 `stealth-extract` |
+| 验证码卡住 | `solve-captcha`，再升级到 `remote-assist` |
+
+## 下一步
+
+- [Architecture](/skill/architecture): 选择浏览器类型。
+- [Sessions](/skill/sessions): 理解并发和隔离。
+- [Commands](/skill/commands): 查看完整命令参考。

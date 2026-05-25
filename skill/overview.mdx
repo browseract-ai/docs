@@ -1,0 +1,47 @@
+---
+title: "Skill overview"
+description: "Browser-act 的 Skill-first 产品心智：Skill 是 Agent 入口，CLI 是执行运行时。"
+---
+
+# Skill overview
+
+结论：Browser-act 的第一入口不是 API，也不是控制台，而是 Agent 可发现的 Skill；`browser-act` CLI 是 Skill 调用的执行运行时。
+
+这意味着文档先解释 Agent 如何发现能力、如何加载运行时说明，再解释浏览器、session、profile、安全和高级能力。
+
+## Browser-act 解决什么问题
+
+AI Agent 需要的不是普通 headless browser，而是一个可被 Skill 正确调度的浏览器自动化运行时：
+
+- 读取受保护页面内容时，用 `stealth-extract` 走最短路径。
+- 需要点击、输入、登录、表单和截图时，用命名 session 控制浏览器。
+- 需要复用登录态时，在 `chrome`、`chrome-direct` 和 Profile 导入之间选择。
+- 遇到验证码、2FA 或企业 SSO 阻塞时，使用 headed 或 `remote-assist` 让人接力。
+- 做并发任务时，用多个 session 隔离任务上下文。
+
+## 核心机制
+
+Browser-act 有两层能力说明：
+
+| 层 | 作用 |
+| --- | --- |
+| 入口 Skill | 让 Agent 知道 Browser-act 存在，并知道先运行 `get-skills`。 |
+| `get-skills` runtime | 返回当前 CLI 版本、API Key 状态、浏览器列表、活跃 session 和命令规则。 |
+
+入口 Skill 保持稳定，运行时说明跟随 CLI 和本机环境变化。
+
+## 最小命令
+
+```bash
+browser-act get-skills core --skill-version <version>
+browser-act browser list
+browser-act --session my-task browser open <browser-id> https://example.com
+browser-act --session my-task state
+browser-act --session my-task session close my-task
+```
+
+## 下一步
+
+- [Installation](/skill/installation): 安装并验证 CLI。
+- [Quickstart](/skill/quickstart): 跑通第一次自动化。
+- [get-skills runtime](/skill/get-skills-runtime): 理解 Agent 每次开始前为什么要加载运行时说明。

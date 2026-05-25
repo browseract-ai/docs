@@ -1,58 +1,26 @@
-# Mintlify Starter Kit
+# Browser-act Docs
 
-Use the starter kit to get your docs deployed and ready to customize.
+This repository contains the Browser-act documentation site.
 
-Click the green **Use this template** button at the top of this repo to copy the Mintlify starter kit. The starter kit contains examples with
+Browser-act is documented as a Skill-first browser automation CLI for AI agents:
 
-- Guide pages
-- Navigation
-- Customizations
-- API reference pages
-- Use of popular components
+- `Skill` is the first entry point for agents.
+- `browser-act` CLI is the runtime that executes browser automation.
+- Browser, session, profile, network, and security rules define the runtime model.
 
-**[Follow the full quickstart guide](https://starter.mintlify.com/quickstart)**
+## Local Preview
 
-## Development
+Run the Mintlify preview from the repository root:
 
-Install the [Mintlify CLI](https://www.npmjs.com/package/mint) to preview your documentation changes locally. To install, use the following command:
-
-```
-npm i -g mint
+```bash
+npx mintlify@latest dev
 ```
 
-Run the following command at the root of your documentation, where your `docs.json` is located:
+The local preview usually opens at `http://localhost:3000`.
 
-```
-mint dev
-```
+## Information Architecture
 
-View your local preview at `http://localhost:3000`.
+- `Skill`: installation, quickstart, get-skills runtime, browser/runtime model, capabilities, and CLI reference.
+- `Workflow`: task-oriented guides built from the real Browser-act CLI capabilities.
 
-## Publishing changes
-
-Install our GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app) to propagate changes from your repo to your deployment. Changes are deployed to production automatically after pushing to the default branch.
-
-## Need help?
-
-### Troubleshooting
-
-- If your dev environment isn't running: Run `mint update` to ensure you have the most recent version of the CLI.
-- If a page loads as a 404: Make sure you are running in a folder with a valid `docs.json`.
-
-### Resources
-- [Mintlify documentation](https://mintlify.com/docs)
-
-
-
-### seo配置
-- https://www.mintlify.com/docs/optimize/seo#common-meta-tags-reference
-
-## api.json生成对应文件
-> npx @mintlify/scraping@latest openapi-file zh/api/openapi.json -o zh/api/norma
-
-## 配置中心
-> https://dashboard.mintlify.com/hc-2ade1025/hc-2ade1025
-
-## 使用的是lucide 的icon库
-> https://lucide.dev/icons/
-> https://mintlify.b-cdn.net/v6.6.0/lucide/activity.svg
+The root `skill.md` is an agent-ready capability summary for this documentation site. It is not the installable Browser-act product Skill.

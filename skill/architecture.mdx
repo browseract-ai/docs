@@ -1,0 +1,59 @@
+---
+title: "Architecture"
+description: "Browser-act 的三类浏览器、统一 CLI 接口和浏览器选择模型。"
+---
+
+# Architecture
+
+结论：Browser-act 用三类浏览器承接不同自动化场景，但它们共享同一套 CLI 交互接口。
+
+## 三类浏览器
+
+| 类型 | 适合场景 | 关键权衡 |
+| --- | --- | --- |
+| `chrome` | 复用本地 Chrome/Edge 登录状态，在独立实例中运行 | Profile 是快照，不会实时同步 |
+| `chrome-direct` | 企业 SSO、证书、扩展、真实本地浏览器环境 | Agent 直接操作用户活跃 Chrome，权限最高 |
+| `stealth` | 反检测、代理、隐私模式、批量采集 | 需要 API Key 支持托管能力 |
+
+## 统一接口
+
+无论浏览器类型是什么，Agent 都用同一组命令操作：
+
+```bash
+browser-act --session s1 browser open <browser-id> https://example.com
+browser-act --session s1 state
+browser-act --session s1 click 2
+browser-act --session s1 input 3 "text"
+browser-act --session s1 screenshot ./shot.png
+```
+
+## 浏览器数据模型
+
+常见字段：
+
+| 字段 | 作用 |
+| --- | --- |
+| `id` | CLI 操作时使用的唯一标识 |
+| `name` | 人类可读名称 |
+| `type` | `chrome`、`chrome-direct` 或 `stealth` |
+| `desc` | Agent 用来语义匹配任务的浏览器描述 |
+| `confirm_before_use` | 每次使用前是否需要用户确认 |
+
+`desc` 是跨会话的用途记忆。用完浏览器后，可以追加新发现：
+
+```bash
+browser-act browser update <id> --desc-append "也用于订单跟踪"
+```
+
+## 选择逻辑
+
+1. 先看 `desc` 是否明确匹配任务。
+2. 只有一个可用浏览器时，可以直接使用。
+3. 多个浏览器且无法判断时，Agent 应询问用户。
+4. 敏感浏览器或敏感操作必须先确认。
+
+## 下一步
+
+- [Sessions](/skill/sessions): 理解并发隔离。
+- [Security](/skill/security): 理解确认门控。
+- [Advanced](/skill/advanced): Profile、代理和网络捕获。

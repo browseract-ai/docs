@@ -1,0 +1,53 @@
+---
+title: "Network capture"
+description: "捕获 XHR、Fetch 和 HAR，定位页面背后的请求。"
+---
+
+# Network capture
+
+## 适用场景
+
+需要理解页面背后的接口、调试登录流程、提取通过 XHR/Fetch 加载的数据，或保存完整 HAR 供分析。
+
+## 最短路径
+
+打开页面并捕获请求：
+
+```bash
+browser-act --session net browser open <browser-id> https://example.com
+browser-act --session net wait stable
+browser-act --session net network requests --type xhr,fetch
+```
+
+查看单个请求详情：
+
+```bash
+browser-act --session net network request <request_id>
+```
+
+## 常用命令
+
+```bash
+browser-act --session net network requests --filter api.example.com
+browser-act --session net network requests --method POST
+browser-act --session net network requests --status 4xx
+browser-act --session net network clear
+browser-act --session net network har start
+browser-act --session net network har stop ./capture.har
+```
+
+## 安全/失败处理
+
+- 网络捕获可能包含认证头或敏感响应，输出前先判断是否需要脱敏。
+- 提交类操作前可以开启离线模式验证流程。
+- HAR 文件只保存在本地，分享前检查 Cookie、Authorization 和请求体。
+
+```bash
+browser-act --session net network offline on
+browser-act --session net network offline off
+```
+
+## 下一步链接
+
+- [Advanced capabilities](/skill/advanced)
+- [Commands](/skill/commands)

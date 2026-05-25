@@ -1,0 +1,75 @@
+---
+title: "Installation"
+description: "安装 Browser-act CLI、配置可选认证，并验证 Skill runtime 可用。"
+---
+
+# Installation
+
+结论：推荐让 Agent 安装 Browser-act Skill；手动路径是安装 `browser-act` CLI，再用 `browser-act --version` 和 `get-skills` 验证。
+
+## Agent 集成
+
+把下面这句话交给支持 Skills 的 Agent：
+
+```text
+帮我安装 browser-act，Skill 地址：https://github.com/browser-act/skills/blob/main/browser-act/SKILL.md ，安装成功后检测可用性。
+```
+
+Agent 应完成三件事：下载入口 Skill、安装或升级 CLI、运行验证命令。
+
+## 手动安装
+
+```bash
+uv tool install browser-act
+browser-act --version
+```
+
+升级：
+
+```bash
+uv tool upgrade browser-act
+```
+
+## 可选认证
+
+不认证也可以使用本地 `chrome` 和 `chrome-direct`。API Key 用于 stealth 浏览器、动态代理、验证码解决和 `stealth-extract` 等托管能力。
+
+```bash
+browser-act auth login
+browser-act auth poll
+```
+
+也可以直接设置：
+
+```bash
+browser-act auth set <your-api-key>
+```
+
+## 验证安装
+
+```bash
+browser-act get-skills core --skill-version <version>
+browser-act browser list
+```
+
+你应该能看到 CLI 状态、认证状态、可用浏览器和核心命令说明。
+
+## 常见失败处理
+
+如果安装后找不到命令，先检查 `uv` 工具目录是否在 PATH 中：
+
+```bash
+uv tool dir
+```
+
+诊断问题时上传日志：
+
+```bash
+browser-act report-log
+```
+
+## 平台要求
+
+- Python 3.10+
+- Chrome/Chromium，用于 `chrome` 和 `chrome-direct`
+- API Key，仅在使用 stealth 托管能力时需要

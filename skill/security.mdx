@@ -1,0 +1,54 @@
+---
+title: "Security model"
+description: "Browser-act 的确认门控、数据隐私、session 隔离和访问控制规则。"
+---
+
+# Security model
+
+结论：Browser-act 的安全边界建立在确认门控、session 所有权、本地数据处理和敏感能力隔离上。
+
+## 确认门控
+
+这些操作执行前需要用户明确确认：
+
+| 操作 | 原因 |
+| --- | --- |
+| 创建或删除浏览器 | 创建或销毁持久化自动化端点 |
+| 导入 Profile | 复制登录相关状态 |
+| 修改代理配置 | 改变网络身份 |
+| 切换隐私模式 | 改变指纹和状态持久化行为 |
+| 修改 `confirm_before_use` | 改变安全确认策略 |
+| 使用 `confirm_before_use` 浏览器 | 访问敏感账户前需要再次确认 |
+
+确认发生在对话层：Agent 先描述将要执行的操作和影响，再等待用户批准。
+
+## 数据隐私
+
+默认本地处理：Cookie、登录会话、页面内容、截图、网络捕获和 Profile 均留在本机。
+
+唯一明确例外：`solve-captcha` 会把验证码挑战图像发送到 Browser-act 服务进行解决；不应包含 Cookie、页面内容或 URL。
+
+## session 隔离
+
+同一浏览器上的多个 session 可以共享登录态，但导航状态、Tab 和网络捕获独立。Agent 只应操作自己创建的 session。
+
+```bash
+browser-act session list
+browser-act --session my-task session close my-task
+```
+
+## chrome-direct 权限
+
+`chrome-direct` 直接控制用户正在使用的 Chrome。它可以访问真实浏览器中的登录态、证书和扩展，因此创建和使用前都应明确说明风险。
+
+## 安全使用建议
+
+- 先用只读命令观察页面，再执行写操作。
+- 敏感提交前可开启离线模式验证流程。
+- 远程协助期间暂停 Agent 浏览器命令。
+- 任务结束后关闭 session。
+
+## 下一步
+
+- [Sessions](/skill/sessions)
+- [Advanced capabilities](/skill/advanced)

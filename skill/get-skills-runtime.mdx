@@ -1,0 +1,60 @@
+---
+title: "get-skills runtime"
+description: "为什么 Agent 每次使用 Browser-act 前都要加载 get-skills runtime。"
+---
+
+# get-skills runtime
+
+结论：`get-skills` 是 Browser-act 的运行时说明入口。Agent 先读取它，再决定使用哪个浏览器、哪个 session 和哪些命令。
+
+## core 是默认入口
+
+```bash
+browser-act get-skills core --skill-version <version>
+```
+
+`core` 返回 80% 场景所需的信息：
+
+- CLI 版本和 Skill 版本兼容性。
+- API Key 是否可用。
+- 当前可用浏览器及其 `id`、`type`、`desc`。
+- 活跃 session 列表。
+- 核心浏览器交互命令。
+- 基于当前状态的安全和选择规则。
+
+## advanced 按需加载
+
+当任务需要代理、Profile 导入、隐私模式、网络捕获或远程协助细节时，再加载：
+
+```bash
+browser-act get-skills advanced
+```
+
+不要默认把高级内容塞进每个任务上下文。
+
+## main 用于自更新
+
+当 CLI 检测到入口 Skill 版本不匹配时，使用：
+
+```bash
+browser-act get-skills main
+```
+
+它返回最新的入口 Skill 内容，用于更新本地 Skill 文件。
+
+## 版本兼容
+
+```bash
+browser-act get-skills core --skill-version 2.0.2
+```
+
+如果 CLI 或 Skill 太旧，输出会给出升级路径，例如：
+
+```bash
+uv tool upgrade browser-act
+```
+
+## 下一步
+
+- [Commands](/skill/commands): 查看命令参考。
+- [Architecture](/skill/architecture): 理解浏览器类型和选择逻辑。
