@@ -1,0 +1,147 @@
+---
+title: "Static Proxy"
+description: "Use Static Proxy when a BrowserAct browser or workflow needs a stable IP identity."
+mode: "wide"
+---
+
+Static Proxy keeps the same IP across sessions. Use it when a browser, account, or workflow should appear from one stable network identity over time.
+
+Dynamic Proxy is different. It rotates IPs between sessions and is better for tasks that need fresh network identity, such as public data extraction or monitoring.
+
+In BrowserAct, proxy mode usually matches the browser environment:
+
+- **Static Proxy + Standard Browser** for stable identity.
+- **Dynamic Proxy + Private Browser** for rotating identity.
+
+<Columns cols={2}>
+  <Card title="Static Proxy" icon="shield-check">
+    Use **Static Proxy + Standard Browser** when account continuity, fixed IP, or allowlisting matters.
+  </Card>
+  <Card title="Dynamic Proxy" icon="refresh-cw">
+    Use **Dynamic Proxy + Private Browser** when rotation and session isolation matter more than a fixed identity.
+  </Card>
+</Columns>
+
+## Static Proxy vs Dynamic Proxy
+
+| Proxy mode | Browser environment | Best for |
+| --- | --- | --- |
+| Static Proxy | Standard Browser | Account management, long-lived logins, social media operations, e-commerce allowlisting, fixed-IP workflows |
+| Dynamic Proxy | Private Browser | Web scraping, price monitoring, anti-tracking tasks, ad verification, rotating-IP workflows |
+
+> [!TIP]
+> If an account expects you to look like the same user over time, use **Static Proxy + Standard Browser**. If the task only cares about the current public page result, use **Dynamic Proxy + Private Browser**.
+
+## Use Static Proxy with Standard Browser
+
+Use Static Proxy when you want to bind one proxy to one browser, account, or workflow.
+
+### Recommended flow
+
+1. Buy or select a Static Proxy and copy its `proxy_id`.
+2. Bind the proxy when you create or update a Browser.
+3. Launch the Browser in **Standard Browser** mode.
+4. Keep the same proxy bound to the same account or workflow whenever possible.
+
+### CLI examples
+
+Create a Browser with Static Proxy:
+
+```bash
+browser-act browser create <browser_name> --static-proxy <proxy_id>
+```
+
+Update an existing Browser:
+
+```bash
+browser-act browser update <browser_id> --static-proxy <proxy_id>
+```
+
+Use Static Proxy in extraction:
+
+```bash
+browser-act stealth-extract --static-proxy <proxy_id>
+```
+
+## Use Static Proxy in Workflow
+
+Use Workflow-level Static Proxy when all browser tasks in one workflow should share the same stable IP.
+
+1. Open **Workflow Browser Settings**.
+2. Select **Static Proxy** as the browser proxy type.
+3. Choose a proxy from the **Select Static Proxy** list.
+4. Save the setting.
+5. Browser tasks in that workflow will use the selected Static Proxy automatically.
+
+This setup is useful when a workflow works with the same account, an allowlisted IP, or a website that expects a consistent network identity.
+
+## When to use Dynamic Proxy
+
+Dynamic Proxy is configured at the browser setting level. Use it when rotation matters more than stability.
+
+For a browser session:
+
+1. Open **BrowserAct Proxy Settings**.
+2. Switch the browser mode to **Dynamic Proxy**.
+3. Choose the region you want to use.
+4. Save the setting and launch the browser in **Private Browser** mode.
+
+For a workflow:
+
+1. Open **Workflow Browser Settings**.
+2. Select **Dynamic Proxy**.
+3. Choose the region.
+4. Save the setting.
+5. Browser tasks in that workflow will use the selected Dynamic Proxy configuration.
+
+## Business scenarios
+
+### Static Proxy + Standard Browser
+
+Use this combination when stability matters more than rotation.
+
+Typical scenarios:
+
+- Account management
+- Social media operations
+- E-commerce operations
+- Long-lived login sessions
+- API allowlisting with a fixed IP
+
+Why this combination works:
+
+- Static Proxy keeps the IP stable across sessions.
+- Standard Browser gives the task a consistent browser environment.
+
+### Dynamic Proxy + Private Browser
+
+Use this combination when rotation and session isolation matter more than stability.
+
+Typical scenarios:
+
+- Web scraping
+- Price monitoring
+- Anti-tracking tasks
+- Ad verification
+- Other tasks that do not depend on a fixed IP
+
+Why this combination works:
+
+- Dynamic Proxy gives you a rotating IP.
+- Private Browser keeps the browsing session isolated.
+
+## Quick decision guide
+
+| Question | Recommended setup |
+| --- | --- |
+| Need a stable IP for one account or workflow? | Static Proxy + Standard Browser |
+| Need a rotating IP for extraction or monitoring? | Dynamic Proxy + Private Browser |
+| Need all tasks in one workflow to share the same IP? | Bind a Static Proxy at the workflow level |
+
+## Tips
+
+- Use Static Proxy for account-sensitive tasks.
+- Use Dynamic Proxy for high-volume or scraping-heavy tasks.
+- Avoid switching proxy mode too often for the same account unless you have a clear reason.
+- If Proxy Check fails, see [Troubleshooting](/help/using-browser-act/browser-configuration/untitled-page-4).
+- If the proxy you need is not listed, contact support on [Discord](https://discord.com/invite/UpnCKd7GaU).
