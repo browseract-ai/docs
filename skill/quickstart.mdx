@@ -1,74 +1,78 @@
 ---
-title: 快速开始
-description: 用 stealth-extract 或完整浏览器会话在 60 秒内跑通第一次自动化。
+title: Quick Start
+description: Get your first result in 60 seconds with extraction or a full browser session.
 ---
 
+There are two fast paths:
 
-两条路径，60 秒看到第一个结果。
+- Use `stealth-extract` when you only need to read page content.
+- Use a browser session when you need to click, type, log in, or inspect state between steps.
 
-## 路径 A：内容提取（WebFetch 的高级替代）
+## Path A: extract content
 
-WebFetch / curl 拿不到的——JS 渲染、反爬封锁、地域限制——一条命令搞定：
+Use this when basic fetchers cannot handle JavaScript rendering, anti-bot checks, or region restrictions:
 
 ```bash
 browser-act stealth-extract https://example.com
 ```
 
-返回 markdown 格式的页面内容。无需管理浏览器，无需会话，无需清理。带 JS 渲染和反爬绕过，且每次调用独立——多个 URL 可并行执行。
+The command opens a stealth browser, waits for the page to render, returns content as Markdown, and closes the browser. You do not need to manage a browser or session.
+
+Common options:
 
 ```bash
-# HTML 格式
+# Return HTML instead of Markdown
 browser-act stealth-extract https://example.com --content-type html
 
-# 用代理访问地域限制内容
+# Use a dynamic proxy for a specific region
 browser-act stealth-extract https://example.com --dynamic-proxy JP
 
-# 保存到文件
+# Save the result to a file
 browser-act stealth-extract https://example.com --output ./page.md
 ```
 
-适用：抓取受保护内容、批量数据采集、信息检索。详见 [反检测与封锁突破](/skill/anti-blocking)。
+Use this path for protected content, batch collection, and information retrieval. See [Anti-detection & Blocking](/skill/anti-blocking).
 
-## 路径 B：完整浏览器自动化
+## Path B: automate a browser
 
-需要登录、填表单、点击交互——使用会话：
+Use this path when the task requires interaction.
 
 ```bash
-# 1. 查看可用浏览器
+# 1. List available browsers
 browser-act browser list
 
-# 2. 打开浏览器到目标 URL（启动会话）
-browser-act --session my-task browser open <browser-id> https://example.com
+# 2. Open a browser and start a named session
+browser-act --session my-task browser open <browser_id> https://example.com
 
-# 3. 看页面有什么可交互元素
+# 3. Read the current page state
 browser-act --session my-task state
 
-# 4. 用元素索引交互
+# 4. Interact with elements by index
 browser-act --session my-task click 4
 browser-act --session my-task input 2 "hello@example.com"
 
-# 5. 完成后关闭
+# 5. Close the session when finished
 browser-act session close my-task
 ```
 
-## 核心循环
+## The core loop
 
+```text
+open -> state -> interact -> state -> ... -> close
 ```
-打开 → 状态 → 交互 → 状态 → ... → 关闭
-```
 
-1. **打开** browser open 启动会话
-2. **状态** state 看页面元素（带索引）
-3. **交互** click/input/select 用索引操作
-4. **状态** 再看一次确认结果
-5. 重复直到任务完成
-6. **关闭** session close
+1. **Open** a page with `browser open`.
+2. **Read state** to see the current URL, title, and indexed elements.
+3. **Interact** with `click`, `input`, `select`, and related commands.
+4. **Read state again** after the page changes.
+5. Repeat until the task is complete.
+6. **Close** the session.
 
-## 理解 state 输出
+## Understand `state`
 
-`state` 是 Agent 的眼睛，返回 URL、标题和带索引的元素树：
+`state` is the agent's view of the page. It returns compact text with indexed elements:
 
-```
+```text
 url=https://example.com/login
 title=Login
 
@@ -81,7 +85,7 @@ title=Login
     Forgot password?
 ```
 
-每个 `[N]` 是一个可交互元素，直接用索引操作：
+Each `[N]` is an element index:
 
 ```bash
 browser-act --session login input 2 "user@example.com"
@@ -89,11 +93,11 @@ browser-act --session login input 3 "password123"
 browser-act --session login click 4
 ```
 
-页面变化后旧索引失效——再调用一次 `state` 取新索引。
+Indexes can change after navigation, page updates, or DOM changes. Call `state` again before acting on a changed page.
 
-## 命令链接
+## Chain commands carefully
 
-无依赖的连续操作用 `&&` 链接，一次提交：
+Use `&&` for independent steps:
 
 ```bash
 browser-act --session s1 input 2 "user" && \
@@ -101,15 +105,15 @@ browser-act --session s1 input 3 "pass" && \
 browser-act --session s1 click 4
 ```
 
-需要读中间输出时（如先看 `state` 再决定点什么）分开执行。
+Run commands separately when the next action depends on intermediate output, such as reading `state` before choosing what to click.
 
-## 下一步
+## Learn more
 
-| 想了解 | 去看 |
-|--------|------|
-| 三种浏览器形态如何选 | [三种浏览器形态](/skill/browser-modes) |
-| 怎么对抗反爬 | [反检测与封锁突破](/skill/anti-blocking) |
-| 卡住时怎么让人接管 | [更好的无头浏览器](/skill/headless) |
-| 多任务并发怎么跑 | [并发与隔离](/skill/concurrency) |
-| 完整命令有哪些 | [命令参考](/skill/commands) |
-| 让 AI 替你写爬虫 | [Skill Forge](/skill/skill-forge) |
+| Goal | Page |
+| --- | --- |
+| Choose the right browser mode | [Browser Modes](/skill/browser-modes) |
+| Handle blocking | [Anti-detection & Blocking](/skill/anti-blocking) |
+| Hand control to a human | [Better Headless Browser](/skill/headless) |
+| Run concurrent work | [Concurrency & Isolation](/skill/concurrency) |
+| Look up every command | [Command Reference](/skill/commands) |
+| Generate reusable scrapers | [Skill Forge](/skill/skill-forge) |

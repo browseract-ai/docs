@@ -2,7 +2,7 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "aspen",
   "name": "Browser-act",
-  "description": "Skill-first browser automation CLI documentation for AI agents.",
+  "description": "Agent CLI and Workflow documentation for Browser-act.",
   "colors": {
     "primary": "#03bf80",
     "light": "#03bf80",
@@ -20,7 +20,7 @@
         "icon": "sparkles",
         "groups": [
           {
-            "group": "入门",
+            "group": "Get started",
             "icon": "rocket",
             "expanded": true,
             "pages": [
@@ -30,7 +30,7 @@
             ]
           },
           {
-            "group": "特性",
+            "group": "Capabilities",
             "icon": "shield-check",
             "expanded": true,
             "pages": [
@@ -43,7 +43,7 @@
             ]
           },
           {
-            "group": "你的专属爬虫工程师",
+            "group": "Skill Forge",
             "icon": "hammer",
             "expanded": false,
             "pages": [
@@ -51,7 +51,7 @@
             ]
           },
           {
-            "group": "集成与参考",
+            "group": "Integration & reference",
             "icon": "terminal",
             "expanded": false,
             "pages": [

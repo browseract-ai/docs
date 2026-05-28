@@ -1,82 +1,100 @@
 ---
-title: 命令参考
-description: Browser-act CLI 的完整命令索引。
+title: Command Reference
+description: Complete index of Browser-act CLI commands.
 ---
 
+This page is a command index. Use the feature chapters for context, examples, and decision rules.
 
-Browser-act CLI 完整命令索引。详细用法和上下文请参考各特性章节。
+## Global options
 
-## 全局选项
+| Option | Description |
+| --- | --- |
+| `--session <name>` | Session name for browser interaction commands |
+| `--format text\|json` | Output format |
+| `--no-auto-dialog` | Disable automatic dialog handling |
+| `--version` | Show CLI version |
 
-| 选项 | 描述 |
-|------|------|
-| `--session <name>` | 会话名称（浏览器交互命令必需） |
-| `--format text\|json` | 输出格式 |
-| `--no-auto-dialog` | 禁用自动对话框处理 |
-| `--version` | 显示 CLI 版本 |
+## Goal-based lookup
 
-## 我想做什么？
+| I want to... | Use | Read more |
+| --- | --- | --- |
+| Extract protected page content | `stealth-extract` | [Anti-detection & Blocking](/skill/anti-blocking) |
+| Create a stealth browser | `browser create --type stealth ...` | [Browser Modes](/skill/browser-modes) |
+| Open a page and interact | `browser open` -> `state` -> `click` / `input` | [Quick Start](/skill/quickstart) |
+| Find API calls behind the UI | `network requests` -> `network request <request_id>` | [Designed for Agents](/skill/agent-design) |
+| Handle CAPTCHA | `captcha-aid`, `solve-captcha`, `remote-assist` | [Anti-detection & Blocking](/skill/anti-blocking) |
+| Let a human take over | `remote-assist --objective "..."` | [Remote Assist](/skill/remote-assist) |
+| Run multiple accounts | separate browsers and named sessions | [Concurrency & Isolation](/skill/concurrency) |
+| Reuse local login state | `browser import-profile` | [Browser Modes](/skill/browser-modes) |
 
-| 我想... | 用这些命令 | 详见 |
-|---------|-----------|------|
-| 提取受保护网站内容 | `stealth-extract` | [反检测](/skill/anti-blocking) |
-| 创建反爬浏览器 | `browser create --type stealth ...` | [浏览器形态](/skill/browser-modes) |
-| 打开网页并交互 | `browser open` → `state` → `click`/`input` | [Agent 设计](/skill/agent-design) |
-| 找到页面背后的 API | `network requests` → `network request <id>` | [Agent 设计](/skill/agent-design) |
-| 处理验证码 | `solve-captcha` → `remote-assist` | [反检测](/skill/anti-blocking) / [无头](/skill/headless) |
-| 卡住时让人接管 | `remote-assist --objective "..."` | [无头](/skill/headless) |
-| 多账号并行 | 多浏览器各开 `--session` | [并发](/skill/concurrency) |
-| 复用已有登录态 | `browser import-profile` | [浏览器形态](/skill/browser-modes) |
+## Browser interaction commands
 
-## 命令分组
+These commands require `--session <name>`.
 
-### 浏览器交互（需要 `--session`）
+### Navigation
 
-#### 导航
-```
-navigate <url> [--new-tab]    back / forward / reload
-```
-
-#### 页面状态
-```
-state                          screenshot [path] [--full]
+```text
+navigate <url> [--new-tab]
+back
+forward
+reload
 ```
 
-`state` 输出的索引标记：
+### Page state
 
-- `[N]` — 可交互元素的索引（用于 `click N` / `input N "..."` 等命令）
-- `*[N]` — 该元素相对上次 `state` 调用是新增或变化的；首次调用所有元素都带 `*`，后续调用只有变化的元素带 `*`，方便 Agent 聚焦页面增量
-
-#### 交互
+```text
+state
+screenshot [path] [--full]
 ```
-click <index>                  hover <index>
-input <index> <text>           select <index> <option>
-type <text>                    keys <key_combo>
-scroll up|down [--amount]      scrollintoview --selector <css>
+
+`state` uses indexed markers:
+
+- `[N]`: element index for commands such as `click N` or `input N "text"`
+- `*[N]`: element is new or changed since the previous `state` call
+
+### Interaction
+
+```text
+click <index>
+hover <index>
+input <index> <text>
+select <index> <option>
+type <text>
+keys <key_combo>
+scroll up|down [--amount]
+scrollintoview --selector <css>
 upload <index> <path>
 ```
 
-#### 数据提取
-```
-get title                      get html [--selector]
-get text <index>               get value <index>
+### Data extraction
+
+```text
+get title
+get html [--selector]
+get text <index>
+get value <index>
 get markdown
 ```
 
-#### JavaScript
-```
+### JavaScript
+
+```text
 eval <js> [--stdin]
 ```
 
-#### 等待
-```
+Use `eval` for complex extraction, page-local calculations, or fallback operations that are awkward through indexed interaction.
+
+### Waiting
+
+```text
 wait stable [--timeout]
 wait selector <index> --state visible|hidden|attached|detached [--timeout]
-wait selector --selector <css> --state ...
+wait selector --selector <css> --state visible|hidden|attached|detached [--timeout]
 ```
 
-#### 网络
-```
+### Network
+
+```text
 network requests [--filter] [--type] [--method] [--status] [--clear]
 network request <request_id>
 network clear
@@ -85,56 +103,85 @@ network har start
 network har stop [path]
 ```
 
-#### Tab 与对话框
-```
-tab list                       tab switch <tab_id>             tab close [tab_id]
-dialog accept [text]           dialog dismiss                   dialog status
+Use network capture to inspect XHR requests, find API endpoints, debug authentication, or export HAR files.
+
+### Tabs and dialogs
+
+```text
+tab list
+tab switch <tab_id>
+tab close [tab_id]
+dialog accept [text]
+dialog dismiss
+dialog status
 ```
 
-#### Cookie
-```
-cookies get [--url]            cookies set <name> <value> [--domain] [--path] [--secure] [--http-only]
-cookies clear [--url]          cookies export <file>            cookies import <file>
+### Cookies
+
+```text
+cookies get [--url]
+cookies set <name> <value> [--domain] [--path] [--secure] [--http-only]
+cookies clear [--url]
+cookies export <file>
+cookies import <file>
 ```
 
-#### 验证码与远程协助
-```
-solve-captcha                  captcha-aid
+### CAPTCHA and handoff
+
+```text
+captcha-aid
+solve-captcha
 remote-assist [--objective]
 ```
 
-### 浏览器管理（不需要 `--session`）
+| Command | Purpose |
+| --- | --- |
+| `captcha-aid` | Assist with CAPTCHA on the current page |
+| `solve-captcha` | Try automatic CAPTCHA solving on the current page |
+| `remote-assist` | Generate a live URL so a human can operate the browser |
 
-```
+## Browser management commands
+
+These commands do not require a session unless noted by the command behavior.
+
+```text
 browser list
-browser open <id> [url] [--headed] [--allow-restart-chrome]
-browser create --type <chrome|chrome-direct|stealth> --name <n> --desc <d> [options]
-browser update <id> [options]
-browser delete <id>
+browser open <id_or_url> [url_arg] [--headed] [--private] [--allow-restart-chrome]
+browser create --type <chrome|chrome-direct|stealth> --name <name> --desc <description> [options]
+browser update <browser_id> [options]
+browser delete <browser_id>
 browser regions
 browser list-profiles
 browser import-profile <browser_id> <profile_id> [--allow-restart-chrome]
 ```
 
-#### browser create 选项
+### `browser create` options
+
 ```bash
 browser-act browser create \
   --type chrome|chrome-direct|stealth \
   --name "my-browser" \
-  --desc "用途描述" \
-  --source-profile <profile_id> \    # chrome only
-  --dynamic-proxy <region> \         # stealth only
-  --custom-proxy <url> \             # stealth only
-  --private true|false \             # stealth only
+  --desc "Purpose description" \
+  --source-profile <profile_id> \
+  --dynamic-proxy <region> \
+  --custom-proxy <url> \
+  --private true|false \
   --confirm-before-use
 ```
 
-#### browser update 选项
+Option notes:
+
+- `--source-profile` applies to `chrome` browsers.
+- `--dynamic-proxy`, `--custom-proxy`, and `--private` apply to `stealth` browsers.
+- `--confirm-before-use` marks a browser as sensitive so the agent should ask before opening it.
+
+### `browser update` options
+
 ```bash
-browser-act browser update <id> \
-  --name "新名称" \
-  --desc "覆盖描述" \
-  --desc-append "追加到描述" \
+browser-act browser update <browser_id> \
+  --name "New name" \
+  --desc "Replace the description" \
+  --desc-append "Append to the description" \
   --dynamic-proxy <region> \
   --custom-proxy <url> \
   --no-proxy \
@@ -142,41 +189,46 @@ browser-act browser update <id> \
   --confirm-before-use|--no-confirm-before-use
 ```
 
-### 会话管理
+## Session management
 
-```
-session list                   session close [name]
+```text
+session list
+session close [name]
 ```
 
-### 隐身提取（独立，无需会话）
+## Stealth extraction
+
+`stealth-extract` is independent. It does not require a session.
 
 ```bash
 browser-act stealth-extract <url>
 browser-act stealth-extract <url> --content-type html|markdown
 browser-act stealth-extract <url> --dynamic-proxy <region>
-browser-act stealth-extract <url> --custom-proxy <proxy-url>
+browser-act stealth-extract <url> --custom-proxy <proxy_url>
 browser-act stealth-extract <url> --timeout 60
 browser-act stealth-extract <url> --output ./result.md
 ```
 
-### 认证
+## Authentication
 
-```
-auth login                     auth poll
-auth set <api_key>             auth clear
+```text
+auth login
+auth poll
+auth set <api_key>
+auth clear
 ```
 
-### Skill 与系统
+## Skill and system
 
-```
-get-skills core --skill-version <v>
+```text
+get-skills core --skill-version <version>
 get-skills advanced
 get-skills main
 report-log
 feedback <message>
 ```
 
-## 下一步
+## Learn more
 
-- [为 Agent 设计](/skill/agent-design) — 命令背后的设计哲学和典型用法
-- [快速开始](/skill/quickstart) — 把命令组合起来跑通工作流
+- [Designed for Agents](/skill/agent-design): Learn why the command model is optimized for agents.
+- [Quick Start](/skill/quickstart): Combine commands into the first working loop.

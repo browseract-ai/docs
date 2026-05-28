@@ -1,65 +1,55 @@
 ---
-title: 简介
-description: Browser-act 是为 AI Agent 打造的浏览器自动化 CLI。
+title: Introduction
+description: Browser-act is an Agent CLI for browser automation.
 mode: wide
 ---
 
+Browser-act is a browser automation CLI built for AI agents. It helps agents open pages, read page state, click, type, extract data, manage sessions, bypass common blocking, and hand control to a human when automation gets stuck.
 
-为 AI Agent 打造的浏览器自动化 CLI。突破反爬封锁，受阻时跨平台远程人机接力。多任务并发提效，多会话并行互不影响，多账号隔离独立运行。
-
-## 从这里开始
+## Start here
 
 <Columns cols={3}>
-  <Card title="安装" icon="download" href="/skill/installation" cta="立即开始">
-    安装 Browser-act Skill，确认 CLI 可用，并让 Agent 能正确加载运行时说明。
+  <Card title="Install" icon="download" href="/skill/installation" cta="Start now">
+    Install the Browser-act CLI, add the entry Skill to your agent, and verify that the runtime is available.
   </Card>
-  <Card title="快速开始" icon="rocket" href="/skill/quickstart" cta="60 秒看到第一个结果">
-    用最短路径打开浏览器、读取页面状态，并完成第一次浏览器自动化操作。
+  <Card title="Quick Start" icon="rocket" href="/skill/quickstart" cta="See a result in 60 seconds">
+    Run your first extraction or full browser automation loop with Browser-act.
   </Card>
-  <Card title="命令参考" icon="terminal" href="/skill/commands" cta="完整命令索引">
-    查询 browser、session、stealth、captcha、network 等常用命令入口。
+  <Card title="Command Reference" icon="terminal" href="/skill/commands" cta="Open the full command index">
+    Look up browser, session, stealth, CAPTCHA, network, and system commands.
   </Card>
 </Columns>
 
-## 为什么需要 Browser-act
+## Why Browser-act
 
-AI Agent 需要的浏览器，要能去标准工具去不了的地方、要在卡住时让人无缝接管、要在多任务并行时互不串号、要为 LLM 推理而非人类脚本设计。
+AI agents need a browser that goes beyond standard automation tools:
 
-**给 Agent 用的浏览器，必须做对四件事：**
+1. **Bypass blocking.** Use stealth fingerprints, TLS rotation, proxies, CAPTCHA solving, and remote handoff when a site challenges automation.
+2. **Choose the right browser mode.** Use local Chrome state, direct Chrome control, privacy-focused stealth sessions, or fixed-identity stealth browsers.
+3. **Run concurrent work safely.** Keep browsers, sessions, cookies, fingerprints, and proxies isolated so multiple tasks do not interfere with each other.
+4. **Work in a format built for models.** Read compact indexed state, act with commands such as `click 3` or `input 2 "text"`, and reuse browsers by semantic descriptions.
 
-### 1. 突破封锁——三层递进
+## Core capabilities
 
-- **环境层** — stealth 指纹伪装、TLS 轮换、代理切换。绝大多数封锁压根不会触发
-- **执行层** — `solve-captcha` 自动破解验证码；`stealth-extract` 一行命令提取受保护页面
-- **人工层** — `remote-assist` 生成实时链接，任意设备接管，处理完 Agent 无缝继续
+| Capability | What it helps with |
+| --- | --- |
+| Anti-detection and blocking | Reach pages that block basic fetchers or standard automation |
+| Better headless mode | Run silently without giving up stealth or human handoff |
+| Remote assist | Let a human complete 2FA, CAPTCHA, or judgment-heavy steps from any device |
+| Browser modes | Pick between Chrome, chrome-direct, stealth privacy, and stealth fixed identity |
+| Concurrency and isolation | Run many agents, tasks, accounts, and sessions without state leaks |
+| Skill Forge | Turn a one-time site exploration into a reusable scraping skill |
 
-### 2. 三种浏览器形态——按真实场景分
+## Compatibility
 
-- **`chrome`** — 复用本地 Chrome 登录态（导入 Profile / CDP 直连两种模式）
-- **`stealth` 隐私模式** — 每会话全新指纹 + 代理轮换，无登录大批量抓取无阻碍
-- **`stealth` 固定身份** — 固定指纹 + 固定 IP，登录账号多浏览器并行身份不被关联
+| Area | Support |
+| --- | --- |
+| Operating systems | Windows, macOS, Linux |
+| Agent environments | Claude Code, Cursor, VS Code, OpenCode, OpenClaw, Codex, Gemini CLI, and other agents that can run shell commands and load skills |
+| Runtime objects | browser, session, profile, stealth browser, network capture, HAR, cookies |
 
-### 3. 并发零干扰——每个 Agent 独立车道
+## Learn more
 
-- **跨浏览器并行** — 独立 Cookie / 指纹 / 代理，网站无法关联
-- **同浏览器多会话** — 共享登录态独立执行，互不卡住
-- **隐私模式** — 每会话全新指纹 + 空 Profile，运行结束零残留
-
-### 4. 为 Agent 推理而设计——不是给人写脚本
-
-- **紧凑文本输出** — 索引化文本格式，比 JSON / HTML 节省数倍 Token
-- **索引化交互** — `state` 返回索引列表，`click 3` / `input 2 "..."`，无需解析 DOM
-- **语义化记忆** — 浏览器带 `desc`，按任务语义匹配
-- **并发安全** — 会话归属 + 显式命名，多 Agent 不冲突
-
-## 不止于此
-
-- **更好的无头浏览器** — 默认无头不打扰、stealth headless 不被检测
-- **跨平台远程人机接管** — 任意设备打开链接即接管，处理完 Agent 无缝继续
-- **Skill Forge — 你的专属爬虫工程师** — 探索一次生成可部署 Skill，反复跑同一稳定路径
-
-## 兼容性
-
-**系统：** Windows、macOS、Linux
-
-**Agent：** Claude Code · Cursor · VS Code · OpenCode · OpenClaw · Codex · Gemini CLI — 适用于任何能执行 Shell 命令 + 支持 Skills 的 AI Agent。
+- [Installation](/skill/installation): Set up the CLI and entry Skill.
+- [Quick Start](/skill/quickstart): Run the first browser automation loop.
+- [Skill System](/skill/skills): Understand how the entry Skill and `get-skills` work together.

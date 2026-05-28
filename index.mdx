@@ -1,21 +1,22 @@
 ---
 title: "Browser-act"
-description: "Browser-act is a Skill-powered browser automation CLI for AI agents."
+description: "Browser-act provides an Agent CLI for browser automation and a hosted Workflow product for visual automation."
 ---
 
 # Browser-act
 
-Browser-act is a Skill-powered browser automation CLI for AI agents.
+Browser-act helps AI agents and teams automate browser work.
 
-Skill is the Agent entry layer. CLI Runtime is the execution layer. Browsers, sessions, profiles, network capture, and security rules define how the runtime is used safely.
+- **Agent CLI** is for AI agents that need to operate browsers through a safe command-line runtime.
+- **Workflow** is for users and teams that want hosted visual browser automation.
 
-## Start with the three layers
+## Start with the Agent CLI
 
 | Layer | What it does | Where to read |
 | --- | --- | --- |
-| Skill | Helps the Agent discover BrowserAct and load runtime-aware instructions first | `skill/overview`, `skill/skills` |
-| CLI Runtime | Performs browser automation commands | `browser-act get-skills`, `browser-act --session ...` |
-| Runtime objects | Control browser state and safety boundaries | browser, session, profile, stealth browser, network capture, security |
+| Entry Skill | Helps the agent discover Browser-act and load runtime-aware instructions | [Skill System](/skill/skills) |
+| CLI Runtime | Performs browser automation commands | [Command Reference](/skill/commands) |
+| Runtime objects | Control browser state and safety boundaries | browser, session, profile, stealth browser, network capture, HAR |
 
 ## Shortest path
 
@@ -29,7 +30,7 @@ browser-act --session my-task click 2
 
 ## Where to start
 
-- [简介](/skill/overview): 了解 Browser-act 为 AI Agent 解决什么问题。
-- [安装](/skill/installation): 安装 CLI、入口 Skill，并验证可用性。
-- [快速开始](/skill/quickstart): 60 秒跑通第一次内容提取或浏览器交互。
+- [Introduction](/skill/overview): Learn what Browser-act gives AI agents.
+- [Installation](/skill/installation): Install the CLI, add the entry Skill, and verify the runtime.
+- [Quick Start](/skill/quickstart): Get the first extraction or browser interaction running in 60 seconds.
 - [First workflow guide](/learn/quick-start/build-your-first-data-scraper-workflow-in-5-minutes): Open the existing Workflow learning material.

@@ -1,163 +1,159 @@
 ---
-title: 反检测与封锁突破
-description: 用环境层、执行层和人工层逐级突破反爬与验证阻塞。
+title: Anti-detection & Blocking
+description: Use environment, execution, and human handoff layers to handle anti-bot blocking.
 ---
 
+Browser-act gives agents a practical escalation path for sites that block basic fetchers or standard browser automation.
 
-去标准工具到不了的地方。**三层反封锁，按需逐级升级**：绝大多数封锁压根触达不到 Agent——已经被环境层吸收。少数触发的会被执行层自动处理。只有极端情况才升级到人工。
-
-## 三层体系
-
+```text
+Environment layer: avoid triggering challenges
+        |
+        v
+Execution layer: handle challenges automatically
+        |
+        v
+Human layer: hand control to a person when automation is stuck
 ```
-环境层（看起来像真实用户）
-   ↓ 触发了？
-执行层（自动处理验证）
-   ↓ 处理不了？
-人工层（人来一下，详见「人机接力」）
-```
 
-| 层级 | 解决什么 | 关键能力 |
-|------|----------|----------|
-| **环境** | 让网站根本不触发验证 | 指纹伪装、TLS 轮换、住宅代理、隐私模式 |
-| **执行** | 触发了就自动解决 | `solve-captcha` 自动验证码、`stealth-extract` 一行命令提取 |
-| **人工** | 自动化解决不了的 | `remote-assist` 远程接管（详见 [更好的无头浏览器](/skill/headless)） |
+## Three-layer strategy
 
-## 环境层：看起来像真实用户
+| Layer | Purpose | Key capabilities |
+| --- | --- | --- |
+| Environment | Prevent challenges from appearing | stealth fingerprints, TLS rotation, proxy switching, privacy mode |
+| Execution | Solve challenges after they appear | `solve-captcha`, `stealth-extract` |
+| Human | Resolve cases automation cannot handle | `remote-assist` |
 
-stealth 浏览器内置了完整的反检测技术栈，确保在网站眼里和真实浏览器没有区别。
+## Environment layer
 
-| 技术 | 作用 |
-|------|------|
-| **指纹伪装** | Canvas / WebGL / 字体 / 插件——全部一致性伪造，所有指纹组件讲同一个故事 |
-| **Navigator 修补** | `webdriver` / `chrome.runtime` / plugin array 全部归一化 |
-| **TLS 指纹轮换** | 匹配真实浏览器的 TLS 签名 |
-| **Headless 隐藏** | 既要 headless 节省资源，又要通过检测——两个都做到 |
-| **代理系统** | 动态代理（按地区自动轮换 IP）/ 静态代理（BYO 固定代理） |
-| **隐私模式** | 每会话全新指纹 + 空 Profile，无数据持久化 |
+The stealth browser is designed to look like a normal browser session instead of a script.
 
-### 代理系统
+| Capability | What it does |
+| --- | --- |
+| Fingerprint masking | Keeps Canvas, WebGL, fonts, plugins, and related signals consistent |
+| Navigator normalization | Normalizes `webdriver`, `chrome.runtime`, plugin arrays, and related browser properties |
+| TLS signature rotation | Matches realistic browser TLS signatures |
+| Headless concealment | Keeps headless mode from exposing common automation signals |
+| Proxy system | Supports hosted dynamic proxies or your own static proxy |
+| Privacy mode | Starts each session with a fresh fingerprint and empty profile |
 
-仅 stealth 浏览器支持代理，两种模式互斥：
-
-**动态代理（托管）**
+### Dynamic proxy
 
 ```bash
-browser-act browser create --type stealth --name s1 --desc "..." --dynamic-proxy US
+browser-act browser create \
+  --type stealth \
+  --name "jp-research" \
+  --desc "Research browser using Japan dynamic proxy" \
+  --dynamic-proxy JP
 ```
 
-- 每次浏览器重启自动轮换 IP
-- 查询可用区域：`browser-act browser regions`
-
-**自定义代理（自带）**
+List available regions:
 
 ```bash
-browser-act browser create --type stealth --name s1 --desc "..." --custom-proxy socks5://user:pass@host:port
+browser-act browser regions
 ```
 
-- 支持 HTTP / SOCKS5 协议
-- 你的代理，你管理 IP
-
-### 隐私模式
-
-启用后每次会话使用全新指纹和空 Profile，不持久化任何数据：
+### Custom proxy
 
 ```bash
-browser-act browser create --type stealth --name "ephemeral" --desc "一次性任务" --private true
+browser-act browser create \
+  --type stealth \
+  --name "custom-proxy" \
+  --desc "Stealth browser with a fixed custom proxy" \
+  --custom-proxy socks5://user:pass@host:port
 ```
 
-或对已有浏览器切换：
+Custom proxies support HTTP and SOCKS5. You own the proxy quality, identity, and rotation strategy.
+
+### Privacy mode
+
+Use privacy mode when each session should start clean:
 
 ```bash
-browser-act browser update <stealth-id> --private true
+browser-act browser create \
+  --type stealth \
+  --name "ephemeral" \
+  --desc "One-time collection jobs" \
+  --private true
 ```
 
-适用于：多账号隔离、避免指纹积累、一次性操作。代价是无法保留登录态。
+Privacy mode is useful for one-off scraping, avoiding fingerprint buildup, and separating account identities. The trade-off is that login state is not preserved.
 
-## 执行层：自动处理验证
+## Execution layer
 
-### stealth-extract（WebFetch 替代品）
+### `stealth-extract`
 
-只读内容提取，零会话管理：
+Use `stealth-extract` when the task is read-only:
 
 ```bash
-browser-act stealth-extract https://protected-site.com
+browser-act stealth-extract https://example.com
 ```
 
-**它做了什么：**
-1. 启动带完整指纹伪装的反检测浏览器
-2. 导航到目标 URL，等待 JavaScript 渲染
-3. 返回 markdown（或 HTML）格式的页面内容
-4. 关闭浏览器——无需清理
-
-**无会话、无浏览器管理、无状态。** 输入 URL，输出内容。
+It opens a stealth browser, renders the page, returns Markdown or HTML, and closes the browser.
 
 ```bash
-# HTML 输出
+# Return HTML
 browser-act stealth-extract https://example.com --content-type html
 
-# 使用托管代理（区域特定 IP）
+# Use a regional dynamic proxy
 browser-act stealth-extract https://example.com --dynamic-proxy US
 
-# 使用自定义代理
-browser-act stealth-extract https://example.com --custom-proxy socks5://host:port
+# Use a custom proxy
+browser-act stealth-extract https://example.com --custom-proxy socks5://user:pass@host:port
 
-# 自定义超时（默认 30 秒）
-browser-act stealth-extract https://example.com --timeout 60
-
-# 保存到文件
+# Save the result
 browser-act stealth-extract https://example.com --output ./result.md
 ```
 
-**规则：** 只需要*读*，用 `stealth-extract`。需要*交互*，用 stealth 浏览器。
+Use `stealth-extract` for reading. Use a browser session when you need interaction.
 
-### solve-captcha 自动验证码
+### `solve-captcha`
 
-自动识别并解决常见验证码类型（图像选择、文字识别等）：
+Use `solve-captcha` when a session reaches a supported CAPTCHA challenge:
 
 ```bash
 browser-act --session s1 solve-captcha
 ```
 
-返回 `solved=True` 表示已自动通过。
+A successful result returns `solved=True`.
 
-#### 自动化失败时的升级流程
+### Escalation flow
 
 ```bash
-# 先尝试自动
+# First try automatic solving
 browser-act --session s1 solve-captcha
 
-# 如果失败，展示给用户本地完成
-browser-act --session s1 browser open <id> <url> --headed
+# If the page needs visible local debugging
+browser-act --session s1 browser open <browser_id> <url> --headed
 
-# 或升级到远程接管
-browser-act --session s1 remote-assist --objective "请解决验证码"
+# If a person should take over remotely
+browser-act --session s1 remote-assist --objective "Solve the CAPTCHA"
 ```
 
-## 人工层：交给人
+## Human layer
 
-环境层 + 执行层都搞不定时，升级到人——`remote-assist` 生成实时 URL，用户在任意设备打开即可接管。详见 [跨平台远程人机接管](/skill/remote-assist)。
+When automation cannot move forward, `remote-assist` creates a live URL. A human can open the link on any device, complete the challenge, and let the agent continue in the same session.
 
-## 升级策略
+See [Remote Assist](/skill/remote-assist).
 
-```
-1. 默认 chrome / chrome-direct + 不加代理 → 适合大多数日常网站
-2. 触发反爬 → 升级到 stealth + 配置代理
-3. 仍触发验证码 → solve-captcha 自动解决
-4. 自动解决失败 → remote-assist 远程交给人
-```
+## Recommended escalation
 
-## 与基础工具的对比
+1. Start with `chrome` or `chrome-direct` for ordinary logged-in work.
+2. Move to `stealth` with a proxy when blocking appears.
+3. Use `solve-captcha` if a supported CAPTCHA appears.
+4. Use `remote-assist` when human judgment, 2FA, hardware tokens, or unsupported challenges are required.
 
-| | curl / WebFetch | 标准 Puppeteer / Playwright | Browser-act |
-|---|---|---|---|
-| 处理 JS 渲染 | ✗ | ✓ | ✓ |
-| 反爬绕过 | ✗ | ✗ | ✓（环境层） |
-| 验证码自动解决 | ✗ | ✗ | ✓（执行层） |
-| 卡住时人工接管 | ✗ | ✗ | ✓（人工层） |
-| 无头不被检测 | N/A | ✗（headless 易识别） | ✓（stealth headless） |
+## Compared with basic tools
 
-## 下一步
+| Capability | curl / WebFetch | Standard Puppeteer / Playwright | Browser-act |
+| --- | --- | --- | --- |
+| JavaScript rendering | No | Yes | Yes |
+| Anti-bot handling | No | Limited | Yes |
+| CAPTCHA solving | No | No | Yes, when supported |
+| Human takeover | No | Manual setup required | Built in with `remote-assist` |
+| Stealth headless | Not applicable | Often detectable | Supported |
 
-- [更好的无头浏览器](/skill/headless) — 默认无头 + 远程接管
-- [三种浏览器形态](/skill/browser-modes) — 选择合适的浏览器
-- [Skill Forge](/skill/skill-forge) — 把反爬经验沉淀为可复用 Skill
+## Learn more
+
+- [Better Headless Browser](/skill/headless): Run silently while keeping handoff available.
+- [Browser Modes](/skill/browser-modes): Choose the right browser identity.
+- [Skill Forge](/skill/skill-forge): Turn site-specific knowledge into a reusable skill.

@@ -1,209 +1,149 @@
 ---
-title: 三种浏览器形态
-description: 理解 chrome、chrome-direct 与 stealth 浏览器的适用场景。
+title: Browser Modes
+description: Choose between chrome, chrome-direct, and stealth browsers for different automation jobs.
 ---
 
+Browser-act uses browser types to represent different identity and runtime needs.
 
-按使用场景分，三种浏览器形态，三种都跑在你机器上：
+| Mode | Best for | Key properties |
+| --- | --- | --- |
+| `chrome` | Reusing local login state in an isolated browser | Profile import, isolated storage, repeatable automation |
+| `chrome-direct` | Controlling the user's current Chrome | Existing extensions, SSO, certificates, and live cookies |
+| `stealth` privacy mode | High-anonymity public data collection | Fresh fingerprint and empty profile per session |
+| `stealth` fixed identity | Multi-account work | Stable fingerprint and fixed proxy per browser |
 
-| 形态 | 解决什么场景 | 关键特性 |
-|------|-------------|----------|
-| **chrome** | 复用本地 Chrome 登录态 | 两种模式：导入 Profile / CDP 直连接管 |
-| **stealth · 隐私模式** | 无登录大批量抓取不被封 | 每会话全新指纹 + 代理轮换，零状态残留 |
-| **stealth · 固定身份** | 登录账号 · 多浏览器并行 | 固定指纹 + 固定 IP，账号身份稳定不被识别为机器人 |
+## `chrome`: reuse local login state
 
-## chrome：复用本地 Chrome 登录态
+`chrome` browsers run in Browser-act-managed Chromium instances. They can import state from a local Chrome profile while staying isolated from the user's daily browser after import.
 
-适合已经登录的网站（Gmail、GitHub、Jira 等），不想重新走登录流程。提供两种模式：
+### Profile import
 
-### 模式一：导入本地 Profile
-
-从本地 Chrome 提取 Profile（Cookies、localStorage、IndexedDB）到独立 Chromium 实例：
+List local profiles:
 
 ```bash
-# 列出可导入的 Profile
 browser-act browser list-profiles
-
-# 创建 chrome 浏览器并导入指定 Profile
-browser-act browser create --type chrome --name "work" \
-  --desc "工作 Chrome：已登录 GitHub、Jira、Gmail" \
-  --source-profile <profile-id>
 ```
 
-**特点：**
-- 创建独立 Chromium 实例，与本地 Chrome 隔离
-- 导入是一次性快照——本地 Chrome 后续变更不会同步
-- 配额最多 20 个浏览器
-- 支持长时间运行的自动化任务
+Create a browser from a discovered profile:
 
-#### 也可以创建后再导入
+```bash
+browser-act browser create \
+  --type chrome \
+  --name "work-account" \
+  --desc "Logged-in work account for reporting" \
+  --source-profile <profile_id>
+```
 
-如果浏览器已经存在，单独执行导入：
+Import state into an existing browser:
 
 ```bash
 browser-act browser import-profile <browser_id> <profile_id>
+```
 
-# 如果需要重启 Chrome 以启用 CDP
+If Chrome must be restarted during import:
+
+```bash
 browser-act browser import-profile <browser_id> <profile_id> --allow-restart-chrome
 ```
 
-#### 导入内容范围
+> **Caution:** Profile import is a snapshot. Later changes in the source Chrome profile are not automatically synchronized.
 
-| 包含 | 排除 |
-|------|------|
-| Cookie | 浏览历史 |
-| localStorage | 书签 |
-| IndexedDB | 扩展 |
-| Session storage | 缓存 |
-| | 保存的密码 |
+### What profile import includes
 
-#### 两种导入模式
+| Included | Not included |
+| --- | --- |
+| Cookies | Browsing history |
+| Local storage | Bookmarks |
+| IndexedDB | Extensions |
+| Session storage | Cached files |
+| Relevant authentication state | Saved passwords |
 
-| 模式 | 路径 | 特点 |
-|------|------|------|
-| **本地模式** | chrome → chrome | 直接文件复制，最快、最完整 |
-| **CDP 模式** | 任意 → stealth、跨类型 | 通过 DevTools Protocol 网络提取 |
+Profile import is useful when a site requires an existing login but the agent should operate in an isolated browser.
 
-#### 前提条件
+## `chrome-direct`: control current Chrome
 
-- 必须先调用 `browser list-profiles` 发现 Profile ID
-- 目标浏览器必须已存在（通过 `browser create` 创建）
-- 源浏览器（Chrome）本地导入时可能需要关闭
+`chrome-direct` controls the user's current Chrome instance through CDP. It is useful when automation depends on local extensions, hardware-backed SSO, certificates, or state that cannot be copied safely.
 
-#### 风险提示
+Trade-offs:
 
-Profile 导入有固有风险，Agent 应主动告知用户：
+- only one `chrome-direct` browser is allowed
+- it operates on the live user browser
+- it is not intended for headed mode switching
+- it is best for short tasks that need the exact local Chrome environment
 
-1. **导入过程中源浏览器可能被关闭**
-2. **目标位置的 IP 变化可能触发某些网站的重新验证**
-3. **环境差异（指纹、位置）可能触发重新登录**
-4. **导入是快照——源的后续变更不会同步**
+## Profile import vs. CDP direct
 
-### 模式二：CDP 直连接管
+| Factor | `chrome` profile import | `chrome-direct` |
+| --- | --- | --- |
+| Isolation | Separate managed browser | Live user Chrome |
+| Extensions and certificates | Not copied | Available |
+| Long-running tasks | Better fit | Use carefully |
+| User browser availability | Independent after import | Uses the active browser |
+| Quota | Up to 20 `chrome` browsers | One direct browser |
 
-直接接管你正在使用的本地 Chrome——扩展、证书、SSO 全部就位：
+## `stealth`: privacy mode
 
-```bash
-browser-act browser create --type chrome-direct --name "live" --desc "直连本地 Chrome"
-browser-act --session work browser open <browser-id> https://internal.corp.com
-```
-
-**特点：**
-- 零配置——无需导入 Profile
-- 完整继承本地 Chrome 的扩展、书签、证书、SSO Cookie
-- 全局仅允许一个 chrome-direct 浏览器
-- 运行期间你的 Chrome 正被自动化（用户不能手动用）
-- 不支持 headed（它本身就是你的浏览器）
-
-**最适合：** 企业 SSO、依赖特定扩展或证书的网站、不需要隔离的快速操作。
-
-### 两种模式对比
-
-| | 导入 Profile | CDP 直连 |
-|---|---|---|
-| 配置 | 选 Profile 导入 | 零配置 |
-| 隔离 | 独立进程 | 直接是你的 Chrome |
-| 扩展/证书 | 不带（导入时排除） | 完整继承 |
-| 配额 | 20 个 | 1 个（全局） |
-| 用户 Chrome 是否被占用 | 不影响 | 是 |
-| 长时间任务 | ✓ | ✗（占用本人 Chrome） |
-
-## stealth · 隐私模式：无登录大批量抓取
-
-每次会话全新指纹 + 代理 IP 自动轮换，零状态残留。适合海量监控对手站价格、SKU、新品——抓完即清，不留痕迹。
+Privacy mode starts each session with a fresh fingerprint and empty profile:
 
 ```bash
-# 创建 stealth 浏览器，启用隐私模式 + 动态代理
-browser-act browser create --type stealth --name "monitor" \
-  --desc "竞品价格监控" \
+browser-act browser create \
+  --type stealth \
+  --name "public-scrape" \
+  --desc "Fresh identity for public data extraction" \
   --dynamic-proxy US \
   --private true
 ```
 
-**特点：**
-- 每次 open session 使用全新指纹和空 Profile，不持久化
-- 动态代理按区域自动轮换 IP
-- 通过反检测，headless 也保持完整伪装
-- 适合一次性任务、高匿名需求、避免指纹关联
+Use it for protected public data, one-off collection, and tasks where persistent identity is a liability.
 
-**代价：** 无法保留登录态；需要 API Key（托管服务）。
+Trade-offs:
 
-## stealth · 固定身份：登录账号多浏览器
+- no login state is preserved
+- an API key is required
+- each session behaves like a new identity
 
-每个浏览器固定指纹 + 固定 IP，账号身份稳定不被识别为机器人。可扩展多个独立浏览器，多账号身份互不关联。
+## `stealth`: fixed identity
 
-需配置固定 IP（动态代理会轮换 IP），每个浏览器一条独立稳定的代理：
+Fixed-identity stealth browsers keep a stable fingerprint and proxy:
 
 ```bash
-# 每个店铺一个独立 stealth 浏览器，各自固定代理
-browser-act browser create --type stealth --name "shop-1" \
-  --desc "淘宝店铺 1：女装" \
-  --custom-proxy socks5://user1:pass@proxy-a.com:1080
-
-browser-act browser create --type stealth --name "shop-2" \
-  --desc "淘宝店铺 2：数码" \
-  --custom-proxy socks5://user2:pass@proxy-b.com:1080
+browser-act browser create \
+  --type stealth \
+  --name "account-a" \
+  --desc "Fixed identity for account A" \
+  --custom-proxy socks5://user:pass@host:port \
+  --private false
 ```
 
-**特点：**
-- 每个浏览器独立指纹、独立固定代理、独立 Cookie
-- 同一浏览器多次使用 IP 不变，网站把它当作稳定真实用户
-- 多浏览器之间网站无法关联
-- 登录态持久化，后续操作免登录
-- 适合多店铺管理、多账号运营、竞品多账号监控
+Use this for multi-account work where each account needs a consistent browser identity.
 
-**代价：** 需要 API Key（托管服务），代理需自备。
+> **Note:** Hosted static IP support may depend on account configuration and availability. Use your own fixed proxy when a stable identity is required.
 
-> **托管固定 IP 即将推出（Coming Soon）** — 未来无需自备代理，由 Browser-act 直接分配长期稳定的固定出口 IP。
+## Choose by scenario
 
-## 场景化选型决策
+| Scenario | Recommended mode |
+| --- | --- |
+| Logged-in website with reusable local state | `chrome` with profile import |
+| Website needs local extensions, certificates, or hardware SSO | `chrome-direct` |
+| Protected public pages with no login | `stealth` privacy mode or `stealth-extract` |
+| Multiple logged-in accounts | `stealth` fixed identity with separate proxies |
+| One-time content extraction | `stealth-extract` |
 
-| 任务 | 选择 |
-|------|------|
-| 已经在 Chrome 登录的网站做自动化 | **chrome 导入 Profile** |
-| 需要本地扩展、证书、SSO | **chrome 直连（CDP）** |
-| 抓取被反爬保护的公开内容 | **stealth 隐私模式** + 代理 |
-| 多个独立账号长期运营 | **stealth 固定身份**（每账号一个浏览器） |
-| 只需要一次性读取页面 | **stealth-extract**（无需创建浏览器） |
+## Browser fields
 
-## 真实使用中的切换路径
+| Field | Meaning |
+| --- | --- |
+| `id` | Browser identifier used in commands |
+| `name` | Human-readable browser name |
+| `type` | `chrome`, `chrome-direct`, or `stealth` |
+| `desc` | Semantic description used by agents to choose a browser |
+| `dynamic_proxy` | Hosted regional proxy setting for stealth browsers |
+| `custom_proxy` | User-provided proxy URL |
+| `private` | Whether sessions start with a clean profile |
+| `confirm_before_use` | Whether the agent should ask before opening the browser |
 
-**场景 1：从 chrome 到 stealth**
+## Learn more
 
-> 你用 chrome 自动化某电商网站。运行几天后开始弹验证码。这时切换到 stealth 隐私模式——换"干净身份"继续，避免被关联。
-
-**场景 2：从 stealth 到 chrome-direct**
-
-> 你用 stealth 登录某企业系统，但该系统依赖特定浏览器扩展。切换到 chrome-direct 直连本地 Chrome（扩展已装）。
-
-**场景 3：从 chrome-direct 到 chrome**
-
-> 用 chrome-direct 跑了一次任务成功。但 chrome-direct 只有 1 个配额，不想每次占用本地 Chrome。导入登录态到 chrome 浏览器，以后用 chrome 跑。
-
-## 配额
-
-| 类型 | 最大数量 | 说明 |
-|------|----------|------|
-| `chrome`（含 chrome-direct） | 20 + 1 | chrome 20 个独立进程，chrome-direct 全局 1 个 |
-| `stealth` | 按账号下发 | 根据账号具体情况分配 |
-
-## 统一数据模型
-
-无论哪种形态，每个浏览器都是同一结构：
-
-| 字段 | 描述 |
-|------|------|
-| `id` | 唯一标识符，自动生成 |
-| `name` | 人类可读名称 |
-| `type` | `chrome` / `chrome-direct` / `stealth` |
-| `desc` | 自然语言用途描述（详见 [为 Agent 设计](/skill/agent-design#desc-语义记忆)） |
-| `dynamic_proxy` | 托管代理地区代码（仅 stealth） |
-| `custom_proxy` | 自定义代理地址（仅 stealth） |
-| `private` | 隐私模式开关，默认 false（仅 stealth） |
-| `confirm_before_use` | 每次使用前是否询问用户 |
-
-## 下一步
-
-- [反检测与封锁突破](/skill/anti-blocking) — stealth 浏览器的反爬能力详解
-- [并发与隔离](/skill/concurrency) — 多浏览器并行的工作模式
-- [为 Agent 设计](/skill/agent-design) — desc 语义记忆和浏览器选择逻辑
+- [Anti-detection & Blocking](/skill/anti-blocking): Understand stealth and proxy escalation.
+- [Concurrency & Isolation](/skill/concurrency): Run multiple browsers and sessions safely.
+- [Designed for Agents](/skill/agent-design): Learn how agents choose browsers by `desc`.

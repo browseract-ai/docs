@@ -1,102 +1,106 @@
 ---
-title: 安装
-description: 安装 Browser-act CLI，配置入口 Skill，并验证运行环境。
+title: Installation
+description: Install the Browser-act CLI, configure the entry Skill, and verify the runtime.
 ---
 
+Install Browser-act in two parts:
 
-## Agent 集成（推荐）
+1. The **Browser-act CLI**, which performs browser automation.
+2. The **entry Skill**, which tells your AI agent when and how to call the CLI.
 
-直接告诉你的 AI Agent：
+## Agent installation
 
-> 帮我安装 browser-act，Skill 地址：https://github.com/browser-act/skills/tree/main/browser-act ，安装成功后检测可用性。
+For agents that support skills, the shortest path is to ask the agent to install Browser-act for you:
 
-Agent 会自动完成 CLI 安装、Skill 配置，并验证是否可正常使用。
+```text
+Install browser-act.
+Skill URL: https://github.com/browser-act/skills/tree/main/browser-act
+After installation, verify that the CLI is available.
+```
 
-## 手动安装
+The agent should install the CLI, add the Skill file to its skill directory, and run a basic availability check.
+
+## Manual CLI installation
+
+Install the CLI with `uv` and Python 3.12:
 
 ```bash
 uv tool install browser-act-cli --python 3.12
 ```
 
-验证安装：
+Verify the command:
 
 ```bash
 browser-act --version
 ```
 
-## 认证（可选）
+## Optional: API key
 
-API Key 解锁以下功能：
+Browser-act can run basic Chrome and chrome-direct browser automation without an API key. An API key unlocks hosted capabilities:
 
-- **stealth 浏览器** — 反检测指纹伪装浏览
-- **stealth-extract** — 一条命令提取受保护页面内容
-- **动态代理** — 托管 IP 轮换，按区域自动分配
-- **solve-captcha** — 自动验证码解决
+- `stealth` browsers
+- `stealth-extract`
+- dynamic proxy rotation
+- `solve-captcha`
 
-不认证也可正常使用 chrome 和 chrome-direct 浏览器。
-
-获取 API Key：
+Start the login flow:
 
 ```bash
 browser-act auth login
-# 打开注册链接 → 完成注册 → 轮询获取 Key
 browser-act auth poll
 ```
 
-或直接设置：
+Or set a key directly:
 
 ```bash
-browser-act auth set <your-api-key>
+browser-act auth set <your_api_key>
 ```
 
-## 升级
+## Upgrade
+
+Upgrade the CLI with:
 
 ```bash
 uv tool upgrade browser-act-cli
 ```
 
-Skill 层自动检测 CLI 与 Skill 内容的版本不匹配，并引导升级。
+The Skill layer can detect version mismatches between the installed Skill and the CLI. When that happens, `get-skills` returns upgrade guidance for the agent.
 
-## 平台支持
+## Requirements
 
-| 平台 | 状态 |
-|------|------|
-| Windows | 支持 |
-| macOS | 支持 |
-| Linux | 支持 |
+| Requirement | Notes |
+| --- | --- |
+| Python 3.12+ | Required by the CLI package |
+| Chrome or Chromium | Required for `chrome` and `chrome-direct` browser types |
+| API key | Required only for `stealth` browser features |
 
-## 要求
+## Troubleshooting
 
-- Python 3.12+
-- Chrome/Chromium（用于 `chrome` 和 `chrome-direct` 类型）
-- API Key（仅 `stealth` 类型需要）
+### Command not found after installation
 
-## 故障排除
-
-### 安装后找不到命令
-
-确保 `uv` 工具目录在 PATH 中：
+Make sure the `uv` tool directory is in your shell `PATH`:
 
 ```bash
 uv tool dir
-# 将输出路径添加到 shell PATH
 ```
 
-### 诊断
+Add the returned directory to `PATH`, then open a new terminal.
 
-上传日志用于问题诊断：
+### Send diagnostics
+
+Upload diagnostic logs:
 
 ```bash
 browser-act report-log
 ```
 
-发送改进建议：
+Send product feedback:
 
 ```bash
-browser-act feedback "问题或建议的描述"
+browser-act feedback "Describe the issue or suggestion"
 ```
 
-## 下一步
+## What is next
 
-- [快速开始](/skill/quickstart) — 跑通第一次自动化
-- [Skill 系统](/skill/skills) — 了解 Agent 如何发现和使用 Browser-act
+- [Quick Start](/skill/quickstart): Run your first automation.
+- [Skill System](/skill/skills): Learn how agents discover Browser-act and load runtime instructions.

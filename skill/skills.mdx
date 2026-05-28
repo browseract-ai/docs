@@ -1,129 +1,122 @@
 ---
-title: Skill 系统
-description: 理解入口 Skill 与 get-skills runtime 的两层机制。
+title: Skill System
+description: Understand the two-layer entry Skill and get-skills runtime model.
 ---
 
+Browser-act uses a two-layer Skill model:
 
-## 安装入口 Skill
+1. The **entry Skill** makes the agent aware that Browser-act exists.
+2. The **`get-skills` runtime** returns current environment state, command guidance, and dynamic instructions.
 
-告诉你的 Agent：
+## Install the entry Skill
 
-> 从 https://github.com/browser-act/skills/tree/main/browser-act 安装 browser-act Skill
+Ask your agent:
 
-Agent 会自动将 SKILL 文件下载到其 Skills 目录。安装完成后，Agent 即可感知 Browser-act 并在合适时机自动调用。
-
-## 两层架构
-
-```
-┌─────────────────────────────────────────┐
-│  入口 Skill（安装的文件）                │
-│  轻量、稳定、极少变更                    │
-│  教会 Agent："browser-act 存在"          │
-├─────────────────────────────────────────┤
-│  运行时内容（get-skills CLI）            │
-│  环境感知、版本匹配                      │
-│  教会 Agent："这样使用它"                │
-└─────────────────────────────────────────┘
+```text
+Install the browser-act Skill from:
+https://github.com/browser-act/skills/tree/main/browser-act
 ```
 
-### 第一层：入口 Skill
+After installation, the agent can recognize Browser-act tasks and call `get-skills` before using the CLI.
 
-安装到 Agent Skills 目录的文件。它刻意精简：
-- 触发 Agent 对 Browser-act 的感知
-- 包含触发词用于激活
-- 将 Agent 指向 `get-skills` 获取实际指令
+## Two layers
 
-入口 Skill 很少变更——它是稳定入口。
+```text
+Entry Skill
+  - lightweight and stable
+  - teaches the agent that Browser-act exists
+  - points the agent to get-skills
 
-### 第二层：通过 `get-skills` 获取运行时内容
+get-skills runtime
+  - environment-aware
+  - version-aware
+  - returns current browser, session, command, and safety instructions
+```
 
-Agent 的第一条命令必须始终是：
+## Layer 1: entry Skill
+
+The installed Skill file is intentionally small. It:
+
+- triggers agent awareness
+- contains activation language
+- tells the agent to load runtime content through `get-skills`
+- changes rarely
+
+## Layer 2: `get-skills`
+
+The first command for a Browser-act task should be:
 
 ```bash
 browser-act get-skills core --skill-version <version>
 ```
 
-返回 Agent 当前会话所需的一切：
-- **环境状态** — CLI 版本、API Key 状态
-- **浏览器列表** — 所有可用浏览器及其 ID、类型、描述
-- **活跃会话** — 正在运行的会话
-- **核心命令** — 交互参考
-- **指令** — 基于当前状态的动态规则
+The output gives the agent:
 
-## 主题
+- CLI and API key status
+- available browsers and descriptions
+- active sessions
+- core command guidance
+- dynamic instructions for the current environment
 
-| 命令 | 内容 | 何时使用 |
-|------|------|----------|
-| `get-skills core --skill-version <v>` | 核心工作流、命令、环境状态 | 总是第一个 |
-| `get-skills advanced` | 代理、Profile、隐私模式、高级模式 | 当核心不够时 |
-| `get-skills main` | 最新 SKILL.md 内容用于自更新 | 检测到版本不匹配时 |
+## Topics
 
-## 渐进式加载
+| Command | What it returns | When to use it |
+| --- | --- | --- |
+| `get-skills core --skill-version <v>` | Core workflow, commands, browser state, safety rules | First command for most tasks |
+| `get-skills advanced` | Proxy, profile import, privacy mode, and advanced browser setup | When the core instructions are not enough |
+| `get-skills main` | Latest Skill content for self-update | When a version mismatch is detected |
 
-- **多数任务只需 `get-skills core`** — 覆盖 80% 使用场景
-- **需要代理配置、Profile 导入等高级能力时** — 才按需加载 `get-skills advanced`
-- 避免一次性灌入大量不相关信息
+## Progressive loading
 
-## 版本兼容
+Most tasks only need `get-skills core`. Load advanced topics only when the task requires them. This keeps the agent context focused and reduces irrelevant instructions.
 
-`--skill-version` 参数让 CLI 检测不兼容：
+## Version compatibility
+
+The `--skill-version` parameter lets the CLI detect mismatches:
 
 ```bash
-# Skill 声称是 2.0.2 版本
 browser-act get-skills core --skill-version 2.0.2
 ```
 
-如果 CLI 版本与 Skill 版本不兼容，输出包含升级指引：
-- CLI 过旧 → `uv tool upgrade browser-act-cli`
-- Skill 过旧 → `browser-act get-skills main` 获取最新 Skill 内容
+When versions are incompatible, the output includes direct upgrade guidance:
 
-版本兼容是自动的：Skill 文件声明版本号，CLI 检查兼容性。不兼容时输出中直接包含升级指引，Agent 自动执行。
+- CLI too old: run `uv tool upgrade browser-act-cli`
+- Skill too old: run `browser-act get-skills main`
 
-## 动态指令
+## Dynamic instructions
 
-`get-skills` 输出包含"指令"——基于当前状态生成的上下文规则：
+`get-skills` adjusts guidance based on the current state:
 
-| 指令 | 触发条件 |
-|------|---------|
-| **多浏览器指令** | 多个浏览器存在时，提供基于 `desc` 匹配的选择引导 |
-| **会话指令** | 发现已有会话时，提醒 Agent 所有权规则 |
-| **认证指令** | API Key 缺失时，引导远离 stealth 操作 |
+| Situation | Instruction returned |
+| --- | --- |
+| Multiple browsers exist | Choose by `desc` match or ask the user |
+| Active sessions exist | Respect session ownership and naming |
+| API key is missing | Avoid stealth-only features or guide authentication |
+| Sensitive browser is selected | Ask before opening a `confirm_before_use` browser |
 
-指令是 Browser-act 根据 Agent 当前情况调整引导的机制，无需在 Skill 中硬编码每种场景。
+## Agent workflow
 
-## 从 Agent 视角看的工作流
+1. The user asks for a browser task.
+2. The entry Skill activates.
+3. The agent runs `browser-act get-skills core --skill-version <version>`.
+4. The agent reads environment state, available browsers, commands, and instructions.
+5. The agent selects a browser.
+6. The agent asks for confirmation when required.
+7. The agent runs browser commands.
+8. The agent closes sessions and updates browser descriptions when useful.
 
-```
-1. 用户说 "查一下 example.com 的价格"
-2. Agent 的入口 Skill 激活（触发词匹配）
-3. Agent 运行：browser-act get-skills core --skill-version 2.0.2
-4. Agent 收到：环境状态 + 浏览器列表 + 命令 + 动态指令
-5. Agent 选择合适的浏览器（desc 匹配）
-6. Agent 向用户确认（确认门控）
-7. Agent 执行浏览器操作
-8. Agent 关闭会话，更新浏览器 desc
-```
+## Agent compatibility
 
-## Agent 兼容性
+Browser-act can work with agents that can:
 
-适用于任何能够：
-1. 从 Skills 目录读取 SKILL 文件
-2. 执行 Shell 命令
-3. 解析文本输出
+1. load Skill files
+2. run shell commands
+3. read text output
 
-的 Agent。
+Known compatible environments include Claude Code, GitHub Copilot, Cursor, Windsurf, Gemini CLI, OpenCode, Codex, and similar agent runtimes.
 
-兼容列表：
-- **Claude Code** — SKILL.md 在 `.claude/skills/`
-- **GitHub Copilot** — 通过 Skills 目录发现
-- **Cursor** — Rules/Skills 目录
-- **Windsurf** — Agent Skills 系统
-- **Google Gemini CLI** — AGENTS.md 集成
-- **OpenCode** — Skills 系统
-- **Codex** — Skills 集成
+## Learn more
 
-## 下一步
-
-- [快速开始](/skill/quickstart) — 跑通第一次自动化
-- [命令参考](/skill/commands) — 完整命令索引
-- [Skill Forge](/skill/skill-forge) — 把做过的事固化为可复用 Skill
+- [Quick Start](/skill/quickstart): Run the first automation loop.
+- [Command Reference](/skill/commands): Open the full command index.
+- [Skill Forge](/skill/skill-forge): Generate reusable task-specific skills.

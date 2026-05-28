@@ -1,60 +1,60 @@
 ---
-title: 跨平台远程人机接管
-description: 自动化卡住时生成实时链接，让用户在任意设备接管后继续执行。
+title: Remote Assist
+description: Generate a live URL so a human can take over a stuck browser session from any device.
 ---
 
+Remote Assist lets an agent hand control to a person when automation reaches a step that needs human input.
 
-自动化卡住时把控制权交给人——任意设备打开链接即可接管，处理完 Agent 无缝继续。
-
-## 一行命令交给人
+## Hand off in one command
 
 ```bash
-browser-act --session my-task remote-assist --objective "完成 2FA 验证"
+browser-act --session my-task remote-assist --objective "Complete 2FA verification"
 ```
 
-CLI 返回一个实时远程 URL。
+The `--objective` text tells the human what to complete. The CLI returns a live URL for the current session.
 
-## 任意设备接管
+## Any-device takeover
 
-用户在任何设备的任何浏览器中打开这个链接，就能看到浏览器画面并操作：
+The link can be opened from:
 
-- 笔记本 / 台式机
-- 手机 / 平板
-- 远程服务器场景（从自己设备接管）
-- SSH 远程开发场景
+- a laptop or desktop browser
+- a phone or tablet
+- the user's own device while the agent runs on a remote machine
+- an SSH or server-based development environment
 
-**无需切回 headed 模式、无需在同一台机器、无需安装任何软件。** 不依赖屏幕共享、不依赖 VNC，一个链接，浏览器原生支持。
+No headed browser, VNC, RDP, screen sharing, or extra client software is required.
 
-## 典型场景
+## Typical scenarios
 
-| 场景 | 解决方式 |
-|------|----------|
-| 需要手机的双因素认证 | 用户在手机上接收短信/App 验证码并输入 |
-| 自动解决不了的复杂验证码 | 拖拽拼图、行为验证等 |
-| 需要硬件令牌的企业 SSO | UKey、动态口令卡等本地硬件设备 |
-| 工作流中间需要人类判断 | 多个候选项中做选择、合规审核、敏感操作前确认 |
-| 多人协作 | 把链接发给同事帮忙完成验证 |
+| Scenario | How Remote Assist helps |
+| --- | --- |
+| Two-factor authentication | The user enters SMS, authenticator app, or email codes |
+| Complex CAPTCHA | A person completes drag puzzles, behavior checks, or unsupported CAPTCHA types |
+| Enterprise SSO | The user handles hardware tokens, certificates, or local device checks |
+| Human judgment | The user chooses between options or approves a sensitive step |
+| Collaboration | A teammate can open the link and complete the blocked step |
 
-## 接管完成后无缝继续
+## Continue after handoff
 
-人完成验证后：
-- 不需要重启会话
-- 不丢失自动化上下文
-- 浏览器状态、Cookie、当前页面位置全部保留
-- Agent 直接从下一步继续执行
+After the human completes the task:
 
-## 与标准方案对比
+- the session does not restart
+- cookies and browser state remain available
+- the current page position is preserved
+- the agent can continue with the next command
 
-| | 标准方案 | Browser-act |
-|---|---|---|
-| headless 时如何让人介入 | 必须切回 headed | 直接生成远程 URL |
-| 需要人在同一台机器 | 是 | 否 |
-| 需要装额外软件（VNC/RDP/屏幕共享） | 是 | 否 |
-| 跨设备接管 | 不支持 | 任意浏览器即可 |
-| 用户完成后 | 手动重启会话 | Agent 自动继续 |
+## Compared with standard approaches
 
-## 下一步
+| Need | Standard setup | Browser-act |
+| --- | --- | --- |
+| Human intervention in headless mode | Switch to headed mode or attach a desktop | Generate a live URL |
+| Same-machine access | Usually required | Not required |
+| Extra software | Often VNC, RDP, or screen sharing | None |
+| Cross-device support | Limited | Any modern browser |
+| Resume automation | Often manual | Continue in the same session |
 
-- [更好的无头浏览器](/skill/headless) — 无头默认 + 远程接管的设计哲学
-- [反检测与封锁突破](/skill/anti-blocking) — 在调用 remote-assist 之前先尝试自动化解决
-- [为 Agent 设计](/skill/agent-design) — 设计哲学、自动化能力、安全为默认
+## Learn more
+
+- [Better Headless Browser](/skill/headless): Understand how handoff works with headless sessions.
+- [Anti-detection & Blocking](/skill/anti-blocking): Try automatic solving before handoff when appropriate.
+- [Designed for Agents](/skill/agent-design): Learn the safety and confirmation model.
