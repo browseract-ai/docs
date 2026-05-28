@@ -1,56 +1,56 @@
 ---
-title: "Introduction"
-description: "BrowserAct Skill is the entry layer that teaches AI agents how to safely use the BrowserAct CLI."
-mode: "wide"
+title: 简介
+description: Browser-act 是为 AI Agent 打造的浏览器自动化 CLI。
 ---
 
-BrowserAct Skill lets AI agents use BrowserAct CLI safely.
 
-It tells an agent how to discover BrowserAct, load runtime-aware instructions with `get-skills`, follow safety rules, and operate browsers through the CLI.
+为 AI Agent 打造的浏览器自动化 CLI。突破反爬封锁，受阻时跨平台远程人机接力。多任务并发提效，多会话并行互不影响，多账号隔离独立运行。
 
-Use this page to choose where to start.
+## 为什么需要 Browser-act
 
-<Columns cols={2}>
-  <Card title="Install the Skill" icon="download" href="/skill/installation" cta="Install">
-    Add BrowserAct Skill to your AI agent and verify the CLI is available.
-  </Card>
-  <Card title="Quickstart" icon="rocket" href="/skill/quickstart" cta="Start">
-    Run your first browser automation with BrowserAct CLI.
-  </Card>
-  <Card title="How the Skill works" icon="blocks" href="/skill/how-it-works" cta="Understand">
-    Understand the entry Skill, get-skills runtime, version matching, and safety rules.
-  </Card>
-  <Card title="Workflow" icon="route" href="/learn/core-concepts" cta="Go to Workflow">
-    Prefer a visual hosted workflow builder? Go to Workflow.
-  </Card>
-</Columns>
+AI Agent 需要的浏览器，要能去标准工具去不了的地方、要在卡住时让人无缝接管、要在多任务并行时互不串号、要为 LLM 推理而非人类脚本设计。
 
-## What the Skill does
+**给 Agent 用的浏览器，必须做对四件事：**
 
-- Loads the right instructions at runtime through `get-skills`.
-- Gives the agent the current browser, session, and CLI state.
-- Guides the agent to use BrowserAct CLI with safety confirmations for sensitive actions.
+### 1. 突破封锁——三层递进
 
-## Skill and CLI Runtime
+- **环境层** — stealth 指纹伪装、TLS 轮换、代理切换。绝大多数封锁压根不会触发
+- **执行层** — `solve-captcha` 自动破解验证码；`stealth-extract` 一行命令提取受保护页面
+- **人工层** — `remote-assist` 生成实时链接，任意设备接管，处理完 Agent 无缝继续
 
-Skill is the agent-facing instruction layer.
+### 2. 三种浏览器形态——按真实场景分
 
-CLI Runtime is the execution layer that actually opens pages, reads state, clicks, types, manages sessions, uses stealth mode, captures network requests, and handles handoff when needed.
+- **`chrome`** — 复用本地 Chrome 登录态（导入 Profile / CDP 直连两种模式）
+- **`stealth` 隐私模式** — 每会话全新指纹 + 代理轮换，无登录大批量抓取无阻碍
+- **`stealth` 固定身份** — 固定指纹 + 固定 IP，登录账号多浏览器并行身份不被关联
 
-## Minimum agent startup sequence
+### 3. 并发零干扰——每个 Agent 独立车道
 
-```bash
-browser-act get-skills core --skill-version <version>
-browser-act browser list
-browser-act --session my-task browser open <browser-id> https://example.com
-browser-act --session my-task state
-browser-act --session my-task session close my-task
-```
+- **跨浏览器并行** — 独立 Cookie / 指纹 / 代理，网站无法关联
+- **同浏览器多会话** — 共享登录态独立执行，互不卡住
+- **隐私模式** — 每会话全新指纹 + 空 Profile，运行结束零残留
 
-Ask for user confirmation before sensitive operations, such as creating or deleting browsers, importing profiles, changing proxy or privacy settings, or using a `confirm_before_use` browser.
+### 4. 为 Agent 推理而设计——不是给人写脚本
 
-## Next step
+- **紧凑文本输出** — 索引化文本格式，比 JSON / HTML 节省数倍 Token
+- **索引化交互** — `state` 返回索引列表，`click 3` / `input 2 "..."`，无需解析 DOM
+- **语义化记忆** — 浏览器带 `desc`，按任务语义匹配
+- **并发安全** — 会话归属 + 显式命名，多 Agent 不冲突
 
-<Card title="Install the Skill" icon="download" href="/skill/installation" cta="Continue">
-  Set up BrowserAct Skill and verify that the CLI is available before running your first automation.
-</Card>
+## 不止于此
+
+- **更好的无头浏览器** — 默认无头不打扰、stealth headless 不被检测
+- **跨平台远程人机接管** — 任意设备打开链接即接管，处理完 Agent 无缝继续
+- **Skill Forge — 你的专属爬虫工程师** — 探索一次生成可部署 Skill，反复跑同一稳定路径
+
+## 兼容性
+
+**系统：** Windows、macOS、Linux
+
+**Agent：** Claude Code · Cursor · VS Code · OpenCode · OpenClaw · Codex · Gemini CLI — 适用于任何能执行 Shell 命令 + 支持 Skills 的 AI Agent。
+
+## 下一步
+
+- [安装](/skill/installation) — 立即开始
+- [快速开始](/skill/quickstart) — 60 秒看到第一个结果
+- [命令参考](/skill/commands) — 完整命令索引

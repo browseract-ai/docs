@@ -1,0 +1,176 @@
+---
+title: 并发与隔离
+description: 用浏览器身份和会话工作区实现多任务并行且互不串号。
+---
+
+
+**浏览器是身份，会话是工作区，状态从不互相渗透。**
+
+每个 Agent 都有自己的车道。多 Agent 多任务并行，互不串号、互不污染。
+
+## 三种并发模型
+
+| 模型 | 隔离粒度 | 共享什么 | 典型场景 |
+|------|---------|---------|---------|
+| **跨浏览器并行** | 浏览器级 | 无（独立指纹/IP/Cookie） | 多账号监控、多身份运营 |
+| **同浏览器多会话** | 会话级 | 共享登录态 | 同账号下并行多任务 |
+| **隐私模式零残留** | 会话级 | 无（每次重新开始） | 一次性数据采集、高匿名 |
+
+## 跨浏览器并行（独立身份）
+
+任意数量浏览器同时运行，每个独立的 Cookies / 指纹 / 代理 / 登录态。**网站无法关联它们。**
+
+```bash
+# 每个 session 名全局唯一，即使指向不同浏览器也不能重复
+browser-act --session monitor-shop-a browser open competitor1 https://shop-a.com
+browser-act --session monitor-shop-b browser open competitor2 https://shop-b.com
+browser-act --session monitor-shop-c browser open competitor3 https://shop-c.com
+```
+
+**特点：**
+- 每个 stealth 浏览器是独立身份
+- 状态零交叉污染
+- 用一个身份监控竞品，用另一个身份跑内部自动化，互不影响
+
+**适用：** 多账号监控、多店铺运营、批量身份隔离。
+
+## 同浏览器多会话（共享登录态）
+
+一个浏览器，多个会话。**共享登录态，独立执行。**
+
+```bash
+# 同一浏览器上并行两个任务
+browser-act --session task-a browser open <browser-id> https://site.com/page1
+browser-act --session task-b browser open <browser-id> https://site.com/page2
+```
+
+**特点：**
+- 共享 Cookie / 登录态
+- 各自独立的导航、网络捕获、对话框处理
+- 两个 Agent 在同一个 Gmail 账号里处理不同邮件线，谁都不会卡住对方
+- 会话归属由显式命名模型保障
+
+**适用：** 同账号下并行多个子任务。
+
+### 并行会话命名（全局唯一）
+
+并行场景下每个 `--session <name>` 必须**全局唯一**——即使分布在不同浏览器，名称也不能重复。命名应反映其用途：
+
+```bash
+# 同浏览器多会话：用名称区分子任务
+browser-act --session monitor-prices browser open shop1 https://shop.com
+browser-act --session track-orders browser open shop1 https://shop.com/orders
+```
+
+## 隐私模式（零残留）
+
+每个会话用全新指纹与 Profile，运行结束不持久化任何数据。**会话之间零残留。**
+
+```bash
+# 创建启用隐私模式的 stealth 浏览器
+browser-act browser create --type stealth --name "ephemeral" \
+  --desc "一次性采集" --private true
+```
+
+**特点：**
+- 仅 stealth 浏览器支持
+- 每次会话全新指纹，避免指纹积累
+- 适合一次性数据采集，或任何"状态泄露即风险"的多账号场景
+
+详见 [反检测与封锁突破 → 隐私模式](/skill/anti-blocking#隐私模式)。
+
+## 会话模型
+
+### 什么是会话
+
+会话是绑定到一个名称的独立浏览器窗口。所有交互命令需要 `--session` 标志：
+
+```bash
+browser-act --session my-task browser open <id> https://example.com
+browser-act --session my-task state
+browser-act --session my-task click 2
+browser-act session close my-task
+```
+
+会话名称是你对特定浏览器上下文的句柄，持续存在直到被显式关闭。
+
+### 为什么要显式会话
+
+| 原因 | 说明 |
+|------|------|
+| **并行安全** | 多个 Agent（或对话）同时操作不冲突 |
+| **所有权清晰** | 每个会话属于创建它的 Agent |
+| **生命周期可控** | 带着意图打开，完成后关闭 |
+| **多浏览器定向** | 不同会话指向不同浏览器 |
+
+### 会话生命周期
+
+```
+创建 (browser open) → 使用 (state/click/input/...) → 关闭 (session close)
+```
+
+- 首次对 `browser open` 使用某个 `--session` 名称时，会话启动
+- 同名 `--session` 复用现有会话，不创建重复
+- 工作完成后关闭：`session close <name>`
+
+### 会话所有权
+
+- 会话属于创建它的 Agent / 对话
+- Agent 不应复用自己没创建的会话
+- 其他对话的现有会话被视为"别人的"
+- 新工作总是创建新会话
+
+### 自动回收
+
+会话如果 8 小时内没有收到任何命令，会被自动回收。不需要担心忘记关闭导致资源永久占用。
+
+### 列出与关闭
+
+```bash
+browser-act session list             # 列出所有活跃会话
+browser-act session close <name>     # 关闭指定会话
+browser-act session close            # 关闭当前会话
+```
+
+### 会话与浏览器的关系
+
+```
+┌── 浏览器 A (chrome) ───────────────────┐
+│  Session "search"  → google.com        │
+│  Session "monitor" → analytics.com     │
+└────────────────────────────────────────┘
+
+┌── 浏览器 B (stealth) ──────────────────┐
+│  Session "scrape"  → target-site.com   │
+└────────────────────────────────────────┘
+```
+
+- 一个会话只属于一个浏览器
+- 一个浏览器可以有多个会话
+- 同浏览器的会话共享 Cookie/登录，但导航独立
+
+## 不需要会话的命令
+
+浏览器管理或系统级命令不需要 `--session`：
+
+- `browser list`、`browser create`、`browser delete`、`browser update`
+- `browser regions`、`browser list-profiles`
+- `session list`
+- `auth login`、`auth poll`、`auth set`、`auth clear`
+- `get-skills`、`report-log`、`feedback`
+- `stealth-extract`（自创建临时上下文）
+
+## 最佳实践
+
+| 实践 | 说明 |
+|------|------|
+| **描述性命名** | `check-price` 而不是 `s1` |
+| **用完必关** | 不要让会话悬着 |
+| **一浏览器多会话** | 优先并行会话而非重复创建浏览器 |
+| **名称全局唯一** | 即使指向不同浏览器，并行 session 名也不能重复 |
+| **一任务一会话** | 一个逻辑任务 = 一个会话 |
+
+## 下一步
+
+- [三种浏览器形态](/skill/browser-modes) — 选哪种浏览器决定隔离粒度
+- [为 Agent 设计](/skill/agent-design) — 设计哲学、自动化能力、安全为默认

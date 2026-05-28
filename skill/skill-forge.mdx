@@ -1,0 +1,142 @@
+---
+title: Skill Forge
+description: 探索一次生成可部署 Skill，让 AI 替你写可复用爬虫。
+---
+
+
+构建在 Browser-act CLI 之上的扩展 Skill。**让 AI 替你写爬虫，探索一次反复使用。**
+
+## 解决什么问题
+
+每次让 Agent 抓新站，它都从头来一遍：
+- 执行路径不同
+- 失败模式不同
+- 规模化不可靠
+- Token 消耗随次数线性增长
+
+**Skill Forge 把"探索网站"和"使用网站"彻底分开：**
+
+> 探索一次后生成可部署 Skill 包，500 / 5,000 条数据都走同一条稳定路径。
+
+爬虫团队从"接需求写代码"，变成"维护一个让 Agent 自助生成 Skill 的平台"。
+
+## 安装
+
+Skill Forge 是独立于 Browser-act 入口 Skill 的扩展。需单独安装。
+
+### Agent 集成（推荐）
+
+直接告诉你的 AI Agent：
+
+> 帮我安装 browser-act-skill-forge，Skill 地址：https://github.com/browser-act/skills/tree/main/browser-act-skill-forge ，安装成功后检测可用性。
+
+Agent 会自动完成 Skill 配置并验证可用性。
+
+### 前置要求
+
+- 已安装 Browser-act CLI（参见 [安装](/skill/installation)）
+- 已安装 browser-act 入口 Skill
+
+## 工作机制：四步流水线
+
+```
+描述 → 探索 → 生成 → 自测试
+```
+
+| 步骤 | 做什么 |
+|------|--------|
+| **01 · 描述** | 告诉 Agent 你要什么 |
+| **02 · 探索** | API 优先，DOM 兜底 |
+| **03 · 生成** | 参数化 Skill 包 |
+| **04 · 自测试** | 端到端验证 + 自修复 |
+
+### Step 01 · 描述
+
+用自然语言告诉 Agent 你要什么数据，未来会怎么用：
+
+> "抓 LinkedIn 招聘的标题、公司、薪资、URL。我之后要跑 300 个关键词。"
+
+### Step 02 · 探索：API 优先 / DOM 兜底
+
+Agent 自动发现实现路径：
+
+| 优先级 | 方式 | 稳定性 |
+|--------|------|--------|
+| 1 | **API 优先** — 网络捕获识别 endpoint | 10x 稳定 |
+| 2 | **DOM 兜底** — 元素提取 | 受改版影响 |
+
+API 路径只要后端契约不变就一直能用，DOM 路径在网站改版时需要重新探索。
+
+### Step 03 · 生成：参数化 Skill 包
+
+业务变量变成 CLI 参数（不是硬编码）：
+
+```bash
+# 生成的 Skill 接受参数化输入
+forged-skill linkedin-jobs --keyword "AI Engineer" --location "Remote"
+forged-skill linkedin-jobs --keyword "Backend" --location "SF"
+```
+
+输出物：
+- `SKILL.md` — Skill 文件
+- 可执行脚本
+- 部署即用
+
+### Step 04 · 自测试：端到端验证 + 自修复
+
+sub-agent 自动跑测试，失败就自修复直到通过——无需人工介入。
+
+## 商业价值
+
+### 对个人开发者
+
+- 一次探索成本，后续无限次低成本调用
+- 站点改版时，告诉 Agent 重新探索一遍即可
+- Token 消耗从"每次调用都付"降为"探索时付一次"
+
+### 对爬虫团队
+
+传统模式：
+
+```
+需求 → 工程师写代码 → 测试 → 部署 → 维护
+       ↑                                ↑
+       接需求                          代码因改版失效
+```
+
+Skill Forge 模式：
+
+```
+需求 → Agent 探索生成 Skill → 自测试 → 部署
+                                          ↑
+                                      改版时重新探索
+```
+
+工程师从"写每个爬虫"变成"维护让 Agent 自助生成 Skill 的平台"。
+
+## 适用场景
+
+| 场景 | 说明 |
+|------|------|
+| **批量数据采集** | 同一模式跑 N 个关键词、N 个区域、N 个分类 |
+| **跨站点比价** | 一次探索每个站点，生成统一接口的 Skill 集 |
+| **定期监控** | 价格变化、库存变化、新品上架 |
+| **数据挖掘** | 招聘、电商、社交等结构化数据获取 |
+| **企业内部流程** | 把内部系统的某个固定操作封装为可复用 Skill |
+
+## 与 Browser-act 入口 Skill 的关系
+
+| | Browser-act 入口 Skill | Skill Forge |
+|---|---|---|
+| 角色 | 基础底座，提供本机浏览器 CLI 能力 | 扩展 Skill，构建在 CLI 之上 |
+| 必装 | ✓ | 选装 |
+| 用法 | Agent 实时探索操作浏览器 | Agent 探索一次，生成可复用 Skill |
+| Token 成本 | 每次调用都付 | 探索时付一次 |
+
+Browser-act 提供"做事的能力"，Skill Forge 提供"把做事的过程固化为 Skill"的能力。
+
+## 下一步
+
+- [安装](/skill/installation) — 安装基础 CLI 和入口 Skill
+- [反检测与封锁突破](/skill/anti-blocking) — Skill Forge 探索时依赖的反爬能力
+- [为 Agent 设计](/skill/agent-design) — 网络捕获用于 API 端点发现

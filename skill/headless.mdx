@@ -1,0 +1,64 @@
+---
+title: 更好的无头浏览器
+description: 默认无头运行，需要人介入时用 remote-assist 远程接管。
+---
+
+
+行业的无头浏览器有两个痛点：**容易被检测**、**需要人介入时必须切回 headed**。Browser-act 把这两个问题一起解决了。
+
+## 默认无头：为什么这样选
+
+Browser-act 默认运行在无头模式：
+
+- **不打扰用户当前操作** — 不会突然弹出浏览器窗口
+- **资源占用最小** — 没有 UI 渲染开销，CPU/内存占用更低
+- **Agent 该有的样子** — 后台静默运行，专注完成任务
+
+需要本地可视化调试时再开 `--headed`，但生产场景默认无头。
+
+## 不被检测的无头
+
+**行业痛点：** 标准方案的 headless 模式会被识别为机器人——`navigator.webdriver` 暴露、缺失 plugin、Canvas 指纹异常等等。这逼得很多团队不得不开 headed 来对抗反爬。
+
+**Browser-act 的方案：** stealth 浏览器在 headless 模式下保持完整伪装：
+
+- 指纹伪装在 headless 下依然生效
+- Navigator 属性归一化
+- TLS 指纹与真实浏览器一致
+- 通过常见的 headless 检测测试
+
+**结果：** 不必为了反检测牺牲资源效率。无头跑，仍然能通过绝大多数网站的反爬检测。极个别强反爬站点仍可能识别——这时再切 headed 兜底（见下文）。
+
+## 体验更好的无头：需要人时无需切 headed
+
+**行业惯例：** headless 看不见 → 必须切回 headed 才能让人操作 → 用户当前工作被打断、生产场景根本切不了。
+
+**Browser-act 的方案：** headless 模式下直接通过 `remote-assist` 生成实时 URL，用户在任意设备的浏览器打开即可接管，不需要切 headed。
+
+详见 [跨平台远程人机接管](/skill/remote-assist)。
+
+## 与 headed 模式的区别
+
+| 模式 | 适用场景 |
+|------|---------|
+| **默认 headless** | 生产环境、Agent 自主运行、无头服务器 |
+| **`--headed`** | 仅本地调试或需要主动可视化观察时 |
+| **headless + remote-assist** | 生产环境的最佳搭配——平时静默，需要人时远程接管 |
+
+### Headed 模式何时使用
+
+```bash
+browser-act --session debug browser open <id> https://example.com --headed
+```
+
+适用场景：
+- 被反爬识别时可切 headed 作为兜底，仿真性更高
+- 可视化调试自动化问题
+- 用户完成手动步骤，Agent 处理其余
+- 演示和协同浏览场景
+
+## 下一步
+
+- [跨平台远程人机接管](/skill/remote-assist) — 无头模式下让人介入的完整方案
+- [反检测与封锁突破](/skill/anti-blocking) — 不被检测的 stealth 引擎是怎么做的
+- [三种浏览器形态](/skill/browser-modes) — 选择合适的浏览器

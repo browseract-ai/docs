@@ -20,7 +20,7 @@
         "icon": "sparkles",
         "groups": [
           {
-            "group": "Start here",
+            "group": "入门",
             "icon": "rocket",
             "expanded": true,
             "pages": [
@@ -30,38 +30,32 @@
             ]
           },
           {
-            "group": "Skill architecture",
-            "icon": "blocks",
-            "expanded": false,
-            "pages": [
-              "skill/how-it-works",
-              "skill/get-skills-runtime"
-            ]
-          },
-          {
-            "group": "Runtime model",
-            "icon": "workflow",
-            "expanded": false,
-            "pages": [
-              "skill/architecture",
-              "skill/sessions"
-            ]
-          },
-          {
-            "group": "Capabilities",
+            "group": "特性",
             "icon": "shield-check",
-            "expanded": false,
+            "expanded": true,
             "pages": [
-              "skill/stealth",
-              "skill/advanced",
-              "skill/security"
+              "skill/anti-blocking",
+              "skill/headless",
+              "skill/remote-assist",
+              "skill/browser-modes",
+              "skill/concurrency",
+              "skill/agent-design"
             ]
           },
           {
-            "group": "Reference",
+            "group": "你的专属爬虫工程师",
+            "icon": "hammer",
+            "expanded": false,
+            "pages": [
+              "skill/skill-forge"
+            ]
+          },
+          {
+            "group": "集成与参考",
             "icon": "terminal",
             "expanded": false,
             "pages": [
+              "skill/skills",
               "skill/commands"
             ]
           }
