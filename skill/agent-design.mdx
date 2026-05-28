@@ -1,6 +1,7 @@
 ---
 title: Designed for Agents
 description: Learn how Browser-act uses compact state, indexed actions, semantic browser descriptions, and safety gates for AI agents.
+mode: wide
 ---
 
 Browser-act is built for models, not for humans writing browser scripts by hand. The interface is designed around one question: **how can an AI agent understand the browser state and choose the next safe action?**
@@ -22,6 +23,13 @@ title=Login
 
 The `*` marker highlights new or changed elements since the previous state call. This helps the agent focus on what changed.
 
+| State field | How the agent uses it |
+| --- | --- |
+| `url` | Confirms the current page before taking action |
+| `title` | Checks whether navigation reached the expected screen |
+| `[N]` index | Provides the target for commands such as `click 4` or `input 2` |
+| `*` marker | Points attention to elements that changed after the last action |
+
 ## Indexed interaction
 
 Agents act by element index:
@@ -31,11 +39,17 @@ browser-act --session s1 click 4
 browser-act --session s1 input 2 "hello@example.com"
 ```
 
-Benefits:
-
-- no XPath or CSS selector generation required
-- the agent sees the same elements it can operate
-- indexes are refreshed by calling `state` again after page changes
+<Columns cols={3}>
+  <Card title="No selector guessing" icon="mouse-pointer-click">
+    Agents do not need to generate XPath or CSS selectors for routine actions.
+  </Card>
+  <Card title="Same view, same actions" icon="list-ordered">
+    The agent acts on the same indexed elements it sees in `state`.
+  </Card>
+  <Card title="Refresh after change" icon="refresh-cw">
+    Calling `state` again refreshes indexes after navigation or page updates.
+  </Card>
+</Columns>
 
 ## Semantic browser descriptions
 
@@ -45,11 +59,17 @@ Each browser has a `desc` field. It tells the agent what the browser is for:
 Logged-in shopping account for price monitoring.
 ```
 
-Agents can use `desc` to:
-
-- match a task to an existing browser
-- avoid creating duplicate browsers for known workflows
-- accumulate knowledge about each browser over time
+<Columns cols={3}>
+  <Card title="Match tasks" icon="target">
+    Use `desc` to match a new request to an existing browser.
+  </Card>
+  <Card title="Avoid duplicates" icon="copy-check">
+    Reuse known browsers instead of creating new ones for the same job.
+  </Card>
+  <Card title="Improve over time" icon="pencil">
+    Append useful context when a browser becomes associated with more workflows.
+  </Card>
+</Columns>
 
 Update descriptions with:
 
@@ -62,11 +82,19 @@ browser-act browser update <browser_id> --desc "New complete description"
 
 When multiple browsers exist, the agent should follow this order:
 
-| Priority | Condition | Action |
-| --- | --- | --- |
-| 1 | A browser `desc` clearly matches the task | Use it without asking |
-| 2 | Only one browser exists | Use it |
-| 3 | Multiple browsers exist and none clearly match | Ask the user to choose |
+<div style={{ display: "flex", justifyContent: "center" }}>
+
+```mermaid
+flowchart TD
+  Start["Need browser"] --> Match["desc match?"]
+  Match -->|Yes| UseMatch["Use match"]
+  Match -->|No| Single["Only one?"]
+  Single -->|Yes| UseSingle["Use it"]
+  Single -->|No| Ask["Ask user"]
+  Ask --> Update["Update desc"]
+```
+
+</div>
 
 This selection logic belongs to the Skill layer. After a user chooses, the agent should update `desc` so future tasks can match more directly.
 
@@ -88,7 +116,8 @@ Agents should ask before sensitive operations:
 | Change `confirm_before_use` | Changes safety behavior |
 | Open a `confirm_before_use` browser | Uses a browser marked as sensitive |
 
-> **Caution:** These confirmation gates are agent instructions, not a replacement for platform-level security. Their effectiveness depends on the agent runtime and model following the Skill instructions.
+> [!WARNING]
+> These confirmation gates are agent instructions, not a replacement for platform-level security. Their effectiveness depends on the agent runtime and model following the Skill instructions.
 
 Example confirmation:
 
@@ -129,15 +158,33 @@ The exception is `solve-captcha`, which sends CAPTCHA challenge images to Browse
 
 Browser-act includes more than simple click and input commands:
 
-- **Network capture and HAR:** find API endpoints, debug auth flows, capture XHR-loaded data, and analyze page loading.
-- **JavaScript evaluation:** run `eval` for complex extraction or page-local operations.
-- **Cookie import and export:** move session state between browser types, machines, or CI jobs.
-- **Offline mode:** test forms and button flows without making real network requests.
+<Columns cols={2}>
+  <Card title="Network capture and HAR" icon="radio">
+    Find API endpoints, debug auth flows, capture XHR-loaded data, and analyze page loading.
+  </Card>
+  <Card title="JavaScript evaluation" icon="code">
+    Run `eval` for complex extraction or page-local operations.
+  </Card>
+  <Card title="Cookie import and export" icon="cookie">
+    Move session state between browser types, machines, or CI jobs.
+  </Card>
+  <Card title="Offline mode" icon="wifi-off">
+    Test forms and button flows without making real network requests.
+  </Card>
+</Columns>
 
 The full command list is in [Command Reference](/skill/commands).
 
 ## Learn more
 
-- [Command Reference](/skill/commands): Open the full command index.
-- [Anti-detection & Blocking](/skill/anti-blocking): Understand blocking and handoff.
-- [Concurrency & Isolation](/skill/concurrency): Run parallel agent work safely.
+<Columns cols={3}>
+  <Card title="Command Reference" icon="terminal" href="/skill/commands" cta="Open index">
+    Open the full Browser-act CLI command index.
+  </Card>
+  <Card title="Anti-detection & Blocking" icon="shield-check" href="/skill/anti-blocking" cta="Handle blocks">
+    Understand blocking, CAPTCHA handling, and handoff.
+  </Card>
+  <Card title="Concurrency & Isolation" icon="split" href="/skill/concurrency" cta="Run safely">
+    Run parallel agent work without mixing state.
+  </Card>
+</Columns>

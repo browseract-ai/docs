@@ -1,6 +1,7 @@
 ---
 title: Concurrency & Isolation
 description: Understand how browsers and sessions let agents run parallel work without state leaks.
+mode: wide
 ---
 
 Browser-act separates **identity** from **work**:
@@ -11,6 +12,17 @@ Browser-act separates **identity** from **work**:
 This model lets agents run multiple tasks without mixing state.
 
 ## Concurrency models
+
+<div style={{ display: "flex", justifyContent: "center" }}>
+
+```mermaid
+flowchart TD
+  Task["Agent work"] --> Cross["Separate browsers"]
+  Task --> Shared["Shared browser"]
+  Task --> Private["Private sessions"]
+```
+
+</div>
 
 | Model | Isolation level | Shared state | Best for |
 | --- | --- | --- | --- |
@@ -56,9 +68,19 @@ This avoids residue between jobs. The trade-off is that login state is not kept.
 
 ## Session lifecycle
 
-```text
-create/open -> read state -> act -> read state -> close
+<div style={{ display: "flex", justifyContent: "center" }}>
+
+```mermaid
+flowchart TD
+  Open["Open"] --> State1["State"]
+  State1 --> Act["Act"]
+  Act --> State2["State again"]
+  State2 --> Repeat{"More?"}
+  Repeat -->|Yes| Act
+  Repeat -->|No| Close["Close"]
 ```
+
+</div>
 
 Rules:
 
@@ -94,14 +116,34 @@ These commands operate outside a browser workspace:
 
 ## Best practices
 
-- Use descriptive session names such as `pricing-us`, `login-check`, or `report-export`.
-- Close sessions when the task is complete.
-- Use multiple sessions when tasks share one account.
-- Use separate browsers when tasks need separate identities.
-- Use privacy mode for one-off jobs that should leave no persistent state.
+> [!TIP]
+> Use descriptive session names such as `pricing-us`, `login-check`, or `report-export`. Close sessions when the task is complete.
+
+<Columns cols={2}>
+  <Card title="Shared account work" icon="copy">
+    Use multiple sessions when tasks should share one browser identity and login state.
+  </Card>
+  <Card title="Separate identities" icon="fingerprint">
+    Use separate browsers when tasks need separate accounts, regions, cookies, or proxies.
+  </Card>
+  <Card title="One-off jobs" icon="shield">
+    Use privacy mode for work that should leave no persistent profile state.
+  </Card>
+  <Card title="Readable ownership" icon="tag">
+    Name sessions by task and identity so agents and humans can understand what each session is doing.
+  </Card>
+</Columns>
 
 ## Learn more
 
-- [Browser Modes](/skill/browser-modes): Choose identities for each task.
-- [Designed for Agents](/skill/agent-design): Understand naming, selection, and safety rules.
-- [Command Reference](/skill/commands): Look up session commands.
+<Columns cols={3}>
+  <Card title="Browser Modes" icon="panel-top" href="/skill/browser-modes" cta="Choose identity">
+    Choose the right browser identity before running parallel work.
+  </Card>
+  <Card title="Designed for Agents" icon="brain-circuit" href="/skill/agent-design" cta="Understand rules">
+    See how naming, selection, and safety rules help agents operate cleanly.
+  </Card>
+  <Card title="Command Reference" icon="terminal" href="/skill/commands" cta="Find commands">
+    Look up browser and session management commands.
+  </Card>
+</Columns>

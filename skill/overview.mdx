@@ -22,12 +22,22 @@ Browser-act is a browser automation CLI built for AI agents. It helps agents ope
 
 ## Why Browser-act
 
-AI agents need a browser that goes beyond standard automation tools:
+AI agents need a browser that goes beyond standard automation tools.
 
-1. **Bypass blocking.** Use stealth fingerprints, TLS rotation, proxies, CAPTCHA solving, and remote handoff when a site challenges automation.
-2. **Choose the right browser mode.** Use local Chrome state, direct Chrome control, privacy-focused stealth sessions, or fixed-identity stealth browsers.
-3. **Run concurrent work safely.** Keep browsers, sessions, cookies, fingerprints, and proxies isolated so multiple tasks do not interfere with each other.
-4. **Work in a format built for models.** Read compact indexed state, act with commands such as `click 3` or `input 2 "text"`, and reuse browsers by semantic descriptions.
+<Columns cols={2}>
+  <Card title="Bypass blocking" icon="shield-check">
+    Use stealth fingerprints, TLS rotation, proxies, CAPTCHA solving, and remote handoff when a site challenges automation.
+  </Card>
+  <Card title="Choose the right browser" icon="panel-top">
+    Use local Chrome state, direct Chrome control, privacy-focused stealth sessions, or fixed-identity stealth browsers.
+  </Card>
+  <Card title="Run concurrent work" icon="split">
+    Keep browsers, sessions, cookies, fingerprints, and proxies isolated so multiple tasks do not interfere with each other.
+  </Card>
+  <Card title="Work in model-friendly state" icon="braces">
+    Read compact indexed state, act with commands such as `click 3`, and reuse browsers by semantic descriptions.
+  </Card>
+</Columns>
 
 ## Core capabilities
 
@@ -47,9 +57,3 @@ AI agents need a browser that goes beyond standard automation tools:
 | Operating systems | Windows, macOS, Linux |
 | Agent environments | Claude Code, Cursor, VS Code, OpenCode, OpenClaw, Codex, Gemini CLI, and other agents that can run shell commands and load skills |
 | Runtime objects | browser, session, profile, stealth browser, network capture, HAR, cookies |
-
-## Learn more
-
-- [Installation](/skill/installation): Set up the CLI and entry Skill.
-- [Quick Start](/skill/quickstart): Run the first browser automation loop.
-- [Skill System](/skill/skills): Understand how the entry Skill and `get-skills` work together.

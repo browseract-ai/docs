@@ -1,9 +1,31 @@
 ---
 title: Browser Modes
 description: Choose between chrome, chrome-direct, and stealth browsers for different automation jobs.
+mode: wide
 ---
 
 Browser-act uses browser types to represent different identity and runtime needs.
+
+## Quick mode picker
+
+Use the browser mode that matches the identity requirement of the task.
+
+<div style={{ display: "flex", justifyContent: "center" }}>
+
+```mermaid
+flowchart TD
+  Start["Task need"] --> Login["Local login?"]
+  Login -->|Yes| Chrome["chrome"]
+  Login -->|No| Live["Live Chrome?"]
+  Live -->|Yes| Direct["chrome-direct"]
+  Live -->|No| Fresh["Fresh identity?"]
+  Fresh -->|Yes| Privacy["stealth private"]
+  Fresh -->|No| Fixed["Stable identity?"]
+  Fixed -->|Yes| StealthFixed["stealth fixed"]
+  Fixed -->|No| ChromeNew["chrome"]
+```
+
+</div>
 
 | Mode | Best for | Key properties |
 | --- | --- | --- |
@@ -46,7 +68,8 @@ If Chrome must be restarted during import:
 browser-act browser import-profile <browser_id> <profile_id> --allow-restart-chrome
 ```
 
-> **Caution:** Profile import is a snapshot. Later changes in the source Chrome profile are not automatically synchronized.
+> [!WARNING]
+> Profile import is a snapshot. Later changes in the source Chrome profile are not automatically synchronized.
 
 ### What profile import includes
 
@@ -117,17 +140,25 @@ browser-act browser create \
 
 Use this for multi-account work where each account needs a consistent browser identity.
 
-> **Note:** Hosted static IP support may depend on account configuration and availability. Use your own fixed proxy when a stable identity is required.
+> [!NOTE]
+> Hosted static IP support may depend on account configuration and availability. Use your own fixed proxy when a stable identity is required.
 
 ## Choose by scenario
 
-| Scenario | Recommended mode |
-| --- | --- |
-| Logged-in website with reusable local state | `chrome` with profile import |
-| Website needs local extensions, certificates, or hardware SSO | `chrome-direct` |
-| Protected public pages with no login | `stealth` privacy mode or `stealth-extract` |
-| Multiple logged-in accounts | `stealth` fixed identity with separate proxies |
-| One-time content extraction | `stealth-extract` |
+<Columns cols={2}>
+  <Card title="Logged-in work" icon="key-round">
+    Use `chrome` with profile import when the site needs reusable local login state.
+  </Card>
+  <Card title="Live local Chrome" icon="chrome">
+    Use `chrome-direct` when the task depends on extensions, certificates, hardware SSO, or live cookies.
+  </Card>
+  <Card title="Protected public pages" icon="shield">
+    Use `stealth` privacy mode or `stealth-extract` when there is no login and a fresh identity is safer.
+  </Card>
+  <Card title="Multiple accounts" icon="users">
+    Use `stealth` fixed identity with separate proxies when each account needs a stable browser identity.
+  </Card>
+</Columns>
 
 ## Browser fields
 
@@ -144,6 +175,14 @@ Use this for multi-account work where each account needs a consistent browser id
 
 ## Learn more
 
-- [Anti-detection & Blocking](/skill/anti-blocking): Understand stealth and proxy escalation.
-- [Concurrency & Isolation](/skill/concurrency): Run multiple browsers and sessions safely.
-- [Designed for Agents](/skill/agent-design): Learn how agents choose browsers by `desc`.
+<Columns cols={3}>
+  <Card title="Anti-detection & Blocking" icon="shield-check" href="/skill/anti-blocking" cta="Escalate safely">
+    Understand stealth mode, proxies, CAPTCHA handling, and human handoff.
+  </Card>
+  <Card title="Concurrency & Isolation" icon="split" href="/skill/concurrency" cta="Run in parallel">
+    Run multiple browsers and sessions without leaking state between tasks.
+  </Card>
+  <Card title="Designed for Agents" icon="brain-circuit" href="/skill/agent-design" cta="Use descriptions">
+    Learn how agents choose browsers by semantic `desc` fields.
+  </Card>
+</Columns>

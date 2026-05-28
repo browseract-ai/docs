@@ -1,12 +1,22 @@
 ---
 title: Quick Start
 description: Get your first result in 60 seconds with extraction or a full browser session.
+mode: wide
 ---
 
 There are two fast paths:
 
 - Use `stealth-extract` when you only need to read page content.
 - Use a browser session when you need to click, type, log in, or inspect state between steps.
+
+<Columns cols={2}>
+  <Card title="Path A: Extract content" icon="file-text" href="#path-a-extract-content" cta="Read pages">
+    Use `stealth-extract` for JS-rendered pages, protected content, and one-off collection.
+  </Card>
+  <Card title="Path B: Automate a browser" icon="mouse-pointer-click" href="#path-b-automate-a-browser" cta="Operate pages">
+    Open a browser session, inspect page state, and interact with elements by index.
+  </Card>
+</Columns>
 
 ## Path A: extract content
 
@@ -57,9 +67,18 @@ browser-act session close my-task
 
 ## The core loop
 
-```text
-open -> state -> interact -> state -> ... -> close
+<div style={{ display: "flex", justifyContent: "center" }}>
+
+```mermaid
+flowchart TD
+  Open["Open"] --> State1["State"]
+  State1 --> Act["Act"]
+  Act --> State2["State again"]
+  State2 --> Act
+  State2 --> Close["Close"]
 ```
+
+</div>
 
 1. **Open** a page with `browser open`.
 2. **Read state** to see the current URL, title, and indexed elements.
@@ -97,6 +116,9 @@ Indexes can change after navigation, page updates, or DOM changes. Call `state` 
 
 ## Chain commands carefully
 
+> [!TIP]
+> Chain commands only when each step is independent. If the next action depends on page output, run `state` first and decide from the result.
+
 Use `&&` for independent steps:
 
 ```bash
@@ -109,11 +131,23 @@ Run commands separately when the next action depends on intermediate output, suc
 
 ## Learn more
 
-| Goal | Page |
-| --- | --- |
-| Choose the right browser mode | [Browser Modes](/skill/browser-modes) |
-| Handle blocking | [Anti-detection & Blocking](/skill/anti-blocking) |
-| Hand control to a human | [Better Headless Browser](/skill/headless) |
-| Run concurrent work | [Concurrency & Isolation](/skill/concurrency) |
-| Look up every command | [Command Reference](/skill/commands) |
-| Generate reusable scrapers | [Skill Forge](/skill/skill-forge) |
+<Columns cols={3}>
+  <Card title="Browser Modes" icon="panel-top" href="/skill/browser-modes" cta="Choose a mode">
+    Pick Chrome, chrome-direct, stealth privacy, or stealth fixed identity.
+  </Card>
+  <Card title="Anti-detection & Blocking" icon="shield-check" href="/skill/anti-blocking" cta="Handle blocking">
+    Use stealth, CAPTCHA solving, proxy options, and remote handoff.
+  </Card>
+  <Card title="Better Headless Browser" icon="eye-off" href="/skill/headless" cta="Run quietly">
+    Keep browser work headless while preserving stealth and handoff.
+  </Card>
+  <Card title="Concurrency & Isolation" icon="split" href="/skill/concurrency" cta="Run in parallel">
+    Separate browsers, sessions, accounts, and one-off jobs.
+  </Card>
+  <Card title="Command Reference" icon="terminal" href="/skill/commands" cta="Look up commands">
+    Open the full CLI command index.
+  </Card>
+  <Card title="Skill Forge" icon="hammer" href="/skill/skill-forge" cta="Generate skills">
+    Turn a successful exploration into a reusable scraping skill.
+  </Card>
+</Columns>

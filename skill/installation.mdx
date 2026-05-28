@@ -1,12 +1,22 @@
 ---
 title: Installation
 description: Install the Browser-act CLI, configure the entry Skill, and verify the runtime.
+mode: wide
 ---
 
 Install Browser-act in two parts:
 
 1. The **Browser-act CLI**, which performs browser automation.
 2. The **entry Skill**, which tells your AI agent when and how to call the CLI.
+
+<Columns cols={2}>
+  <Card title="1. Add the entry Skill" icon="sparkles">
+    Let your agent discover Browser-act and learn that `get-skills` must be loaded before browser work.
+  </Card>
+  <Card title="2. Verify the CLI" icon="terminal">
+    Install `browser-act-cli`, check the version, and confirm the runtime can execute commands.
+  </Card>
+</Columns>
 
 ## Agent installation
 
@@ -36,12 +46,8 @@ browser-act --version
 
 ## Optional: API key
 
-Browser-act can run basic Chrome and chrome-direct browser automation without an API key. An API key unlocks hosted capabilities:
-
-- `stealth` browsers
-- `stealth-extract`
-- dynamic proxy rotation
-- `solve-captcha`
+> [!NOTE]
+> Browser-act can run basic Chrome and chrome-direct browser automation without an API key. An API key unlocks hosted capabilities: `stealth` browsers, `stealth-extract`, dynamic proxy rotation, and `solve-captcha`.
 
 Start the login flow:
 
@@ -64,7 +70,8 @@ Upgrade the CLI with:
 uv tool upgrade browser-act-cli
 ```
 
-The Skill layer can detect version mismatches between the installed Skill and the CLI. When that happens, `get-skills` returns upgrade guidance for the agent.
+> [!TIP]
+> The Skill layer can detect version mismatches between the installed Skill and the CLI. When that happens, `get-skills` returns upgrade guidance for the agent.
 
 ## Requirements
 
@@ -78,7 +85,8 @@ The Skill layer can detect version mismatches between the installed Skill and th
 
 ### Command not found after installation
 
-Make sure the `uv` tool directory is in your shell `PATH`:
+> [!WARNING]
+> If `browser-act` is not found after installation, make sure the `uv` tool directory is in your shell `PATH`.
 
 ```bash
 uv tool dir
@@ -102,5 +110,11 @@ browser-act feedback "Describe the issue or suggestion"
 
 ## What is next
 
-- [Quick Start](/skill/quickstart): Run your first automation.
-- [Skill System](/skill/skills): Learn how agents discover Browser-act and load runtime instructions.
+<Columns cols={2}>
+  <Card title="Continue to Quick Start" icon="rocket" href="/skill/quickstart" cta="Run the first task">
+    Run a content extraction or a browser session in about a minute.
+  </Card>
+  <Card title="Learn the Skill System" icon="layers" href="/skill/skills" cta="Understand the runtime">
+    See how the entry Skill and `get-skills` keep agent instructions current.
+  </Card>
+</Columns>

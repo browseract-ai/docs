@@ -1,6 +1,7 @@
 ---
 title: Skill Forge
 description: Use Browser-act to generate reusable scraping skills after exploring a website once.
+mode: wide
 ---
 
 Skill Forge is an extension built on Browser-act CLI. It lets AI agents explore a website once, then generate a reusable skill for repeated extraction or automation.
@@ -16,6 +17,7 @@ Without a reusable skill, an agent has to rediscover the same website every time
 
 Skill Forge separates **exploration** from **reuse**.
 
+> [!NOTE]
 > Explore once. Generate a deployable skill package. Reuse the same stable path for hundreds or thousands of inputs.
 
 ## Installation
@@ -38,9 +40,16 @@ Requirements:
 
 ## Four-step pipeline
 
-```text
-describe -> explore -> generate -> self-test
+<div style={{ display: "flex", justifyContent: "center" }}>
+
+```mermaid
+flowchart LR
+  Describe["Describe"] --> Explore["Explore"]
+  Explore --> Generate["Generate"]
+  Generate --> Test["Self-test"]
 ```
+
+</div>
 
 | Step | What happens |
 | --- | --- |
@@ -88,13 +97,14 @@ The generated skill should be tested end to end. When the target site changes, t
 
 ## Business value
 
-### For individual developers
-
-- Pay the exploration cost once.
-- Reuse the generated path for many inputs.
-- Re-explore only when the site changes.
-
-### For teams
+<Columns cols={2}>
+  <Card title="For individual developers" icon="user">
+    Pay the exploration cost once, reuse the generated path for many inputs, and re-explore only when the site changes.
+  </Card>
+  <Card title="For teams" icon="users">
+    Move repeatable scraping work from one-off scripts toward generated, tested, reusable capabilities.
+  </Card>
+</Columns>
 
 Traditional model:
 
@@ -112,13 +122,20 @@ The engineering work shifts from writing every scraper by hand to maintaining a 
 
 ## Use cases
 
-| Use case | Example |
-| --- | --- |
-| Batch data collection | Run one pattern across many keywords, regions, or categories |
-| Cross-site price comparison | Generate skills for multiple sites and normalize output |
-| Periodic monitoring | Track price, inventory, or listing changes |
-| Data mining | Extract structured data from recruiting, e-commerce, or social sites |
-| Internal business processes | Wrap repeated browser operations into reusable skills |
+<Columns cols={2}>
+  <Card title="Batch data collection" icon="list">
+    Run one pattern across many keywords, regions, or categories.
+  </Card>
+  <Card title="Cross-site price comparison" icon="scale">
+    Generate skills for multiple sites and normalize output.
+  </Card>
+  <Card title="Periodic monitoring" icon="activity">
+    Track price, inventory, or listing changes.
+  </Card>
+  <Card title="Internal processes" icon="briefcase-business">
+    Wrap repeated browser operations into reusable skills.
+  </Card>
+</Columns>
 
 ## Entry Skill vs. Skill Forge
 
@@ -133,6 +150,14 @@ Browser-act gives agents the ability to act. Skill Forge helps agents turn a suc
 
 ## Learn more
 
-- [Installation](/skill/installation): Install the base CLI and entry Skill.
-- [Anti-detection & Blocking](/skill/anti-blocking): Use blocking tools during exploration.
-- [Designed for Agents](/skill/agent-design): Use network capture and semantic descriptions effectively.
+<Columns cols={3}>
+  <Card title="Installation" icon="download" href="/skill/installation" cta="Install first">
+    Install the base CLI and entry Skill before using Skill Forge.
+  </Card>
+  <Card title="Anti-detection & Blocking" icon="shield-check" href="/skill/anti-blocking" cta="Explore reliably">
+    Use blocking tools during exploration when a site challenges automation.
+  </Card>
+  <Card title="Designed for Agents" icon="brain-circuit" href="/skill/agent-design" cta="Use state well">
+    Use network capture and semantic descriptions effectively.
+  </Card>
+</Columns>

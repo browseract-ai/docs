@@ -1,11 +1,15 @@
 ---
 title: Command Reference
 description: Complete index of Browser-act CLI commands.
+mode: wide
 ---
 
 This page is a command index. Use the feature chapters for context, examples, and decision rules.
 
 ## Global options
+
+> [!NOTE]
+> Global flags can be combined with command groups. Use `--session <name>` for browser interaction commands, `--format text|json` for output, `--no-auto-dialog` when dialogs should not be handled automatically, and `--version` to check the installed CLI.
 
 | Option | Description |
 | --- | --- |
@@ -26,6 +30,29 @@ This page is a command index. Use the feature chapters for context, examples, an
 | Let a human take over | `remote-assist --objective "..."` | [Remote Assist](/skill/remote-assist) |
 | Run multiple accounts | separate browsers and named sessions | [Concurrency & Isolation](/skill/concurrency) |
 | Reuse local login state | `browser import-profile` | [Browser Modes](/skill/browser-modes) |
+
+## Command groups
+
+<Columns cols={3}>
+  <Card title="Browser interaction" icon="mouse-pointer-click" href="#browser-interaction-commands" cta="Open">
+    Navigate pages, read state, click, type, extract, wait, capture network data, and manage tabs.
+  </Card>
+  <Card title="Browser management" icon="panel-top" href="#browser-management-commands" cta="Open">
+    List, create, update, delete, open, and import browser profiles.
+  </Card>
+  <Card title="Sessions" icon="split" href="#session-management" cta="Open">
+    List and close task workspaces.
+  </Card>
+  <Card title="Stealth extraction" icon="shield-check" href="#stealth-extraction" cta="Open">
+    Extract protected content without opening a named session.
+  </Card>
+  <Card title="Authentication" icon="key-round" href="#authentication" cta="Open">
+    Log in, poll device auth, set API keys, or clear credentials.
+  </Card>
+  <Card title="Skill and system" icon="layers" href="#skill-and-system" cta="Open">
+    Load runtime-aware instructions, send feedback, and report logs.
+  </Card>
+</Columns>
 
 ## Browser interaction commands
 
@@ -230,5 +257,11 @@ feedback <message>
 
 ## Learn more
 
-- [Designed for Agents](/skill/agent-design): Learn why the command model is optimized for agents.
-- [Quick Start](/skill/quickstart): Combine commands into the first working loop.
+<Columns cols={2}>
+  <Card title="Designed for Agents" icon="brain-circuit" href="/skill/agent-design" cta="Understand model">
+    Learn why the command model is optimized for agents.
+  </Card>
+  <Card title="Quick Start" icon="rocket" href="/skill/quickstart" cta="Run a loop">
+    Combine commands into the first working browser loop.
+  </Card>
+</Columns>

@@ -1,6 +1,7 @@
 ---
 title: Remote Assist
 description: Generate a live URL so a human can take over a stuck browser session from any device.
+mode: wide
 ---
 
 Remote Assist lets an agent hand control to a person when automation reaches a step that needs human input.
@@ -15,12 +16,20 @@ The `--objective` text tells the human what to complete. The CLI returns a live 
 
 ## Any-device takeover
 
-The link can be opened from:
-
-- a laptop or desktop browser
-- a phone or tablet
-- the user's own device while the agent runs on a remote machine
-- an SSH or server-based development environment
+<Columns cols={4}>
+  <Card title="Desktop" icon="monitor">
+    Open the handoff link from a desktop browser.
+  </Card>
+  <Card title="Laptop" icon="laptop">
+    Use a nearby laptop while the agent keeps the session alive.
+  </Card>
+  <Card title="Mobile" icon="smartphone">
+    Complete 2FA or quick checks from a phone or tablet.
+  </Card>
+  <Card title="Remote host" icon="server">
+    Take over from your own device while the agent runs elsewhere.
+  </Card>
+</Columns>
 
 No headed browser, VNC, RDP, screen sharing, or extra client software is required.
 
@@ -28,11 +37,11 @@ No headed browser, VNC, RDP, screen sharing, or extra client software is require
 
 | Scenario | How Remote Assist helps |
 | --- | --- |
-| Two-factor authentication | The user enters SMS, authenticator app, or email codes |
-| Complex CAPTCHA | A person completes drag puzzles, behavior checks, or unsupported CAPTCHA types |
-| Enterprise SSO | The user handles hardware tokens, certificates, or local device checks |
-| Human judgment | The user chooses between options or approves a sensitive step |
-| Collaboration | A teammate can open the link and complete the blocked step |
+| Two-factor authentication | User enters SMS, authenticator app, or email codes |
+| Complex CAPTCHA | Person completes drag puzzles, behavior checks, or unsupported CAPTCHA types |
+| Enterprise SSO | User handles hardware tokens, certificates, or local device checks |
+| Human judgment | User chooses between options or approves a sensitive step |
+| Collaboration | Teammate opens the link and completes the blocked step |
 
 ## Continue after handoff
 
@@ -55,6 +64,14 @@ After the human completes the task:
 
 ## Learn more
 
-- [Better Headless Browser](/skill/headless): Understand how handoff works with headless sessions.
-- [Anti-detection & Blocking](/skill/anti-blocking): Try automatic solving before handoff when appropriate.
-- [Designed for Agents](/skill/agent-design): Learn the safety and confirmation model.
+<Columns cols={3}>
+  <Card title="Better Headless Browser" icon="eye-off" href="/skill/headless" cta="Use headless">
+    Understand how handoff works with headless sessions.
+  </Card>
+  <Card title="Anti-detection & Blocking" icon="shield-check" href="/skill/anti-blocking" cta="Try automatic solving">
+    Use automatic escalation before handoff when appropriate.
+  </Card>
+  <Card title="Designed for Agents" icon="bot" href="/skill/agent-design" cta="Review safety">
+    Learn the safety and confirmation model.
+  </Card>
+</Columns>

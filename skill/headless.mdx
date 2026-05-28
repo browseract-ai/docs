@@ -1,6 +1,7 @@
 ---
 title: Better Headless Browser
 description: Run browser automation headlessly without losing stealth or human handoff.
+mode: wide
 ---
 
 Browser-act runs headlessly by default so agents can work without interrupting the user's desktop. Headed mode is still available for local debugging and demos.
@@ -38,13 +39,22 @@ The CLI returns a live URL. A human opens it in any browser, completes the step,
 
 ## Mode comparison
 
-| Mode | Best for | Trade-off |
-| --- | --- | --- |
-| Default headless | Background automation and routine tasks | User cannot watch unless remote assist is used |
-| Headed mode | Visual debugging, demos, local manual steps | Interrupts the desktop and uses more resources |
-| Headless plus remote assist | Server work, 2FA, complex CAPTCHA, human judgment | Requires sharing a temporary handoff link |
+<Columns cols={3}>
+  <Card title="Default headless" icon="eye-off">
+    Best for background automation and routine tasks. The user does not watch the browser unless remote assist is used.
+  </Card>
+  <Card title="Headed mode" icon="monitor">
+    Best for visual debugging, demos, and local manual steps. It interrupts the desktop and uses more resources.
+  </Card>
+  <Card title="Headless plus remote assist" icon="globe">
+    Best for server work, 2FA, complex CAPTCHA, and human judgment. It requires sharing a temporary handoff link.
+  </Card>
+</Columns>
 
 ## When to use headed mode
+
+> [!TIP]
+> Keep routine agent work headless. Use `--headed` only when local visual inspection is part of the task.
 
 Use `--headed` when:
 
@@ -57,6 +67,14 @@ For most agent tasks, keep the browser headless and use remote assist only when 
 
 ## Learn more
 
-- [Remote Assist](/skill/remote-assist): Let a person take over from any device.
-- [Anti-detection & Blocking](/skill/anti-blocking): Understand the blocking escalation path.
-- [Browser Modes](/skill/browser-modes): Pick the correct browser type.
+<Columns cols={3}>
+  <Card title="Remote Assist" icon="radio" href="/skill/remote-assist" cta="Hand off">
+    Let a person take over from any device.
+  </Card>
+  <Card title="Anti-detection & Blocking" icon="shield-check" href="/skill/anti-blocking" cta="Escalate">
+    Understand the blocking escalation path.
+  </Card>
+  <Card title="Browser Modes" icon="panel-top" href="/skill/browser-modes" cta="Choose mode">
+    Pick the correct browser type.
+  </Card>
+</Columns>

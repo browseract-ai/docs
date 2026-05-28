@@ -1,19 +1,20 @@
 ---
 title: Anti-detection & Blocking
 description: Use environment, execution, and human handoff layers to handle anti-bot blocking.
+mode: wide
 ---
 
 Browser-act gives agents a practical escalation path for sites that block basic fetchers or standard browser automation.
 
-```text
-Environment layer: avoid triggering challenges
-        |
-        v
-Execution layer: handle challenges automatically
-        |
-        v
-Human layer: hand control to a person when automation is stuck
+<div style={{ display: "flex", justifyContent: "center" }}>
+
+```mermaid
+flowchart TD
+  Env["Environment"] --> Exec["Execution"]
+  Exec --> Human["Human handoff"]
 ```
+
+</div>
 
 ## Three-layer strategy
 
@@ -64,6 +65,11 @@ browser-act browser create \
 
 Custom proxies support HTTP and SOCKS5. You own the proxy quality, identity, and rotation strategy.
 
+| Proxy option | Best for | Operational note |
+| --- | --- | --- |
+| Dynamic proxy | Regional rotation and one-off collection | Browser-act rotates hosted IPs by region |
+| Custom proxy | Stable identity and bring-your-own infrastructure | You manage proxy quality and reputation |
+
 ### Privacy mode
 
 Use privacy mode when each session should start clean:
@@ -76,7 +82,8 @@ browser-act browser create \
   --private true
 ```
 
-Privacy mode is useful for one-off scraping, avoiding fingerprint buildup, and separating account identities. The trade-off is that login state is not preserved.
+> [!TIP]
+> Use privacy mode for one-off scraping, avoiding fingerprint buildup, and separating account identities. The trade-off is that login state is not preserved.
 
 ## Execution layer
 
@@ -118,16 +125,16 @@ A successful result returns `solved=True`.
 
 ### Escalation flow
 
-```bash
-# First try automatic solving
-browser-act --session s1 solve-captcha
+<div style={{ display: "flex", justifyContent: "center" }}>
 
-# If the page needs visible local debugging
-browser-act --session s1 browser open <browser_id> <url> --headed
-
-# If a person should take over remotely
-browser-act --session s1 remote-assist --objective "Solve the CAPTCHA"
+```mermaid
+flowchart TD
+  Blocked["Challenge"] --> Captcha["CAPTCHA"]
+  Captcha --> Debug["Headed mode"]
+  Debug --> Handoff["Remote assist"]
 ```
+
+</div>
 
 ## Human layer
 
@@ -154,6 +161,14 @@ See [Remote Assist](/skill/remote-assist).
 
 ## Learn more
 
-- [Better Headless Browser](/skill/headless): Run silently while keeping handoff available.
-- [Browser Modes](/skill/browser-modes): Choose the right browser identity.
-- [Skill Forge](/skill/skill-forge): Turn site-specific knowledge into a reusable skill.
+<Columns cols={3}>
+  <Card title="Better Headless Browser" icon="eye-off" href="/skill/headless" cta="Run quietly">
+    Run silently while keeping stealth and handoff available.
+  </Card>
+  <Card title="Browser Modes" icon="panel-top" href="/skill/browser-modes" cta="Choose identity">
+    Choose the right browser identity for the job.
+  </Card>
+  <Card title="Skill Forge" icon="hammer" href="/skill/skill-forge" cta="Reuse knowledge">
+    Turn site-specific knowledge into a reusable skill.
+  </Card>
+</Columns>
