@@ -152,9 +152,9 @@
                     "expanded": true,
                     "pages": [
                       "help/billing--credits",
-                      "help/using-browser-act/credits-and-subscription/untitled-page",
-                      "help/using-browser-act/credits-and-subscription/untitled-page-1",
-                      "help/using-browser-act/credits-and-subscription/untitled-page-2"
+                      "help/using-browser-act/credits-and-subscription/subscription-management",
+                      "help/using-browser-act/credits-and-subscription/upgrade-your-plan",
+                      "help/using-browser-act/credits-and-subscription/credit-packs"
                     ]
                   },
                   {
@@ -162,12 +162,12 @@
                     "icon": "globe",
                     "pages": [
                       "help/using-browser-act/browser-configuration/quick-start",
-                      "help/using-browser-act/browser-configuration/untitled-page",
-                      "help/using-browser-act/browser-configuration/untitled-page-1",
+                      "help/using-browser-act/browser-configuration/browser-modes-profiles",
+                      "help/using-browser-act/browser-configuration/proxy-network-settings",
                       "help/using-browser-act/browser-configuration/static-proxy",
-                      "help/using-browser-act/browser-configuration/untitled-page-2",
-                      "help/using-browser-act/browser-configuration/untitled-page-3",
-                      "help/using-browser-act/browser-configuration/untitled-page-4"
+                      "help/using-browser-act/browser-configuration/performance-browser-maintenance",
+                      "help/using-browser-act/browser-configuration/best-practice",
+                      "help/using-browser-act/browser-configuration/troubleshooting"
                     ]
                   },
                   "help/authentication-and-credentials",
