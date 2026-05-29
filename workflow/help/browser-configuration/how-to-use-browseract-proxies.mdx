@@ -41,27 +41,45 @@ In BrowserAct, the proxy mode is usually paired with a browser environment:
 
 Use Static Proxy when you want to bind one proxy to one Browser or extraction task.
 
-#### Create a Browser with Static Proxy
+#### Create a browser with Static Proxy
 
 ```bash
-browser-act browser create <browser_name> --static-proxy <proxy_id>
+browser-act browser create --type stealth --name "<browser-name>" --desc "<browser-description>" --static-proxy <static-proxy-id>
 ```
 
-#### Update an existing Browser
+#### Create a private-mode browser with Static Proxy
 
 ```bash
-browser-act browser update <browser_id> --static-proxy <proxy_id>
+browser-act browser create --type stealth --name "<browser-name>" --desc "<browser-description>" --mode private --static-proxy <static-proxy-id>
 ```
 
-#### Use Static Proxy in extraction
+#### Update an existing browser with Static Proxy
 
 ```bash
-browser-act stealth-extract --static-proxy <proxy_id>
+browser-act browser update <browser-id> --static-proxy <static-proxy-id>
+```
+
+#### Remove browser proxy
+
+```bash
+browser-act browser update <browser-id> --no-proxy
+```
+
+#### Use Static Proxy during extraction
+
+```bash
+browser-act stealth-extract "<url>" --static-proxy <static-proxy-id>
+```
+
+#### Extract and save the result
+
+```bash
+browser-act stealth-extract "<url>" --static-proxy <static-proxy-id> --output <output-file>
 ```
 
 #### Recommended flow
 
-1. Buy a Static Proxy and copy its `proxy_id`.
+1. Buy a Static Proxy and copy its `static-proxy-id`.
 2. Bind the proxy when you create or update a Browser.
 3. Launch the Browser in **Standard Browser** mode.
 4. Keep the same proxy bound to the same account or workflow whenever possible.
