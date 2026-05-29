@@ -16,4 +16,4 @@ Ask for confirmation before sensitive operations, including creating or deleting
 
 Use Workflow documentation only when the user asks about BrowserAct hosted canvas workflows: visual canvas automation, natural-language nodes, hosted workflow runs, scheduling, execution history, integrations, or API reference.
 
-For command details, see `skill/commands`.
+For command details, see `agent-cli/command-reference`.

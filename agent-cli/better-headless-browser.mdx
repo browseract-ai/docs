@@ -1,0 +1,80 @@
+---
+title: Better Headless Browser
+description: Run browser automation headlessly without losing stealth or human handoff.
+mode: wide
+---
+
+Browser-act runs headlessly by default so agents can work without interrupting the user's desktop. Headed mode is still available for local debugging and demos.
+
+## Default headless mode
+
+Headless mode is the default because it is quiet, resource-efficient, and suitable for background agent work.
+
+Use headed mode only when the user needs to watch or debug the browser:
+
+```bash
+browser-act --session debug browser open <browser_id> https://example.com --headed
+```
+
+## Stealth headless mode
+
+Standard headless browsers are often detected through signals such as:
+
+- `navigator.webdriver`
+- missing plugins
+- inconsistent Canvas or WebGL signatures
+- suspicious browser properties
+
+Browser-act stealth browsers keep fingerprint masking and headless concealment active together. The goal is to keep background automation quiet without exposing the common signs of headless automation.
+
+## Human handoff without switching modes
+
+Remote assist works even when the browser is headless:
+
+```bash
+browser-act --session my-task remote-assist --objective "Complete 2FA verification"
+```
+
+The CLI returns a live URL. A human opens it in any browser, completes the step, and the agent continues in the same session.
+
+## Mode comparison
+
+<Columns cols={3}>
+  <Card title="Default headless" icon="eye-off">
+    Best for background automation and routine tasks. The user does not watch the browser unless remote assist is used.
+  </Card>
+  <Card title="Headed mode" icon="monitor">
+    Best for visual debugging, demos, and local manual steps. It interrupts the desktop and uses more resources.
+  </Card>
+  <Card title="Headless plus remote assist" icon="globe">
+    Best for server work, 2FA, complex CAPTCHA, and human judgment. It requires sharing a temporary handoff link.
+  </Card>
+</Columns>
+
+## When to use headed mode
+
+> [!TIP]
+> Keep routine agent work headless. Use `--headed` only when local visual inspection is part of the task.
+
+Use `--headed` when:
+
+- a user wants to observe the browser locally
+- visual debugging is needed
+- a site behaves differently in visible mode
+- you are preparing a demo
+
+For most agent tasks, keep the browser headless and use remote assist only when needed.
+
+## Learn more
+
+<Columns cols={3}>
+  <Card title="Remote Assist" icon="radio" href="/agent-cli/remote-assist" cta="Hand off">
+    Let a person take over from any device.
+  </Card>
+  <Card title="Anti-detection & Blocking" icon="shield-check" href="/agent-cli/anti-detection-blocking" cta="Escalate">
+    Understand the blocking escalation path.
+  </Card>
+  <Card title="Browser Modes" icon="panel-top" href="/agent-cli/browser-modes" cta="Choose mode">
+    Pick the correct browser type.
+  </Card>
+</Columns>

@@ -1,0 +1,64 @@
+---
+title: "Make & n8n Integrations"
+sidebarTitle: "Make & n8n Integrations"
+---
+
+**Import Data to Google Sheets**
+
+[******Via Make.com (easiest):******](http://Make.com)
+
+1. Create Make scenario
+2. Add BrowserAct module (Run workflow)
+3. Connect BrowserAct account + select workflow
+4. Add JSON Parse module
+5. Add Google Sheets "Add Row" module
+6. Map fields to columns
+7. Test → Save
+
+→ [Detailed walkthrough](https://docs.browseract.com/workflow/help/integrations-apis/how-to-import-data-to-google-sheets)
+
+---
+
+**Schedule Automated Runs**
+
+[******Use Make.com scheduling:******](http://Make.com)
+
+1. Create scenario with BrowserAct module
+2. Click clock icon → **"Scheduling"**
+3. Pick frequency:
+   1. Every 1 hour / 6 hours / day
+   2. Every day at 8:00 AM
+   3. Every Monday at 9:00 AM
+   4. Custom cron expressions
+1. Save & activate
+
+**Examples:**
+
+- 📊 Price monitoring – Daily at 8 AM
+- 📰 Brand monitoring – Every 6 hours
+- 📈 Reports – Every Monday 9 AM
+
+→ [Full scheduling guide](https://docs.browseract.com/workflow/help/integrations-apis/how-to-set-up-scheduled-tasks-for-browseract)
+
+---
+
+**Share Workflows as JSON**
+
+**Export workflow:**
+
+1. Open scenario
+2. Click "..." → **"Export Blueprint"**
+3. JSON file downloads
+4. Share with others
+
+**Import workflow:**
+
+1. Create new scenario
+2. Click "..." → **"Import Blueprint"**
+3. Select JSON file
+4. Configure modules
+5. Test & activate
+
+Works in Make and n8n.
+
+→ [Full scheduling guide](https://docs.browseract.com/workflow/help/integrations-apis/how-to-share-and-use-workflows-in-n8n-using-json-files)

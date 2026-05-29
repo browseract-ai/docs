@@ -1,0 +1,77 @@
+---
+title: Remote Assist
+description: Generate a live URL so a human can take over a stuck browser session from any device.
+mode: wide
+---
+
+Remote Assist lets an agent hand control to a person when automation reaches a step that needs human input.
+
+## Hand off in one command
+
+```bash
+browser-act --session my-task remote-assist --objective "Complete 2FA verification"
+```
+
+The `--objective` text tells the human what to complete. The CLI returns a live URL for the current session.
+
+## Any-device takeover
+
+<Columns cols={4}>
+  <Card title="Desktop" icon="monitor">
+    Open the handoff link from a desktop browser.
+  </Card>
+  <Card title="Laptop" icon="laptop">
+    Use a nearby laptop while the agent keeps the session alive.
+  </Card>
+  <Card title="Mobile" icon="smartphone">
+    Complete 2FA or quick checks from a phone or tablet.
+  </Card>
+  <Card title="Remote host" icon="server">
+    Take over from your own device while the agent runs elsewhere.
+  </Card>
+</Columns>
+
+No headed browser, VNC, RDP, screen sharing, or extra client software is required.
+
+## Typical scenarios
+
+| Scenario | How Remote Assist helps |
+| --- | --- |
+| Two-factor authentication | User enters SMS, authenticator app, or email codes |
+| Complex CAPTCHA | Person completes drag puzzles, behavior checks, or unsupported CAPTCHA types |
+| Enterprise SSO | User handles hardware tokens, certificates, or local device checks |
+| Human judgment | User chooses between options or approves a sensitive step |
+| Collaboration | Teammate opens the link and completes the blocked step |
+
+## Continue after handoff
+
+After the human completes the task:
+
+- the session does not restart
+- cookies and browser state remain available
+- the current page position is preserved
+- the agent can continue with the next command
+
+## Compared with standard approaches
+
+| Need | Standard setup | Browser-act |
+| --- | --- | --- |
+| Human intervention in headless mode | Switch to headed mode or attach a desktop | Generate a live URL |
+| Same-machine access | Usually required | Not required |
+| Extra software | Often VNC, RDP, or screen sharing | None |
+| Cross-device support | Limited | Any modern browser |
+| Resume automation | Often manual | Continue in the same session |
+
+## Learn more
+
+<Columns cols={3}>
+  <Card title="Better Headless Browser" icon="eye-off" href="/agent-cli/better-headless-browser" cta="Use headless">
+    Understand how handoff works with headless sessions.
+  </Card>
+  <Card title="Anti-detection & Blocking" icon="shield-check" href="/agent-cli/anti-detection-blocking" cta="Try automatic solving">
+    Use automatic escalation before handoff when appropriate.
+  </Card>
+  <Card title="Designed for Agents" icon="bot" href="/agent-cli/designed-for-agents" cta="Review safety">
+    Learn the safety and confirmation model.
+  </Card>
+</Columns>

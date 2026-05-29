@@ -1,0 +1,188 @@
+---
+title: Browser Modes
+description: Choose between chrome, chrome-direct, and stealth browsers for different automation jobs.
+mode: wide
+---
+
+Browser-act uses browser types to represent different identity and runtime needs.
+
+## Quick mode picker
+
+Use the browser mode that matches the identity requirement of the task.
+
+<div style={{ display: "flex", justifyContent: "center" }}>
+
+```mermaid
+flowchart TD
+  Start["Task need"] --> Login["Local login?"]
+  Login -->|Yes| Chrome["chrome"]
+  Login -->|No| Live["Live Chrome?"]
+  Live -->|Yes| Direct["chrome-direct"]
+  Live -->|No| Fresh["Fresh identity?"]
+  Fresh -->|Yes| Privacy["stealth private"]
+  Fresh -->|No| Fixed["Stable identity?"]
+  Fixed -->|Yes| StealthFixed["stealth fixed"]
+  Fixed -->|No| ChromeNew["chrome"]
+```
+
+</div>
+
+| Mode | Best for | Key properties |
+| --- | --- | --- |
+| `chrome` | Reusing local login state in an isolated browser | Profile import, isolated storage, repeatable automation |
+| `chrome-direct` | Controlling the user's current Chrome | Existing extensions, SSO, certificates, and live cookies |
+| `stealth` privacy mode | High-anonymity public data collection | Fresh fingerprint and empty profile per session |
+| `stealth` fixed identity | Multi-account work | Stable fingerprint and fixed proxy per browser |
+
+## `chrome`: reuse local login state
+
+`chrome` browsers run in Browser-act-managed Chromium instances. They can import state from a local Chrome profile while staying isolated from the user's daily browser after import.
+
+### Profile import
+
+List local profiles:
+
+```bash
+browser-act browser list-profiles
+```
+
+Create a browser from a discovered profile:
+
+```bash
+browser-act browser create \
+  --type chrome \
+  --name "work-account" \
+  --desc "Logged-in work account for reporting" \
+  --source-profile <profile_id>
+```
+
+Import state into an existing browser:
+
+```bash
+browser-act browser import-profile <browser_id> <profile_id>
+```
+
+If Chrome must be restarted during import:
+
+```bash
+browser-act browser import-profile <browser_id> <profile_id> --allow-restart-chrome
+```
+
+> [!WARNING]
+> Profile import is a snapshot. Later changes in the source Chrome profile are not automatically synchronized.
+
+### What profile import includes
+
+| Included | Not included |
+| --- | --- |
+| Cookies | Browsing history |
+| Local storage | Bookmarks |
+| IndexedDB | Extensions |
+| Session storage | Cached files |
+| Relevant authentication state | Saved passwords |
+
+Profile import is useful when a site requires an existing login but the agent should operate in an isolated browser.
+
+## `chrome-direct`: control current Chrome
+
+`chrome-direct` controls the user's current Chrome instance through CDP. It is useful when automation depends on local extensions, hardware-backed SSO, certificates, or state that cannot be copied safely.
+
+Trade-offs:
+
+- only one `chrome-direct` browser is allowed
+- it operates on the live user browser
+- it is not intended for headed mode switching
+- it is best for short tasks that need the exact local Chrome environment
+
+## Profile import vs. CDP direct
+
+| Factor | `chrome` profile import | `chrome-direct` |
+| --- | --- | --- |
+| Isolation | Separate managed browser | Live user Chrome |
+| Extensions and certificates | Not copied | Available |
+| Long-running tasks | Better fit | Use carefully |
+| User browser availability | Independent after import | Uses the active browser |
+| Quota | Up to 20 `chrome` browsers | One direct browser |
+
+## `stealth`: privacy mode
+
+Privacy mode starts each session with a fresh fingerprint and empty profile:
+
+```bash
+browser-act browser create \
+  --type stealth \
+  --name "public-scrape" \
+  --desc "Fresh identity for public data extraction" \
+  --dynamic-proxy US \
+  --private true
+```
+
+Use it for protected public data, one-off collection, and tasks where persistent identity is a liability.
+
+Trade-offs:
+
+- no login state is preserved
+- an API key is required
+- each session behaves like a new identity
+
+## `stealth`: fixed identity
+
+Fixed-identity stealth browsers keep a stable fingerprint and proxy:
+
+```bash
+browser-act browser create \
+  --type stealth \
+  --name "account-a" \
+  --desc "Fixed identity for account A" \
+  --custom-proxy socks5://user:pass@host:port \
+  --private false
+```
+
+Use this for multi-account work where each account needs a consistent browser identity.
+
+> [!NOTE]
+> Hosted static IP support may depend on account configuration and availability. Use your own fixed proxy when a stable identity is required.
+
+## Choose by scenario
+
+<Columns cols={2}>
+  <Card title="Logged-in work" icon="key-round">
+    Use `chrome` with profile import when the site needs reusable local login state.
+  </Card>
+  <Card title="Live local Chrome" icon="chrome">
+    Use `chrome-direct` when the task depends on extensions, certificates, hardware SSO, or live cookies.
+  </Card>
+  <Card title="Protected public pages" icon="shield">
+    Use `stealth` privacy mode or `stealth-extract` when there is no login and a fresh identity is safer.
+  </Card>
+  <Card title="Multiple accounts" icon="users">
+    Use `stealth` fixed identity with separate proxies when each account needs a stable browser identity.
+  </Card>
+</Columns>
+
+## Browser fields
+
+| Field | Meaning |
+| --- | --- |
+| `id` | Browser identifier used in commands |
+| `name` | Human-readable browser name |
+| `type` | `chrome`, `chrome-direct`, or `stealth` |
+| `desc` | Semantic description used by agents to choose a browser |
+| `dynamic_proxy` | Hosted regional proxy setting for stealth browsers |
+| `custom_proxy` | User-provided proxy URL |
+| `private` | Whether sessions start with a clean profile |
+| `confirm_before_use` | Whether the agent should ask before opening the browser |
+
+## Learn more
+
+<Columns cols={3}>
+  <Card title="Anti-detection & Blocking" icon="shield-check" href="/agent-cli/anti-detection-blocking" cta="Escalate safely">
+    Understand stealth mode, proxies, CAPTCHA handling, and human handoff.
+  </Card>
+  <Card title="Concurrency & Isolation" icon="split" href="/agent-cli/concurrency-isolation" cta="Run in parallel">
+    Run multiple browsers and sessions without leaking state between tasks.
+  </Card>
+  <Card title="Designed for Agents" icon="brain-circuit" href="/agent-cli/designed-for-agents" cta="Use descriptions">
+    Learn how agents choose browsers by semantic `desc` fields.
+  </Card>
+</Columns>

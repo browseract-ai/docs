@@ -24,9 +24,9 @@
             "icon": "rocket",
             "expanded": true,
             "pages": [
-              "skill/overview",
-              "skill/installation",
-              "skill/quickstart"
+              "agent-cli/introduction",
+              "agent-cli/installation",
+              "agent-cli/quick-start"
             ]
           },
           {
@@ -34,12 +34,12 @@
             "icon": "shield-check",
             "expanded": true,
             "pages": [
-              "skill/anti-blocking",
-              "skill/headless",
-              "skill/remote-assist",
-              "skill/browser-modes",
-              "skill/concurrency",
-              "skill/agent-design"
+              "agent-cli/anti-detection-blocking",
+              "agent-cli/better-headless-browser",
+              "agent-cli/remote-assist",
+              "agent-cli/browser-modes",
+              "agent-cli/concurrency-isolation",
+              "agent-cli/designed-for-agents"
             ]
           },
           {
@@ -47,7 +47,7 @@
             "icon": "hammer",
             "expanded": false,
             "pages": [
-              "skill/skill-forge"
+              "agent-cli/skill-forge"
             ]
           },
           {
@@ -55,8 +55,8 @@
             "icon": "terminal",
             "expanded": false,
             "pages": [
-              "skill/skills",
-              "skill/commands"
+              "agent-cli/skill-system",
+              "agent-cli/command-reference"
             ]
           }
         ]
@@ -75,8 +75,8 @@
                 "icon": "sparkles",
                 "expanded": true,
                 "pages": [
-                  "learn/core-concepts",
-                  "learn/quick-start/build-your-first-data-scraper-workflow-in-5-minutes"
+                  "workflow/learn/quick-start/core-concepts",
+                  "workflow/learn/quick-start/build-your-first-data-scraper-workflow-in-5-minutes"
                 ]
               },
               {
@@ -84,23 +84,23 @@
                 "icon": "workflow",
                 "expanded": false,
                 "pages": [
-                  "learn/basics/node-types/click-element-item-node",
-                  "learn/basics/node-types/click-element-node",
-                  "learn/basics/node-types/condition-node",
-                  "learn/basics/node-types/extract-data-item-node",
-                  "learn/basics/node-types/extract-data-node",
-                  "learn/basics/node-types/human-interaction-node",
-                  "learn/basics/node-types/input-text-node",
-                  "learn/basics/node-types/loop-list-node",
-                  "learn/basics/node-types/loop-node",
-                  "learn/basics/node-types/output-data-node",
-                  "learn/basics/node-types/pagination-node",
-                  "learn/basics/node-types/scroll-page-node",
-                  "learn/basics/node-types/scroll-to-element-node",
-                  "learn/basics/node-types/tab-operation-node",
-                  "learn/basics/node-types/visit-node",
-                  "learn/basics/node-types/wait-node",
-                  "learn/basics/node-types/hover-element-node"
+                  "workflow/learn/node-types/click-element-item-node",
+                  "workflow/learn/node-types/click-element-node",
+                  "workflow/learn/node-types/condition-node",
+                  "workflow/learn/node-types/extract-data-item-node",
+                  "workflow/learn/node-types/extract-data-node",
+                  "workflow/learn/node-types/human-interaction-node",
+                  "workflow/learn/node-types/input-text-node",
+                  "workflow/learn/node-types/loop-list-node",
+                  "workflow/learn/node-types/loop-node",
+                  "workflow/learn/node-types/output-data-node",
+                  "workflow/learn/node-types/pagination-node",
+                  "workflow/learn/node-types/scroll-page-node",
+                  "workflow/learn/node-types/scroll-to-element-node",
+                  "workflow/learn/node-types/tab-operation-node",
+                  "workflow/learn/node-types/visit-node",
+                  "workflow/learn/node-types/wait-node",
+                  "workflow/learn/node-types/hover-element-node"
                 ]
               },
               {
@@ -108,11 +108,11 @@
                 "icon": "lightbulb",
                 "expanded": false,
                 "pages": [
-                  "learn/basics/case-study/case-1-deep-extraction-from-list-page-to-detail-page",
-                  "learn/basics/case-study/case-2-automatic-pagination-and-data-collection-from-multi-page-lists",
-                  "learn/basics/case-study/case-3-automatic-expansion-and-collection-on-long-load-more-lists",
-                  "learn/basics/case-study/case-4-precise-collection-from-lists-with-condition-based-filtering",
-                  "learn/basics/case-study/case-5-precise-scraping-with-multi-dimensional-filtering"
+                  "workflow/learn/case-studies/case-1-deep-extraction-from-list-page-to-detail-page",
+                  "workflow/learn/case-studies/case-2-automatic-pagination-and-data-collection-from-multi-page-lists",
+                  "workflow/learn/case-studies/case-3-automatic-expansion-and-collection-on-long-load-more-lists",
+                  "workflow/learn/case-studies/case-4-precise-collection-from-lists-with-condition-based-filtering",
+                  "workflow/learn/case-studies/case-5-precise-scraping-with-multi-dimensional-filtering"
                 ]
               },
               {
@@ -120,9 +120,9 @@
                 "icon": "blocks",
                 "expanded": false,
                 "pages": [
-                  "learn/intergrations/n8n",
-                  "learn/intergrations/make",
-                  "learn/intergrations/mcp"
+                  "workflow/learn/integrations/n8n",
+                  "workflow/learn/integrations/make",
+                  "workflow/learn/integrations/mcp"
                 ]
               }
             ]
@@ -141,9 +141,9 @@
                     "group": "Workflow & Nodes",
                     "icon": "network",
                     "pages": [
-                      "basics",
-                      "data-extraction",
-                      "files-and-downloads"
+                      "workflow/help/workflow-and-nodes/basics",
+                      "workflow/help/workflow-and-nodes/data-extraction",
+                      "workflow/help/workflow-and-nodes/files-and-downloads"
                     ]
                   },
                   {
@@ -151,42 +151,42 @@
                     "icon": "badge-dollar-sign",
                     "expanded": true,
                     "pages": [
-                      "help/billing--credits",
-                      "help/using-browser-act/credits-and-subscription/subscription-management",
-                      "help/using-browser-act/credits-and-subscription/upgrade-your-plan",
-                      "help/using-browser-act/credits-and-subscription/credit-packs"
+                      "workflow/help/credits-subscription/billing-credits",
+                      "workflow/help/credits-subscription/subscription-management",
+                      "workflow/help/credits-subscription/upgrade-your-plan",
+                      "workflow/help/credits-subscription/credit-packs"
                     ]
                   },
                   {
                     "group": "Browser Configuration",
                     "icon": "globe",
                     "pages": [
-                      "help/using-browser-act/browser-configuration/quick-start",
-                      "help/using-browser-act/browser-configuration/browser-modes-profiles",
-                      "help/using-browser-act/browser-configuration/proxy-network-settings",
-                      "help/using-browser-act/browser-configuration/static-proxy",
-                      "help/using-browser-act/browser-configuration/performance-browser-maintenance",
-                      "help/using-browser-act/browser-configuration/best-practice",
-                      "help/using-browser-act/browser-configuration/troubleshooting"
+                      "workflow/help/browser-configuration/quick-start",
+                      "workflow/help/browser-configuration/browser-modes-profiles",
+                      "workflow/help/browser-configuration/proxy-network-settings",
+                      "workflow/help/browser-configuration/static-proxy",
+                      "workflow/help/browser-configuration/performance-browser-maintenance",
+                      "workflow/help/browser-configuration/best-practice",
+                      "workflow/help/browser-configuration/troubleshooting"
                     ]
                   },
-                  "help/authentication-and-credentials",
+                  "workflow/help/authentication-and-credentials",
                   {
                     "group": "Integrations & APIs",
                     "icon": "blocks",
                     "pages": [
-                      "help/integrations--apis/supported-platforms",
-                      "help/integrations--apis/api-keys--authentication",
-                      "help/integrations--apis/make--n8n-integrations",
-                      "help/integrations--apis/how-to-importing-data-to-google-sheets",
-                      "help/integrations--apis/-how-to-setting-up-scheduled-tasks-for-browseract",
-                      "help/integrations--apis/how-to-share-and-use-workflows-in-make-using-json-files",
-                      "help/integrations--apis/how-to-share-and-use-workflows-in-n8n-using-json-files"
+                      "workflow/help/integrations-apis/supported-platforms",
+                      "workflow/help/integrations-apis/api-keys-authentication",
+                      "workflow/help/integrations-apis/make-n8n-integrations",
+                      "workflow/help/integrations-apis/how-to-import-data-to-google-sheets",
+                      "workflow/help/integrations-apis/how-to-set-up-scheduled-tasks-for-browseract",
+                      "workflow/help/integrations-apis/how-to-share-and-use-workflows-in-make-using-json-files",
+                      "workflow/help/integrations-apis/how-to-share-and-use-workflows-in-n8n-using-json-files"
                     ]
                   },
-                  "help/runtime-environment",
-                  "help/troubleshooting",
-                  "help/frequently-asked-questions"
+                  "workflow/help/runtime-environment",
+                  "workflow/help/troubleshooting",
+                  "workflow/help/frequently-asked-questions"
                 ]
               },
               {
@@ -194,10 +194,10 @@
                 "icon": "messages-square",
                 "expanded": false,
                 "pages": [
-                  "help/support--community",
-                  "help/step-by-step-tutorial-to-publish-workflows",
-                  "help/tutorials--resources",
-                  "help/still-need-help"
+                  "workflow/help/resources-support/support-community",
+                  "workflow/help/resources-support/step-by-step-tutorial-to-publish-workflows",
+                  "workflow/help/resources-support/tutorials-resources",
+                  "workflow/help/resources-support/still-need-help"
                 ]
               }
             ]
@@ -205,7 +205,10 @@
           {
             "group": "API Reference",
             "icon": "code-xml",
-            "openapi": "openapi_2.json"
+            "openapi": {
+              "source": "openapi_2.json",
+              "directory": "workflow/api-reference"
+            }
           }
         ]
       }

@@ -1,0 +1,197 @@
+---
+title: "Build Your First Data Scraper Workflow in 5 Minutes"
+description: "The best way to master BrowserAct is to build a workflow yourself."
+sidebarTitle: "Your First Workflow"
+'og:image': "images/Gemini_Generated_Image_kcftxzkcftxzkcft.png"
+---
+
+## 0. Before You Start: Core Concepts
+
+Understanding the BrowserAct architecture moves you from **Design** to **Execution**.
+
+- **Workflow (The Blueprint):** The complete definition of your automated process (like a digital SOP). It is a static file you design and save.
+- **Node (The Building Block):** The individual instructions within a workflow. You map manual actions to specific nodes:
+  - _Open URL_ 👉 **Visit Page**
+  - _Type_ 👉 **Input Text**
+  - _Click_ 👉 **Click Element**
+- **Task (The Runtime Instance):** A single execution record. When you hit "Run" on a specific Workflow with specific parameters, it creates a **Task** that generates your data/CSV.
+
+**Summary:** You build a **Workflow** using **Nodes** to generate **Tasks**.
+
+---
+
+## 1. Open the Workflow Builder
+
+After logging in, you’ll see the **Home** page.
+
+1. Locate the **“AI Workflow Builder”** card in the center area.
+2. Click it to open the **Workflow Build page** (the canvas where we’ll add nodes).
+
+![image-20251203204132361.png](/images/image-20251203204132361.png)
+
+---
+
+## 2. Example Setup & Logic
+
+**Inputs**
+
+- **Country:** e.g., `USA`
+- **Area:** e.g., `Avalon, CA`
+
+**Browser Actions**
+
+1. Open `https://www.google.com/maps`
+2. Search `{Country} {Area}`
+3. Click search icon
+4. Click **Nearby**
+5. Click **Restaurant**
+6. Extract list data
+
+Output
+
+A CSV file containing:
+
+- `name`
+- `full_address`
+- `star_rating`
+- `review_count`
+- `average_price_per_person_range`
+
+---
+
+## 3. Step-by-Step Setup (Node Orchestration)
+
+_All steps below are performed on the Workflow Build page._
+
+### Step 1 – Start Node: Define Input Parameters
+
+1. On the canvas, click the **Start** node.
+2. In **Input Parameters**, add:
+   - **Name:** `Country` | **Default Value:** `USA`
+   - **Name:** `Area` | **Default Value::** `Avalon, CA`
+
+![image-20251203204306840.png](/images/image-20251203204306840.png)
+
+### Step 2 – Visit Page: Open Google Maps
+
+1. Click **\+** on the canvas (or right-click) and choose [**Visit Page**](/workflow/learn/node-types/visit-node).
+2. Connect it after **Start**.
+3. Set URL to:
+
+   ```
+   https://www.google.com/maps
+   
+   ```
+
+![image-20251203204336274.png](/images/image-20251203204336274.png)
+
+### Step 3 – Input Text: Search for the Location
+
+1. Add an [**Input Text**](/workflow/learn/node-types/input-text-node) node and connect it after **Visit Page**.
+2. In the page preview/selector, target the **top search bar**.
+3. In Text to Input, enter: Country Area
+
+   (This references the Start parameters).
+
+![image-20251203204349544.png](/images/image-20251203204349544.png)
+
+### Step 4 – Click Element: Navigate to Restaurants
+
+Use one or more [**Click Element**](/workflow/learn/node-types/click-element-node) nodes to perform these three clicks in order:
+
+1. **Search:** Click the magnifying-glass icon.
+2. **Nearby:** Click the “Nearby” button.
+3. **Restaurant:** Click the “Restaurant” category.
+
+![image-20251203204434324.png](/images/image-20251203204434324.png)
+
+### Step 5 – Extract Data: Scrape the Restaurant List
+
+1. Add an [**Extract Data**](/workflow/learn/node-types/extract-data-node) node after the last Click Element node.
+2. In the left restaurant list, select **one full restaurant item** as the sample.
+3. Configure fields to extract:
+   - `name`
+   - `full_address`
+   - `star_rating`
+   - `review_count`
+   - `average_price_per_person_range`
+
+![image-20251203204450694.png](/images/image-20251203204450694.png)
+
+### Step 6 – Finish: Output Data as CSV
+
+1. Add a **Finish: Output Data** node and connect it after [**Extract Data.**](/workflow/learn/node-types/extract-data-node)
+2. In the output settings:
+   - **Output Format:** CSV
+   - **Enable:** “Output as a file”
+
+![image-20251203204500720.png](/images/image-20251203204500720.png)
+
+---
+
+## 4. Publish & Run
+
+Before executing the workflow, ensure your latest changes are saved and versioned.
+
+1. **Publish Version:** Click the **Publish** button (top-right corner) and select **Publish as New Version** to save your current configuration.
+2. **Enter Run Mode:** Click the **Run** tab (located next to the _Build_ tab).
+3. **Set Parameters:**
+   - Country: `USA`
+   - Area: `Avalon, CA`
+4. **Execute:** Click **Start Run** and watch the nodes execute one by one.
+
+![unnamed.png](/images/unnamed.png)
+
+You’re done when:
+
+1. All steps show **Succeeded / ✔**.
+2. The run result shows a **downloadable CSV file**.
+3. The CSV contains rows like:
+
+Code snippet
+
+```
+name,full_address,star_rating,review_count,average_price_per_person_range
+Bluewater Avalon,306 Crescent Ave,4.3,2342,$30–50
+Buffalo Nickel Inc,57 Pebbly Beach Rd,4.6,646,$20–30
+...
+```
+
+![image-20251203204936979.png](/images/image-20251203204936979.png)
+
+---
+
+## 5. Common Roadblocks (Quick Fixes)
+
+- **CSV is empty or has very few rows:**
+  - Check the sample in [**Extract Data**](/workflow/learn/node-types/extract-data-node): it should be a full list item, not a tiny sub-element.
+  - **Wait for load:** Add a short [wait](/workflow/learn/node-types/wait-node) before Extract Data if the list loads slowly.
+- **Click Element does nothing:**
+  - Re-select the actual clickable element (button/text) in the [Click Element node](/workflow/learn/node-types/click-element-node).
+  - Confirm node order: Search → Nearby → Restaurant.
+- **Run error and not sure why:**
+  - Check URL in Visit Page is exactly `https://www.google.com/maps`.
+  - Ensure Run parameters (Country/Area) are filled.
+  - Ensure no node has missing config ([Click Element](/workflow/learn/node-types/click-element-node), etc.).
+
+> **Support:** If it still fails, contact support via [**Discord**](https://discord.com/invite/UpnCKd7GaU) with:
+>
+> - A short description of your goal.
+> - Screenshot of the failing error.
+> - Task ID of the execution.
+
+---
+
+## 8. Next Steps
+
+Now that this workflow runs:
+
+1. Reuse it with new locations
+
+   Run again with:
+   - _Country:_ USA, _Area:_ New York
+   - _Country:_ Japan, _Area:_ Shibuya
+
+**If you can build this workflow, run it successfully, and change inputs to scrape another city, you’re ready to design your own BrowserAct workflows.**
+
+---
