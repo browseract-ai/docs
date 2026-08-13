@@ -1,0 +1,24 @@
+---
+title: "Best Practices"
+description: "Match the browser mode and proxy option to common BrowserAct use cases."
+---
+
+| Scenario | Recommended setup | Why |
+| --- | --- | --- |
+| Account-based workflow or long-lived login | Standard Browser + Static Proxy | Keeps the browser profile and IP stable |
+| Public web extraction | Private Browser + Dynamic Proxy | Provides an isolated session with rotating IP access |
+| Region-specific data | Dynamic Proxy with the target region | Runs the Bot through the selected region |
+| Fixed-IP allowlisting | Static Proxy | Provides a consistent IP that can be allowlisted |
+| Existing proxy provider | Custom Proxy | Uses infrastructure and credentials you already manage |
+
+## Keep Identity Consistent
+
+For an authenticated account, avoid changing the browser profile, proxy type, or proxy region without a clear reason. Sudden identity changes may trigger additional verification from the target website.
+
+## Match the Proxy to the Task
+
+- Choose Static Proxy when continuity matters.
+- Choose Dynamic Proxy when rotation and regional access matter.
+- Choose Custom Proxy only when you can maintain and troubleshoot the external proxy.
+
+Proxy settings can improve access, but they do not guarantee that every website or verification challenge can be completed.

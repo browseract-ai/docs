@@ -1,0 +1,40 @@
+---
+title: "Agent & Integrations FAQ"
+sidebarTitle: "Agent & Integrations"
+---
+
+## Can I use BrowserAct through MCP in QwenPaw?
+
+Yes, if QwenPaw supports connecting to a remote MCP server. Create a BrowserAct MCP Server, expose the required Workflow Built Bots as MCP Tools, and add the MCP Server URL and API key to QwenPaw.
+
+Agent Built Bots will support MCP soon.
+
+## Can I use BrowserAct with AI agents other than Claude?
+
+Yes. Workflow Built Bots can connect to Claude and other AI agents through MCP.
+
+Create a BrowserAct MCP Server, publish the Workflow Built Bot as an MCP Tool, and expose it to the server. Then connect the server to your MCP client with the MCP Server URL and API key.
+
+BrowserAct provides connection guidance for clients such as Claude Desktop, Claude Code, Cursor, Windsurf, Gemini CLI, VS Code, and supported API-based agent environments.
+
+Agent Built Bots will support MCP soon.
+
+## Where are API keys managed?
+
+Open `Integrations` and select `Manage API Keys` to create, copy, edit, or delete an API key. For endpoints and API-based webhooks, see the API Reference.
+
+## Is Google Sheets a direct BrowserAct integration?
+
+Not directly. Connect BrowserAct to Make, n8n, or Zapier, then add Google Sheets as the next step in your automation.
+
+## Can I integrate BrowserAct with platforms other than Make, n8n, and Zapier?
+
+Yes. Use the BrowserAct API to connect a Bot to another application or automation platform. Workflow Built Bots can also be exposed as MCP Tools for supported AI agents and MCP clients.
+
+Make, n8n, and Zapier provide ready-to-use integration paths. Other platforms can connect through the API or MCP, depending on the platform's capabilities.
+
+## How do I schedule a BrowserAct Bot to run automatically?
+
+Use Make, n8n, or Zapier to trigger the Bot on a schedule. Build and test the Bot in BrowserAct first, then connect it to your automation and add a schedule trigger.
+
+Schedule options, time zones, retries, and limits depend on the automation platform.

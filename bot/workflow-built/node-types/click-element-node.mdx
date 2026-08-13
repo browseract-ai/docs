@@ -1,0 +1,107 @@
+---
+title: "Click Element Node"
+sidebarTitle: "Click Element"
+description: "Click a visible button, link, icon, or other element described in natural language."
+---
+
+# Click Element
+
+Use **Click Element** to click a visible element on the current page. Describe the target in natural language; no selector or code is required.
+
+## What Is the Click Element Node?
+
+The node identifies and clicks the element that matches your description. It can be used with buttons, links, icons, checkboxes, radio buttons, and other interactive elements.
+
+![Click Element node overview](/images/Gemini_Generated_Image_5dchmi5dchmi5dch.png)
+
+### Click Type Options
+
+| Click type | Description | Default |
+| --- | --- | --- |
+| Left-click | Standard click for buttons, links, forms, and most page actions. | Yes |
+| Right-click | Opens a context menu or triggers a website's right-click action. | No |
+
+## When Should You Use It?
+
+Use **Left-click** to:
+
+- Submit a form or start a search.
+- Open a menu, link, or another page.
+- Select a checkbox, radio button, or visible option.
+- Load more results or move to the next step.
+
+Use **Right-click** when the required action is exposed through a context menu or right-click event.
+
+## How to Set Up a Click Element Node
+
+### 1. Insert the Node
+
+Select the `+` below a node, then choose **Click Element** from the Node Action Library.
+
+### 2. Describe the Target Element
+
+Describe the element using its visible text, type, location, or other distinguishing details.
+
+Examples:
+
+```text
+The Search button to the right of the search field
+```
+
+```text
+The blue Continue button at the bottom of the form
+```
+
+### 3. Select the Click Type
+
+Choose **Left-click** for a standard interaction or **Right-click** for a context-menu action.
+
+### 4. Handle Errors
+
+Configure the failure behavior when the target cannot be found or clicked.
+
+### 5. Connect Other Nodes
+
+Place the node after the page-opening or navigation step. Add a **Wait**, extraction, or another interaction node after it as required by the page.
+
+## Key Rules and Best Practices
+
+### Rules
+
+| Rule | Description |
+| --- | --- |
+| Target must be available | The target element must be present and visible when the node runs. |
+| One click per node | Add another Click Element node for each additional click. |
+| Describe the target clearly | Use visible text and distinguishing details instead of a vague label. |
+| Click type is explicit | Select the click type that matches the website interaction. |
+
+### Best Practices
+
+- Include the element type, such as button, link, icon, or checkbox.
+- Include visible text and location when similar elements appear more than once.
+- Use **Scroll to Element** when the target is farther down the page.
+- Use **Wait** when the click loads new content or navigates to another page.
+- Test the workflow to confirm that the intended element is clicked.
+
+## Quick Review
+
+1. **What does Click Element do?**  
+   It clicks the visible element that matches the natural-language description.
+
+2. **How many clicks does one node perform?**  
+   One click per node.
+
+3. **When should Right-click be used?**  
+   When the website exposes the required action through a context menu or right-click event.
+
+4. **What makes a good target description?**  
+   Visible text, element type, location, and other distinguishing details.
+
+## Next Steps
+
+Combine **Click Element** with **Wait**, **Scroll to Element**, **Input Text**, or data extraction nodes to continue the workflow after the click.
+
+## Need Help?
+
+- Join the [BrowserAct Discord community](https://discord.com/invite/UpnCKd7GaU).
+- Email [support@browseract.com](mailto:support@browseract.com).

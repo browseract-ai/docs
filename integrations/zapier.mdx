@@ -1,0 +1,112 @@
+---
+title: "Integrate BrowserAct with Zapier"
+sidebarTitle: "Zapier"
+description: "Run a BrowserAct Bot from Zapier and send its structured results to other apps."
+---
+
+Use the BrowserAct app in Zapier to run a Bot and pass its structured results to the next step in a Zap.
+
+> **Naming note:** BrowserAct calls the automation a **Bot**. The current Zapier action uses `Workflow` and `Run a Workflow`; these labels refer to the corresponding BrowserAct Bot. A `Workflow ID` shown in a legacy or third-party interface is the Bot ID.
+
+## Before You Start
+
+Prepare the following:
+
+- A BrowserAct Bot that runs successfully
+- The Bot's required input values
+- A BrowserAct API key
+- A Zapier account
+
+To create an API key, open `Integrations` > `Manage API Keys` > `Create New API Key`. Enter a name, choose the confirmation mode, select `Confirm`, and copy the key.
+
+## Add BrowserAct to a Zap
+
+1. In Zapier, create a Zap or open an existing one.
+2. Configure the app and event that will trigger the Zap.
+3. Add an Action step.
+4. Search for and select `BrowserAct`.
+5. Select `Run a Workflow` as the Action event.
+
+BrowserAct currently provides an Action and does not start a Zap as a trigger.
+
+## Connect Your BrowserAct Account
+
+1. Select `Sign in` or add a new BrowserAct connection.
+2. Paste your BrowserAct API key when prompted.
+3. Save and select the connection.
+
+API keys grant access to your BrowserAct account. Do not share them publicly.
+
+## Select a Bot
+
+1. Under `Search Workflows From`, choose your own published Workflows or the Template Marketplace.
+2. Select the Workflow that corresponds to the BrowserAct Bot.
+3. Complete the input fields shown for that Bot.
+
+Zapier normally lets you select the Bot from a list instead of entering its ID manually. If a Workflow ID is displayed or requested, use the corresponding Bot ID.
+
+## Map Bot Inputs
+
+For each required Bot input, enter a fixed value or map data from the Zap trigger or an earlier step.
+
+For example, a Bot input named `company_url` can receive a URL from a form submission, spreadsheet row, CRM record, or email.
+
+## Test the Action
+
+1. Test the BrowserAct Action with sample input values.
+2. Confirm that BrowserAct creates a Task.
+3. Review the returned fields in Zapier.
+4. If the Task fails, open it in BrowserAct to review the status and result.
+
+After the test succeeds, add the next Zap step and publish the Zap.
+
+## Use Bot Results
+
+Map the structured fields returned by BrowserAct to another Zapier app, such as:
+
+- Google Sheets
+- Gmail
+- Airtable
+- Google Drive
+- A CRM
+- Slack or another notification app
+
+Google Sheets is used as a downstream Zapier app; it is not configured as a direct BrowserAct integration.
+
+## Common Scenarios
+
+### Run a Bot on a Schedule
+
+Use Schedule by Zapier to run a BrowserAct Bot daily or at another supported interval.
+
+```text
+Schedule by Zapier > BrowserAct > Google Sheets
+```
+
+### Enrich Form or CRM Data
+
+Pass a submitted URL or company record to BrowserAct, then write the returned fields to a CRM or spreadsheet.
+
+```text
+Form or CRM Trigger > BrowserAct > CRM or Spreadsheet
+```
+
+### Monitor Data and Send an Alert
+
+Run BrowserAct after a scheduled or application event, then send the result by email or team notification.
+
+```text
+Trigger > BrowserAct > Gmail or Notification App
+```
+
+## Troubleshooting
+
+| Problem | What to check |
+| --- | --- |
+| BrowserAct is not available | Search for the current BrowserAct app when adding an Action. |
+| Authentication failed | Copy the current API key again, remove extra spaces, or reconnect the BrowserAct account. |
+| Bot is not listed | Confirm that the Bot runs in BrowserAct and check the selected Workflow source. |
+| An input is missing | Confirm that every required input has a fixed value or mapped field. |
+| The Action returns no data | Run the Bot with the same inputs in BrowserAct and review the resulting Task. |
+
+For the current Action and available app pairings, see the [BrowserAct integration on Zapier](https://zapier.com/apps/browseract/integrations).

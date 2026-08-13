@@ -1,0 +1,85 @@
+---
+title: "General Troubleshooting"
+sidebarTitle: "Troubleshooting"
+---
+
+## What should I do if my Bot build fails?
+
+Open the failed build Task and review its status and error details. Then check the target URL, login or verification requirements, and the Bot's Browser and Proxy settings before trying the build again.
+
+If the build still fails, contact Support and include the Bot ID, Task ID, target URL, and a screenshot of the issue.
+
+## A Task Failed
+
+1. Open Tasks and select the failed Task.
+2. Review the available status, result, and error details.
+3. Confirm that the target page is available in a normal browser.
+4. Check whether the page requires login, verification, a region, or a specific network route.
+5. Review the Bot's Browser and Proxy settings.
+6. Run the Bot again after correcting the identified issue.
+
+## A Login Failed
+
+1. Confirm that the same login information works directly on the target website.
+2. Update the saved item in Credential Center if the password changed.
+3. Confirm that the credential is authorized for the correct Bot.
+4. Check whether the website requires an unsupported email or SMS verification step.
+
+Never send a password, verification code, or 2FA secret to support.
+
+## A Workflow Built Bot Returned No Data
+
+- Add a Scroll Page or Scroll to Element node if the content is outside the visible area.
+- Open the required detail page before extracting fields that are not present in the list.
+- Use Extract Data for page-level or list extraction and Extract Data Item inside the relevant repeated-item flow.
+- Add Wait when dynamic content has not loaded before extraction begins.
+- Confirm that the Bot is logged in when the data is available only to an authorized account.
+
+## A Workflow Built Bot Returned Partial Results or Missing Fields
+
+- Confirm that the field is visible on the page or open the required detail page.
+- Check the item limit, pagination, Loop, and Loop List settings.
+- Add Wait when the page has not finished loading.
+- Confirm that the field is present on every record.
+- Review regional, login, proxy, or website changes that may affect the returned records.
+
+## What Is the Difference Between Extract Data and Extract Data Item?
+
+Use **Extract Data** for page-level fields, a detail page, the full page, or the current visible area. It does not require **Loop List**.
+
+Use **Extract Data Item** inside **Loop List** when you need the same fields from every repeated item, such as product cards, jobs, posts, or comments.
+
+To collect fields from each detail page, use **Loop List** with **Click Element Item** to open each item, then use **Extract Data** on the detail page.
+
+## What Is the Difference Between Loop and Loop List?
+
+Use **Loop** to repeat a process until an exit condition or maximum iteration count is reached. Typical uses include pagination, scrolling, and clicking **Load more**.
+
+Use **Loop List** to process repeated items in a page list. Add **Extract Data Item** or **Click Element Item** as its child node.
+
+## A Workflow Built Bot Did Not Download a File
+
+- Confirm that the download control is visible and clickable.
+- Check whether a login prompt, pop-up, or verification step is blocking the action.
+- Add **Wait** when the page or download request needs more time.
+- Confirm that the website starts the download through a supported browser interaction.
+
+Open the completed Task to review the available download result. A login-protected download requires an authorized and active session.
+
+## A Website Changed
+
+For a Workflow Built Bot, open the Workflow Builder, update the affected nodes, test the Workflow, and publish the updated Bot.
+
+For an Agent Built Bot, open Build and use `Improve Bot` to describe the changed page or expected result. Review and publish the draft before using the update.
+
+## What Should I Do If a Website Is Not Accessible?
+
+1. Confirm that the website opens normally in your browser.
+2. Retry the Task after a short wait.
+3. Review the Bot's browser mode and proxy region in `Browser settings`.
+4. Try another supported proxy region when access is location-dependent.
+5. If the issue continues, contact Support with the website URL, Bot ID, Task ID, and a screenshot.
+
+## Contact Support
+
+Include the Bot ID, Task ID, target URL, expected behavior, actual behavior, and a screenshot with sensitive information removed.

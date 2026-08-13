@@ -2,7 +2,7 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "aspen",
   "name": "Browser-act",
-  "description": "Agent CLI and Workflow documentation for Browser-act.",
+  "description": "BrowserAct Cloud, API, and Agent CLI documentation.",
   "colors": {
     "primary": "#03bf80",
     "light": "#03bf80",
@@ -15,6 +15,231 @@
   },
   "navigation": {
     "tabs": [
+      {
+        "tab": "BrowserAct Cloud",
+        "icon": "cloud",
+        "groups": [
+          {
+            "group": "Overview",
+            "icon": "house",
+            "expanded": false,
+            "pages": [
+              "overview/what-is-browseract-cloud",
+              "overview/core-capabilities"
+            ]
+          },
+          {
+            "group": "Quick Start",
+            "icon": "zap",
+            "expanded": false,
+            "pages": ["quick-start/build-your-first-bot"]
+          },
+          {
+            "group": "Bot",
+            "icon": "bot",
+            "expanded": false,
+            "pages": [
+              "bot/bot-introduction",
+              {
+                "group": "Create a Bot",
+                "expanded": false,
+                "pages": [
+                  "bot/agent-built/agent-built",
+                  {
+                    "group": "Workflow Built",
+                    "expanded": false,
+                    "pages": [
+                      "bot/workflow-built/overview",
+                      "bot/workflow-built/build-your-first-bot",
+                      {
+                        "group": "Node Types",
+                        "expanded": false,
+                        "pages": [
+                          "bot/workflow-built/node-types/index",
+                          "bot/workflow-built/node-types/start-node",
+                          "bot/workflow-built/node-types/visit-node",
+                          "bot/workflow-built/node-types/click-element-node",
+                          "bot/workflow-built/node-types/click-element-item-node",
+                          "bot/workflow-built/node-types/hover-element-node",
+                          "bot/workflow-built/node-types/input-text-node",
+                          "bot/workflow-built/node-types/scroll-page-node",
+                          "bot/workflow-built/node-types/scroll-to-element-node",
+                          "bot/workflow-built/node-types/pagination-node",
+                          "bot/workflow-built/node-types/wait-node",
+                          "bot/workflow-built/node-types/extract-data-node",
+                          "bot/workflow-built/node-types/extract-data-item-node",
+                          "bot/workflow-built/node-types/loop-node",
+                          "bot/workflow-built/node-types/loop-list-node",
+                          "bot/workflow-built/node-types/condition-node",
+                          "bot/workflow-built/node-types/tab-operation-node",
+                          "bot/workflow-built/node-types/human-interaction-node"
+                        ]
+                      },
+                      {
+                        "group": "Case Studies",
+                        "expanded": false,
+                        "pages": [
+                          "bot/workflow-built/case-studies/condition-filtering",
+                          "bot/workflow-built/case-studies/list-to-detail",
+                          "bot/workflow-built/case-studies/load-more",
+                          "bot/workflow-built/case-studies/multi-dimensional-filtering",
+                          "bot/workflow-built/case-studies/pagination"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "group": "Run a Bot",
+                "expanded": false,
+                "pages": [
+                  "bot/run/run-agent-built-bot",
+                  "bot/run/run-workflow-built-bot",
+                  "bot/run/view-run-history"
+                ]
+              },
+              {
+                "group": "Tasks",
+                "expanded": false,
+                "pages": ["bot/tasks/view-manage-tasks"]
+              },
+              "bot/improve/improve-a-bot",
+              "bot/manage/manage-bots"
+            ]
+          },
+          {
+            "group": "Browser & Proxy",
+            "icon": "monitor",
+            "expanded": false,
+            "pages": [
+              "browser-proxy/index",
+              {
+                "group": "Browser",
+                "expanded": false,
+                "pages": [
+                  "browser-proxy/browser/quick-start",
+                  "browser-proxy/browser/browser-modes-profiles",
+                  "browser-proxy/browser/best-practices",
+                  "browser-proxy/browser/performance-maintenance",
+                  "browser-proxy/browser/troubleshooting"
+                ]
+              },
+              {
+                "group": "Proxy",
+                "expanded": false,
+                "pages": [
+                  "browser-proxy/proxy/proxy-overview",
+                  "browser-proxy/proxy/static-proxy-purchase-use",
+                  "browser-proxy/proxy/dynamic-proxy-configure-use",
+                  "browser-proxy/proxy/custom-proxy-configure-use",
+                  "browser-proxy/proxy/proxy-best-practices"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Credential Center",
+            "icon": "shield-check",
+            "expanded": false,
+            "pages": [
+              "credential-center/credential-center-overview",
+              "credential-center/authentication-and-credentials"
+            ]
+          },
+          {
+            "group": "Integrations",
+            "icon": "blocks",
+            "expanded": false,
+            "pages": [
+              "integrations/integration-overview",
+              "integrations/api-keys",
+              "integrations/make",
+              "integrations/n8n",
+              "integrations/zapier",
+              "integrations/mcp",
+              {
+                "group": "Integration Guides",
+                "expanded": false,
+                "pages": [
+                  "integrations/guides/google-sheets",
+                  "integrations/guides/scheduled-runs",
+                  "integrations/guides/make-json-import-export",
+                  "integrations/guides/n8n-json-import-export"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Account & Billing",
+            "icon": "user-round",
+            "expanded": false,
+            "pages": [
+              "account-billing/index",
+              {
+                "group": "Account",
+                "expanded": false,
+                "pages": [
+                  "account-billing/account/account-settings",
+                  "account-billing/account/redeem-code",
+                  "account-billing/account/affiliate",
+                  "account-billing/account/task-failure-alert"
+                ]
+              },
+              {
+                "group": "Billing",
+                "expanded": false,
+                "pages": [
+                  "account-billing/billing/billing-credits",
+                  "account-billing/billing/view-credit-usage",
+                  "account-billing/billing/choose-plan",
+                  "account-billing/billing/view-billing-history",
+                  "account-billing/billing/credit-packs",
+                  "account-billing/billing/subscription-management"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Support",
+            "icon": "headphones",
+            "expanded": false,
+            "pages": [
+              "support/index",
+              "support/contact-support",
+              "support/community",
+              "support/tutorials-resources"
+            ]
+          },
+          {
+            "group": "FAQ",
+            "icon": "circle-help",
+            "expanded": false,
+            "pages": [
+              "faq/index",
+              "faq/getting-started-faq",
+              "faq/bot-faq",
+              "faq/agent-integrations-faq",
+              "faq/billing-credits-faq",
+              "faq/existing-troubleshooting"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "icon": "code-xml",
+        "groups": [
+          {
+            "group": "API Reference",
+            "icon": "code-xml",
+            "openapi": {
+              "source": "openapi_2.json",
+              "directory": "workflow/api-reference"
+            }
+          }
+        ]
+      },
       {
         "tab": "Agent CLI",
         "icon": "sparkles",
@@ -58,157 +283,6 @@
               "agent-cli/skill-system",
               "agent-cli/command-reference"
             ]
-          }
-        ]
-      },
-      {
-        "tab": "Workflow",
-        "icon": "route",
-        "groups": [
-          {
-            "group": "Learn",
-            "icon": "book-open",
-            "expanded": true,
-            "pages": [
-              {
-                "group": "Quick Start",
-                "icon": "sparkles",
-                "expanded": true,
-                "pages": [
-                  "workflow/learn/quick-start/core-concepts",
-                  "workflow/learn/quick-start/build-your-first-data-scraper-workflow-in-5-minutes"
-                ]
-              },
-              {
-                "group": "Node Types",
-                "icon": "workflow",
-                "expanded": false,
-                "pages": [
-                  "workflow/learn/node-types/click-element-item-node",
-                  "workflow/learn/node-types/click-element-node",
-                  "workflow/learn/node-types/condition-node",
-                  "workflow/learn/node-types/extract-data-item-node",
-                  "workflow/learn/node-types/extract-data-node",
-                  "workflow/learn/node-types/human-interaction-node",
-                  "workflow/learn/node-types/input-text-node",
-                  "workflow/learn/node-types/loop-list-node",
-                  "workflow/learn/node-types/loop-node",
-                  "workflow/learn/node-types/output-data-node",
-                  "workflow/learn/node-types/pagination-node",
-                  "workflow/learn/node-types/scroll-page-node",
-                  "workflow/learn/node-types/scroll-to-element-node",
-                  "workflow/learn/node-types/tab-operation-node",
-                  "workflow/learn/node-types/visit-node",
-                  "workflow/learn/node-types/wait-node",
-                  "workflow/learn/node-types/hover-element-node"
-                ]
-              },
-              {
-                "group": "Case Studies",
-                "icon": "lightbulb",
-                "expanded": false,
-                "pages": [
-                  "workflow/learn/case-studies/case-1-deep-extraction-from-list-page-to-detail-page",
-                  "workflow/learn/case-studies/case-2-automatic-pagination-and-data-collection-from-multi-page-lists",
-                  "workflow/learn/case-studies/case-3-automatic-expansion-and-collection-on-long-load-more-lists",
-                  "workflow/learn/case-studies/case-4-precise-collection-from-lists-with-condition-based-filtering",
-                  "workflow/learn/case-studies/case-5-precise-scraping-with-multi-dimensional-filtering"
-                ]
-              },
-              {
-                "group": "Integrations",
-                "icon": "blocks",
-                "expanded": false,
-                "pages": [
-                  "workflow/learn/integrations/n8n",
-                  "workflow/learn/integrations/make",
-                  "workflow/learn/integrations/mcp"
-                ]
-              }
-            ]
-          },
-          {
-            "group": "Help",
-            "icon": "message-circle-question-mark",
-            "expanded": false,
-            "pages": [
-              {
-                "group": "Using BrowserAct",
-                "icon": "life-buoy",
-                "expanded": false,
-                "pages": [
-                  {
-                    "group": "Workflow & Nodes",
-                    "icon": "network",
-                    "pages": [
-                      "workflow/help/workflow-and-nodes/basics",
-                      "workflow/help/workflow-and-nodes/data-extraction",
-                      "workflow/help/workflow-and-nodes/files-and-downloads"
-                    ]
-                  },
-                  {
-                    "group": "Credits & Subscription",
-                    "icon": "badge-dollar-sign",
-                    "expanded": true,
-                    "pages": [
-                      "workflow/help/credits-subscription/billing-credits",
-                      "workflow/help/credits-subscription/subscription-management",
-                      "workflow/help/credits-subscription/upgrade-your-plan",
-                      "workflow/help/credits-subscription/credit-packs"
-                    ]
-                  },
-                  {
-                    "group": "Browser Configuration",
-                    "icon": "globe",
-                    "pages": [
-                      "workflow/help/browser-configuration/quick-start",
-                      "workflow/help/browser-configuration/browser-modes-profiles",
-                      "workflow/help/browser-configuration/proxy-network-settings",
-                      "workflow/help/browser-configuration/how-to-use-browseract-proxies",
-                      "workflow/help/browser-configuration/performance-browser-maintenance",
-                      "workflow/help/browser-configuration/best-practice",
-                      "workflow/help/browser-configuration/troubleshooting"
-                    ]
-                  },
-                  "workflow/help/authentication-and-credentials",
-                  {
-                    "group": "Integrations & APIs",
-                    "icon": "blocks",
-                    "pages": [
-                      "workflow/help/integrations-apis/supported-platforms",
-                      "workflow/help/integrations-apis/api-keys-authentication",
-                      "workflow/help/integrations-apis/make-n8n-integrations",
-                      "workflow/help/integrations-apis/how-to-import-data-to-google-sheets",
-                      "workflow/help/integrations-apis/how-to-set-up-scheduled-tasks-for-browseract",
-                      "workflow/help/integrations-apis/how-to-share-and-use-workflows-in-make-using-json-files",
-                      "workflow/help/integrations-apis/how-to-share-and-use-workflows-in-n8n-using-json-files"
-                    ]
-                  },
-                  "workflow/help/runtime-environment",
-                  "workflow/help/troubleshooting",
-                  "workflow/help/frequently-asked-questions"
-                ]
-              },
-              {
-                "group": "More Resources & Support",
-                "icon": "messages-square",
-                "expanded": false,
-                "pages": [
-                  "workflow/help/resources-support/support-community",
-                  "workflow/help/resources-support/step-by-step-tutorial-to-publish-workflows",
-                  "workflow/help/resources-support/tutorials-resources",
-                  "workflow/help/resources-support/still-need-help"
-                ]
-              }
-            ]
-          },
-          {
-            "group": "API Reference",
-            "icon": "code-xml",
-            "openapi": {
-              "source": "openapi_2.json",
-              "directory": "workflow/api-reference"
-            }
           }
         ]
       }

@@ -1,0 +1,131 @@
+---
+title: "Hover Element Node"
+sidebarTitle: "Hover Element"
+description: "Move the pointer over a visible element to reveal or trigger hover-based content."
+---
+
+# Hover Element
+
+Use **Hover Element** to move the pointer over a visible element described in natural language. This is useful for menus, tooltips, preview cards, and actions that appear only on hover.
+
+## What Is the Hover Element Node?
+
+The node identifies the visible element that matches your description and triggers its hover state. No selector or code is required.
+
+## When Should You Use It?
+
+Use **Hover Element** to:
+
+- Reveal a dropdown or navigation submenu.
+- Display a tooltip before extracting its content.
+- Open a profile, product, or link preview card.
+- Access an e-commerce mega menu.
+- Reveal action buttons that appear only when the pointer is over an item.
+
+## How to Set Up a Hover Element Node
+
+### 1. Insert the Node
+
+Select the `+` below a node, then choose **Hover Element** from the Node Action Library.
+
+### 2. Describe the Target Element
+
+In **Element Location Description**, describe the element using its visible text, type, location, or position.
+
+Correct examples:
+
+- `The Products menu item in the top navigation bar`
+- `The user avatar icon in the upper-right corner`
+- `The first product card in the search results`
+- `The More options icon next to the file name`
+- `The category menu in the sidebar`
+
+Avoid describing multiple actions in one node. For example, hovering over a menu and clicking an option require separate **Hover Element** and **Click Element** nodes.
+
+### 3. Handle Errors
+
+Configure the failure behavior when the target element cannot be found.
+
+### 4. Connect Other Nodes
+
+Place **Hover Element** after the page-opening or navigation step. It is commonly followed by:
+
+- **Click Element** to click a revealed menu option.
+- **Extract Data** to capture tooltip or hover-card content.
+- **Wait** when the hover effect needs time to appear.
+
+## Examples
+
+### Reveal a Dropdown Menu
+
+**Goal:** Hover over a navigation item to reveal its dropdown, then click an option.
+
+**Step 1: Add Visit Page**
+
+- URL: `https://www.amazon.com/`
+- Access method: **Current Tab Access**
+- Failure behavior: **Stop Task**
+
+**Step 2: Add Hover Element**
+
+- Element description: `The Gift Cards menu item in the top navigation bar`
+- Failure behavior: **Stop Task**
+
+**Step 3: Add Click Element**
+
+- Element description: `The Shop all gift cards option in the dropdown menu`
+- Click type: **Left-click**
+- Failure behavior: **Stop Task**
+
+## Key Rules and Best Practices
+
+### Rules
+
+| Rule | Description |
+| --- | --- |
+| Target must be visible | The node can interact only with an element that is visible when it runs. |
+| One hover per node | Each node performs one hover action. |
+| Describe the target clearly | Use visible text, element type, location, or position. |
+| Hover state is temporary | The state may end when the next action moves the pointer or changes the page. |
+
+### Element Description Tips
+
+- Include the element type, such as menu item, icon, button, card, or row.
+- Specify a location, such as the top navigation bar, sidebar, or first row.
+- Include visible text or another distinguishing detail.
+- Use position references such as first, second, or next to.
+
+### Workflow Tips
+
+| Scenario | Recommended flow |
+| --- | --- |
+| Dropdown menu | Hover Element -> Click Element |
+| Tooltip extraction | Hover Element -> Wait -> Extract Data |
+| Mega menu | Hover Element -> Wait -> Click Element |
+| Hidden action button | Hover Element -> Click Element |
+
+## Quick Review
+
+1. **What does Hover Element do?**  
+   It moves the pointer over a visible element and triggers its hover state.
+
+2. **Can it target an element outside the visible area?**  
+   No. Scroll to the target first.
+
+3. **How many hover actions does one node perform?**  
+   One.
+
+4. **What commonly follows Hover Element?**  
+   **Click Element**, **Extract Data**, or **Wait**.
+
+5. **How long does the hover state remain active?**  
+   It may remain until another action moves the pointer or changes the page.
+
+## Next Steps
+
+Combine **Hover Element** with **Click Element**, **Wait**, and **Extract Data** for interfaces that reveal content or controls on hover.
+
+## Need Help?
+
+- Join the [BrowserAct Discord community](https://discord.com/invite/UpnCKd7GaU).
+- Email [support@browseract.com](mailto:support@browseract.com).
