@@ -18,7 +18,7 @@
       {
         "tab": "BrowserAct Cloud",
         "icon": "cloud",
-        "groups": [
+        "pages": [
           {
             "group": "Overview",
             "icon": "house",
