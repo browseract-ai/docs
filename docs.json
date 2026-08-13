@@ -247,7 +247,7 @@
           {
             "group": "Get started",
             "icon": "rocket",
-            "expanded": false,
+            "expanded": true,
             "pages": [
               "agent-cli/introduction",
               "agent-cli/installation",
@@ -257,7 +257,7 @@
           {
             "group": "Capabilities",
             "icon": "shield-check",
-            "expanded": false,
+            "expanded": true,
             "pages": [
               "agent-cli/anti-detection-blocking",
               "agent-cli/better-headless-browser",
