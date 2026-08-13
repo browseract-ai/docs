@@ -1,0 +1,28 @@
+/* BrowserAct Cloud: render Mintlify's top-level sidebar groups as accordions. */
+html[data-browseract-cloud-nav="true"] .sidebar-group-header {
+  cursor: pointer;
+  margin-bottom: 0.25rem;
+  padding-bottom: 0.375rem;
+  padding-top: 0.375rem;
+  user-select: none;
+}
+
+html[data-browseract-cloud-nav="true"] .sidebar-group-header::after {
+  border-bottom: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+  content: "";
+  height: 0.375rem;
+  margin-left: auto;
+  margin-right: 0.875rem;
+  transform: rotate(-45deg);
+  transition: transform 150ms ease;
+  width: 0.375rem;
+}
+
+html[data-browseract-cloud-nav="true"] .sidebar-group-header[data-expanded="true"]::after {
+  transform: rotate(45deg);
+}
+
+html[data-browseract-cloud-nav="true"] .sidebar-group[data-cloud-collapsed="true"] {
+  display: none;
+}
