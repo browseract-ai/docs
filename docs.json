@@ -3,6 +3,13 @@
   "theme": "aspen",
   "name": "Browser-act",
   "description": "BrowserAct Cloud, API, and Agent CLI documentation.",
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/overview/what-is-browseract-cloud",
+      "permanent": false
+    }
+  ],
   "colors": {
     "primary": "#03bf80",
     "light": "#03bf80",
