@@ -223,7 +223,7 @@
           },
           {
             "group": "FAQ",
-            "icon": "circle-question-mark",
+            "icon": "circle-help",
             "expanded": false,
             "pages": [
               "faq/index",
