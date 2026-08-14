@@ -33,6 +33,10 @@
       }
 
       if (header.dataset.cloudAccordion !== "ready") {
+        const containsActivePage = Boolean(
+          group.querySelector('[data-active-nav-item="true"], [aria-current="page"]'),
+        );
+
         const toggle = () => {
           const expanded = header.dataset.expanded === "true";
           header.dataset.expanded = String(!expanded);
@@ -41,8 +45,8 @@
         };
 
         header.dataset.cloudAccordion = "ready";
-        header.dataset.expanded = "false";
-        header.setAttribute("aria-expanded", "false");
+        header.dataset.expanded = String(containsActivePage);
+        header.setAttribute("aria-expanded", String(containsActivePage));
         header.setAttribute("role", "button");
         header.setAttribute("tabindex", "0");
         header.addEventListener("click", toggle);
@@ -52,6 +56,10 @@
             toggle();
           }
         });
+
+        if (containsActivePage) {
+          group.removeAttribute("data-cloud-collapsed");
+        }
       }
 
       if (header.dataset.expanded !== "true") {
