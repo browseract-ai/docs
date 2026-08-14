@@ -33,9 +33,10 @@
       }
 
       if (header.dataset.cloudAccordion !== "ready") {
-        const containsActivePage = Boolean(
-          group.querySelector('[data-active-nav-item="true"], [aria-current="page"]'),
-        );
+        const isFaqGroup = header.textContent.trim() === "FAQ";
+        const containsActivePage =
+          !isFaqGroup &&
+          Boolean(group.querySelector('[data-active-nav-item="true"], [aria-current="page"]'));
 
         const toggle = () => {
           const expanded = header.dataset.expanded === "true";
