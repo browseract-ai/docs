@@ -20,6 +20,9 @@
   "icons": {
     "library": "lucide"
   },
+  "settings": {
+    "customScripts": ["/cloud-sidebar.js"]
+  },
   "navigation": {
     "tabs": [
       {
