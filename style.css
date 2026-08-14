@@ -48,3 +48,7 @@ html[data-browseract-cloud-nav="true"] .sidebar-group[data-cloud-collapsed="true
 html[data-browseract-cloud-nav="true"] .sidebar-nav-group-divider {
   display: none;
 }
+
+html[data-browseract-cloud-nav="true"] div:has(> .sidebar-nav-group-divider) {
+  display: none;
+}
