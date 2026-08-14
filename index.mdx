@@ -1,36 +1,12 @@
 ---
-title: "Browser-act"
-description: "Browser-act provides an Agent CLI for browser automation and a hosted Workflow product for visual automation."
+title: "BrowserAct Cloud"
+description: "Start with BrowserAct Cloud documentation."
 ---
 
-# Browser-act
+# BrowserAct Cloud
 
-Browser-act helps AI agents and teams automate browser work.
+BrowserAct Cloud is the default starting point for BrowserAct documentation.
 
-- **Agent CLI** is for AI agents that need to operate browsers through a safe command-line runtime.
-- **Workflow** is for users and teams that want hosted visual browser automation.
+Start with [Introduction](/overview/what-is-browseract-cloud) to learn what BrowserAct Cloud is, when to use it, and how it relates to Agent CLI.
 
-## Start with the Agent CLI
-
-| Layer | What it does | Where to read |
-| --- | --- | --- |
-| Entry Skill | Helps the agent discover Browser-act and load runtime-aware instructions | [Skill System](/agent-cli/skill-system) |
-| CLI Runtime | Performs browser automation commands | [Command Reference](/agent-cli/command-reference) |
-| Runtime objects | Control browser state and safety boundaries | browser, session, profile, stealth browser, network capture, HAR |
-
-## Shortest path
-
-```bash
-browser-act get-skills core --skill-version <version>
-browser-act browser list
-browser-act --session my-task browser open <browser-id> https://example.com
-browser-act --session my-task state
-browser-act --session my-task click 2
-```
-
-## Where to start
-
-- [Introduction](/agent-cli/introduction): Learn what Browser-act gives AI agents.
-- [Installation](/agent-cli/installation): Install the CLI, add the entry Skill, and verify the runtime.
-- [Quick Start](/agent-cli/quick-start): Get the first extraction or browser interaction running in 60 seconds.
-- [First workflow guide](/workflow/learn/quick-start/build-your-first-data-scraper-workflow-in-5-minutes): Open the existing Workflow learning material.
+If you are looking for local browser control for your own agent workflow, open the [Agent CLI documentation](/agent-cli/introduction).
