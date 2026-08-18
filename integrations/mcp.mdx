@@ -1,10 +1,10 @@
 ---
 title: "Integrate BrowserAct with MCP"
 sidebarTitle: "MCP"
-description: "Turn a Workflow Built Bot into an MCP Tool and connect it to an MCP client."
+description: "Turn BrowserAct Bots into MCP Tools and connect them to MCP clients."
 ---
 
-BrowserAct MCP Server lets compatible MCP clients discover and run BrowserAct automations as MCP Tools.
+BrowserAct MCP Server lets compatible MCP clients discover and run BrowserAct Bots as MCP Tools.
 
 ## Video Tutorial
 
@@ -12,20 +12,18 @@ BrowserAct MCP Server lets compatible MCP clients discover and run BrowserAct au
 
 [Watch **Create Your First BrowserAct MCP Server** on YouTube](https://www.youtube.com/watch?v=b3f1rvqCTlM).
 
-> **Availability:** MCP currently supports Workflow Built Bots only. Support for Agent Built Bots is coming soon.
-
 > **Naming note:** The MCP interface currently uses `Workflow`. In the new BrowserAct product structure, the completed automation is managed as a Bot, and a legacy Workflow ID corresponds to the Bot ID.
 
 ## What Is BrowserAct MCP Server?
 
-BrowserAct MCP Server connects MCP clients to Workflow Built Bots through the Model Context Protocol. A connected client can discover exposed tools, provide inputs, run the Bot, and receive its result.
+BrowserAct MCP Server connects MCP clients to BrowserAct Bots through the Model Context Protocol. A connected client can discover exposed tools, provide inputs, run the Bot, and receive its result.
 
 You can use it to:
 
 - Run browser automation from a chat or agent interface
 - Pass runtime inputs in natural language
 - Return results as text or files
-- Expose multiple Workflow Built Bots from one MCP Server
+- Expose multiple BrowserAct Bots from one MCP Server
 
 ## Supported MCP Clients
 
@@ -38,11 +36,48 @@ Compatibility depends on the client, not only on the AI model name. For a client
 Prepare the following:
 
 - A BrowserAct account
-- A published Workflow Built Bot
+- A published BrowserAct Bot
 - An MCP-compatible client
 - A Bot that does not require manual credential input on every run
 
-## Part 1: Convert a Workflow Built Bot into an MCP Tool
+## How to Use MCP
+
+BrowserAct supports two MCP setup paths:
+
+- Convert an Agent Built Bot into an MCP Tool from the Bot's `Integrations` tab.
+- Convert a Workflow Built Bot into an MCP Tool from the Workflow Builder's MCP configuration.
+
+## Convert an Agent Built Bot into an MCP Tool
+
+Use this path when the Bot was created with Agent Built.
+
+### Open the Agent Built Bot
+
+1. Open `Bots`.
+2. Find the Agent Built Bot you want to expose as an MCP Tool.
+3. Select the Bot.
+
+![Select an Agent Built Bot from the Bots page](../images/mcp-agent-built-select-bot.png)
+
+### Open the MCP Server Entry
+
+1. Open the Bot's `Integrations` tab.
+2. Find the `MCP` card.
+3. Select `MCP Server`.
+
+![Open MCP Server from an Agent Built Bot](../images/mcp-agent-built-integrations-card.png)
+
+### Add or Select an MCP Server
+
+Select `Add` to create an MCP Server.
+
+![Add an MCP Server](../images/mcp-server-list-add.png)
+
+After the server is created, expose the Bot as an MCP Tool and connect the MCP Server URL and API Key to your MCP client.
+
+## Convert a Workflow Built Bot into an MCP Tool
+
+Use this path when the Bot was created with Workflow Built.
 
 ### Enable MCP Configuration
 
@@ -81,7 +116,7 @@ After the configuration is published, update the Workflow and publish again when
 
 Select `Publish` after the MCP configuration is complete. MCP clients run the latest published configuration; unpublished changes are not available to them.
 
-## Part 2: Create an MCP Server
+## Create an MCP Server
 
 ### Open MCP
 
@@ -103,7 +138,7 @@ Select `Publish` after the MCP configuration is complete. MCP clients run the la
 
 ![Enter the MCP Server name and description](../images/mcp-add-server-form.png)
 
-## Part 3: Expose MCP Tools
+## Expose MCP Tools
 
 1. Select `Management` for the target MCP Server.
 
@@ -118,9 +153,9 @@ Select `Publish` after the MCP configuration is complete. MCP clients run the la
 
 ![Confirm that the MCP Tool should be exposed](../images/mcp-confirm-expose-tool.png)
 
-Only published, MCP-ready Workflow Built Bots can be exposed. One MCP Server can expose multiple MCP Tools.
+Only published, MCP-ready Bots can be exposed. One MCP Server can expose multiple MCP Tools.
 
-## Part 4: Connect an MCP Client
+## Connect an MCP Client
 
 Each MCP Server has its own MCP Server URL and API Key. Use the matching pair from the same server.
 
@@ -171,7 +206,7 @@ Open the MCP Server's execution logs to review status, duration, and errors.
 - Confirm that the MCP Server URL is correct.
 - Confirm that the MCP Server is online.
 - Confirm that at least one tool is exposed.
-- Confirm that the Workflow Built Bot is MCP-ready and published.
+- Confirm that the Bot is MCP-ready and published.
 - Reload the MCP client after changing the configuration.
 
 ### MCP Client Cannot Run a Tool
@@ -185,7 +220,7 @@ Open the MCP Server's execution logs to review status, duration, and errors.
 
 ### Can Agent Built Bots Be Used as MCP Tools?
 
-Not yet. MCP currently supports Workflow Built Bots only, and support for Agent Built Bots is coming soon.
+Yes. Agent Built Bots can be exposed as MCP Tools from the Bot's `Integrations` tab. See [Convert an Agent Built Bot into an MCP Tool](#convert-an-agent-built-bot-into-an-mcp-tool).
 
 ### Can Every Workflow Built Bot Be Exposed?
 
