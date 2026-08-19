@@ -51,7 +51,7 @@ BrowserAct supports two MCP setup paths:
 
 Use this path when the Bot was created with Agent Built.
 
-### Open the Agent Built Bot
+### Step 1: Select the Bot to Expose
 
 1. Open `Bots`.
 2. Find the Agent Built Bot you want to expose as an MCP Tool.
@@ -59,7 +59,9 @@ Use this path when the Bot was created with Agent Built.
 
 ![Select an Agent Built Bot from the Bots page](../images/mcp-agent-built-select-bot.png)
 
-### Open the MCP Server Entry
+### Step 2: Create an MCP Server and Expose the Tool
+
+#### Create an MCP Server
 
 1. Open the Bot's `Integrations` tab.
 2. Find the `MCP` card.
@@ -67,19 +69,48 @@ Use this path when the Bot was created with Agent Built.
 
 ![Open MCP Server from an Agent Built Bot](../images/mcp-agent-built-integrations-card.png)
 
-### Add or Select an MCP Server
+Before exposing the Bot, you can review or edit the MCP Tool's basic information from the settings icon on the `MCP` card. BrowserAct generates the Tool Call Name, Tool Description, and input descriptions automatically, but you can adjust them before exposing the Bot to MCP clients.
 
-Select `Add` to create an MCP Server.
+![Open Agent Built MCP Tool settings](../images/mcp-agent-built-tool-settings-entry.png)
 
-![Add an MCP Server](../images/mcp-server-list-add.png)
+![Edit Agent Built MCP Tool configuration](../images/mcp-agent-built-tool-configuration.png)
 
-After the server is created, expose the Bot as an MCP Tool and connect the MCP Server URL and API Key to your MCP client.
+Select `Add MCP Servers`, enter a server name and optional description, then select `Confirm`.
+
+![Create an MCP Server for an Agent Built Bot](../images/mcp-agent-built-add-server-form.png)
+
+#### Expose the Tool
+
+After the MCP Server is created, select the `Server Management` icon for that server.
+
+![Open Server Management for the MCP Server](../images/mcp-agent-built-server-management.png)
+
+1. Open `Exposed Tools`.
+2. Select `Not Exposed`.
+3. Select the Bot you want to expose.
+4. Select the expose action, then confirm.
+
+![Expose an Agent Built Bot as an MCP Tool](../images/mcp-agent-built-expose-tool.png)
+
+### Step 3: Connect an MCP Client
+
+1. Open `Connect to Clients` for the MCP Server.
+2. Copy the MCP Server URL.
+3. Create or copy the API Key from the same MCP Server.
+4. Select the MCP client you want to connect, then follow the setup instructions shown in BrowserAct.
+5. Reload the client if required and confirm that the exposed Agent Built Bot appears as an available MCP Tool.
+
+![Copy the MCP Server URL and API Key](../images/mcp-connect-to-clients.png)
+
+![Open the setup guide for an MCP client](../images/mcp-client-setup-guide.png)
+
+Use the MCP Server URL and API Key from the same server. Do not share the API Key in prompts, screenshots, repositories, or public configuration files.
 
 ## Convert a Workflow Built Bot into an MCP Tool
 
 Use this path when the Bot was created with Workflow Built.
 
-### Enable MCP Configuration
+### Step 1: Select the Workflow Built Bot to Expose
 
 1. Open the Workflow Built Bot.
 2. Select `MCP Configure`.
@@ -101,7 +132,7 @@ Clear tool names and descriptions help the MCP client select the correct tool.
 
 ![Enable and configure the MCP Tool](../images/mcp-tool-configuration.png)
 
-### Configure Input Parameters
+#### Configure Input Parameters
 
 Choose how each Workflow input is provided:
 
@@ -112,21 +143,19 @@ MCP Tools do not support credentials entered manually for each run. Use credenti
 
 After the configuration is published, update the Workflow and publish again when its MCP parameters need to change.
 
-### Publish the Workflow
+#### Publish the Workflow
 
 Select `Publish` after the MCP configuration is complete. MCP clients run the latest published configuration; unpublished changes are not available to them.
 
-## Create an MCP Server
+### Step 2: Create an MCP Server and Expose the Tool
 
-### Open MCP
+Open the MCP Server page:
 
 1. Open `Integrations` in BrowserAct Cloud.
 2. Find the `MCP` section.
 3. Select the `MCP` card.
 
 ![Open MCP from the BrowserAct Integrations page](../images/mcp-integrations-entry.png)
-
-### Add an MCP Server
 
 1. Select `Add` on the MCP Server page.
 
@@ -138,7 +167,7 @@ Select `Publish` after the MCP configuration is complete. MCP clients run the la
 
 ![Enter the MCP Server name and description](../images/mcp-add-server-form.png)
 
-## Expose MCP Tools
+Expose the Workflow Built Bot as an MCP Tool:
 
 1. Select `Management` for the target MCP Server.
 
@@ -155,11 +184,11 @@ Select `Publish` after the MCP configuration is complete. MCP clients run the la
 
 Only published, MCP-ready Bots can be exposed. One MCP Server can expose multiple MCP Tools.
 
-## Connect an MCP Client
+### Step 3: Connect an MCP Client
 
 Each MCP Server has its own MCP Server URL and API Key. Use the matching pair from the same server.
 
-### Get the Server URL and API Key
+Get the Server URL and API Key:
 
 1. Open `Management` for the target MCP Server.
 2. Open `Connect to Clients`.
@@ -170,7 +199,7 @@ Each MCP Server has its own MCP Server URL and API Key. Use the matching pair fr
 
 This is the MCP Server connection key. It is managed from the MCP Server, not from the general `Manage API Keys` page.
 
-### Configure the Client
+Configure the client:
 
 1. Select the target MCP client in `Connect to Clients`.
 2. Open the setup instructions for that client.
