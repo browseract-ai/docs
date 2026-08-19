@@ -6,12 +6,6 @@ description: "Turn BrowserAct Bots into MCP Tools and connect them to MCP client
 
 BrowserAct MCP Server lets compatible MCP clients discover and run BrowserAct Bots as MCP Tools.
 
-## Video Tutorial
-
-[![Watch Create Your First BrowserAct MCP Server](https://i.ytimg.com/vi/b3f1rvqCTlM/hqdefault.jpg)](https://www.youtube.com/watch?v=b3f1rvqCTlM)
-
-[Watch **Create Your First BrowserAct MCP Server** on YouTube](https://www.youtube.com/watch?v=b3f1rvqCTlM).
-
 > **Naming note:** The MCP interface currently uses `Workflow`. In the new BrowserAct product structure, the completed automation is managed as a Bot, and a legacy Workflow ID corresponds to the Bot ID.
 
 ## What Is BrowserAct MCP Server?
@@ -215,9 +209,15 @@ Do not expose the API Key in prompts, screenshots, repositories, or shared confi
 
 Ask the connected client to run the exposed BrowserAct tool and include the required runtime inputs.
 
+To run a BrowserAct MCP Tool in Codex, use a prompt like this:
+
 ```text
-Run the BrowserAct tool for this URL and return the structured result:
-https://example.com
+Connect to the BrowserAct Tool through the provided MCP Server URL and return the output as structured data.
+
+MCP Server URL:
+https://mcp.browseract.com/************/mcp/
+
+Before calling the tool, verify whether the required BrowserAct MCP Key is already authorized and available in the current environment. If the key is missing, invalid, or not authorized, do not continue with the tool call. Instead, guide the user to install or configure the BrowserAct MCP Key at the exact required file location. Provide the concrete file path, the configuration snippet or format to add, and the steps to retry the connection after setup is complete.
 ```
 
 Open the MCP Server's execution logs to review status, duration, and errors.
