@@ -45,6 +45,19 @@
             "pages": ["quick-start/build-your-first-bot"]
           },
           {
+            "group": "Bot Templates",
+            "icon": "layout-template",
+            "expanded": false,
+            "pages": [
+              "bot-templates/introduction",
+              "bot-templates/browse-templates",
+              "bot-templates/run-a-template",
+              "bot-templates/manage-template-bots",
+              "bot-templates/create-editable-duplicate",
+              "bot-templates/template-faq"
+            ]
+          },
+          {
             "group": "Bot",
             "icon": "bot",
             "expanded": false,
