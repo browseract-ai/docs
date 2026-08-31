@@ -1,0 +1,1887 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "BrowserAct API",
+    "description": "BrowserAct's API lets you list and run BrowserAct bots programmatically and monitor their execution.\n\n**Core concepts (same as the Dashboard):**\n- **Bot**: a published Bot automation that can be run through the API.\n- **Task**: a single bot execution record (the \"run\").\n\nThe public `bot_type=agent` value represents **SkillFlow**, not the legacy Agent app type.\n\n## Base URL\nAll requests use the following base URL:\n\n```\nhttps://api.browseract.com\n```\n\n## API versioning\nThe API is versioned in the URL path (for example, `/v3/bots/...`).\n\n## Authentication\nAuthenticate with a Bearer token in the `Authorization` header:\n\n```\nAuthorization: Bearer <API_KEY>\n```\n\nAPI keys are scoped to a company and channel. Do not send internal session headers such as `x-session-company-id` or `x-session-api-channel`; BrowserAct injects them after authentication.\n\n## Requests\n- Send request bodies as JSON.\n- Set `Content-Type: application/json` for endpoints that accept a body.\n- Run inputs use an `input` object that must conform to the bot or template `input_schema`.\n\n## Response codes\n- `200` for successful queries, creates, cancels, and resumes\n- `400` for invalid parameters, business validation failures, or resources not visible to the current API key\n- `500` for server-side errors\n\nSuccessful responses return the business object directly without a data wrapper. Error responses use `code`, `msg`, `data`, `ts`, `time`, and `traceId`.\n\n## Pagination\nList endpoints use **page-based pagination** with these query parameters:\n- `page` (starts at 1)\n- `limit` (maximum depends on the endpoint)\n\nPaginated responses include `page`, `limit`, `items`, `total_pages`, and `total_count`.\n\n## Webhooks (optional)\nWhen creating a task, you can provide:\n- `callback_url`: called when a task **finishes**, **fails**, or is **canceled**.\n- `status_change_callback_url`: called whenever the public task status changes.\n\nBoth callbacks receive the complete `BotRunDetailResponse` directly, without an additional `data` wrapper. Callback URLs cannot resolve to private or local addresses.\n\n## Task status values\n`created`, `running`, `pausing`, `paused`, `finished`, `canceled`, `failed`.\n\n## Common error codes\n- `99001`: Request parameter error\n- `99002`: No operation permission\n- `10013`: Proxy region does not exist\n- `10020`: Bot is not published\n- `10021`: SkillFlow LLM configuration is incomplete\n- `10111`: Bot does not exist or is not visible\n- `10112`: Task does not exist\n- `10121`: Task has already completed\n- `10127`: Only a paused task can be resumed\n- `10142`: Required Bot input is missing\n- `10143`: Required SkillFlow input is missing\n- `10176`: Bot template does not exist\n- `10879`: SkillFlow runs do not support resume\n\n## Rate limits\nTo protect platform stability, rate limits may apply. If you hit a limit, reduce request frequency and retry with backoff.\n\n## Need help?\nJoin our Discord community: https://discord.com/invite/UpnCKd7GaU\n",
+    "version": "v3",
+    "contact": {
+      "name": "BrowserAct Support",
+      "url": "https://discord.com/invite/UpnCKd7GaU"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.browseract.com",
+      "description": "API host"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Tasks",
+      "description": "Create and manage bot execution tasks. Start a task, poll its status or full details, and retrieve outputs after it finishes."
+    },
+    {
+      "name": "Bots",
+      "description": "Bots are published Bot automations. Use these endpoints to list runnable bots and inspect their input and output schemas."
+    },
+    {
+      "name": "Bot Templates",
+      "description": "Official Bot templates curated by BrowserAct. Templates provide a fast way to start common scraping and automation use cases."
+    },
+    {
+      "name": "Regions",
+      "description": "Supported proxy regions that can be used when running an official Bot template."
+    }
+  ],
+  "paths": {
+    "/v3/bots/{bot_id}/runs": {
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Run a bot (create a task)",
+        "operationId": "createRun",
+        "parameters": [
+          {
+            "name": "bot_id",
+            "in": "path",
+            "required": true,
+            "description": "Public bot identifier.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "1001"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BotRunCreateRequest"
+              },
+              "examples": {
+                "basic": {
+                  "summary": "Start a Bot task",
+                  "value": {
+                    "input": {
+                      "order_id": "A-100"
+                    }
+                  }
+                },
+                "withWebhooks": {
+                  "summary": "Receive webhook callbacks",
+                  "value": {
+                    "input": {
+                      "order_id": "A-100"
+                    },
+                    "callback_url": "https://your-server.com/webhooks/bot-callback",
+                    "status_change_callback_url": "https://your-server.com/webhooks/task-status-change-callback"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "callbacks": {
+          "runCompleted": {
+            "{$request.body#/callback_url}": {
+              "post": {
+                "summary": "Receive the terminal V3 bot run detail",
+                "requestBody": {
+                  "required": true,
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BotRunDetailResponse"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "Callback accepted."
+                  }
+                }
+              }
+            }
+          },
+          "runStatusChanged": {
+            "{$request.body#/status_change_callback_url}": {
+              "post": {
+                "summary": "Receive the current V3 bot run detail after a public status change",
+                "requestBody": {
+                  "required": true,
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BotRunDetailResponse"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "Callback accepted."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Run created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BotRunCreatedResponse"
+                },
+                "example": {
+                  "task_id": "93001",
+                  "status": "created"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bot not found (10111), or the current company's Bot is not published (10020).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Starts a new task execution for a published Bot and returns a `task_id`.\n\n### How it works\n1) Use `GET /v3/bots` to find a runnable Bot and copy its `bot_id`.\n2) Use `GET /v3/bots/{bot_id}` to inspect its `input_schema`.\n3) Provide an `input` object that conforms to that schema; use `{}` when no inputs are required.\n\n### Webhooks\nYou can provide `callback_url` and/or `status_change_callback_url`. Both callbacks receive a complete `BotRunDetailResponse` without a data wrapper."
+      }
+    },
+    "/v3/bots/templates/{template_id}/runs": {
+      "post": {
+        "tags": [
+          "Tasks",
+          "Bot Templates"
+        ],
+        "summary": "Run an official bot template (create a task)",
+        "operationId": "createTemplateRun",
+        "parameters": [
+          {
+            "name": "template_id",
+            "in": "path",
+            "required": true,
+            "description": "Public Bot template identifier.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "3001"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BotTemplateRunCreateRequest"
+              },
+              "examples": {
+                "basic": {
+                  "summary": "Start a Bot template task",
+                  "value": {
+                    "input": {
+                      "url": "https://example.com"
+                    }
+                  }
+                },
+                "withProxyAndWebhooks": {
+                  "summary": "Use a proxy region and receive webhook callbacks",
+                  "value": {
+                    "input": {
+                      "url": "https://example.com"
+                    },
+                    "proxy_region": "US",
+                    "callback_url": "https://your-server.com/webhooks/bot-template-callback",
+                    "status_change_callback_url": "https://your-server.com/webhooks/task-status-change-callback"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "callbacks": {
+          "runCompleted": {
+            "{$request.body#/callback_url}": {
+              "post": {
+                "summary": "Receive the terminal V3 template run detail",
+                "requestBody": {
+                  "required": true,
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BotRunDetailResponse"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "Callback accepted."
+                  }
+                }
+              }
+            }
+          },
+          "runStatusChanged": {
+            "{$request.body#/status_change_callback_url}": {
+              "post": {
+                "summary": "Receive the current V3 template run detail after a public status change",
+                "requestBody": {
+                  "required": true,
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/BotRunDetailResponse"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "Callback accepted."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Template run created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BotRunCreatedResponse"
+                },
+                "example": {
+                  "task_id": "93002",
+                  "status": "created"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bot template not found. Returns error code 10176.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Starts a new task execution from an official Bot template and returns a `task_id`.\n\nUse `GET /v3/bots/templates` to discover templates and `GET /v3/bots/templates/{template_id}` to inspect the template `input_schema`.\n\nProvide an `input` object that conforms to the schema. Optionally select a `proxy_region` returned by `GET /v3/bots/regions`, and configure completion or status-change callbacks.\n\nTemplate runs do not support the MCP execution context."
+      }
+    },
+    "/v3/bots/runs/{task_id}/status": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Retrieve a task status",
+        "operationId": "queryRunStatus",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "description": "Task ID",
+            "schema": {
+              "type": "string"
+            },
+            "example": "93001"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Run status returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BotRunStatusResponse"
+                },
+                "example": {
+                  "task_id": "93001",
+                  "status": "running",
+                  "updated_at": "2026-08-13T09:01:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Run not found. Returns error code 10112.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns the current public status and update time for a task. This endpoint is more lightweight than `GET /v3/bots/runs/{task_id}` and is recommended for polling."
+      }
+    },
+    "/v3/bots/runs/{task_id}": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Retrieve a task",
+        "operationId": "queryRun",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "description": "Task ID",
+            "schema": {
+              "type": "string"
+            },
+            "example": "93001"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Run returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BotRunDetailResponse"
+                },
+                "example": {
+                  "task_id": "93001",
+                  "log_detail_url": "https://www.browseract.com/reception/logs?keyword=93001",
+                  "bot_id": "1001",
+                  "bot_type": "workflow",
+                  "bot_name": "Order status lookup",
+                  "status": "finished",
+                  "created_at": "2026-08-13T09:00:00Z",
+                  "finished_at": "2026-08-13T09:02:00Z",
+                  "input": {
+                    "order_id": "A-100"
+                  },
+                  "output": {
+                    "status": "paid"
+                  },
+                  "steps": [
+                    {
+                      "id": "501",
+                      "step": 1,
+                      "evaluation_previous_goal": "The order page opened successfully.",
+                      "step_goal": "Open the order page.",
+                      "screenshots_url": "https://signed-url/step-1.png",
+                      "status": "succeed"
+                    }
+                  ],
+                  "credit": 12
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Run not found. Returns error code 10112.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns comprehensive information about a task, including its current `status`, accepted `input`, output, failure details, files, live browser information, and Bot step summaries when available.\n\nFields that do not apply to the run type or state are omitted. Official template runs do not expose template source fields or the internally copied Bot ID. If you only need the current status, use `GET /v3/bots/runs/{task_id}/status`."
+      }
+    },
+    "/v3/bots/runs": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "List tasks",
+        "operationId": "pageRuns",
+        "parameters": [
+          {
+            "name": "bot_id",
+            "in": "query",
+            "required": false,
+            "description": "Optional public bot identifier filter.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "1001"
+          },
+          {
+            "name": "bot_name",
+            "in": "query",
+            "required": false,
+            "description": "Optional bot name keyword (fuzzy match, contains).",
+            "schema": {
+              "type": "string"
+            },
+            "example": "Order status"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "description": "Filter tasks by status.",
+            "schema": {
+              "$ref": "#/components/schemas/BotRunStatus"
+            },
+            "example": "running"
+          },
+          {
+            "name": "created_at_from",
+            "in": "query",
+            "required": false,
+            "description": "Lower bound of task creation time (inclusive). ISO 8601 format, e.g. `2024-01-01T00:00:00Z`.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "example": "2026-08-01T00:00:00Z"
+          },
+          {
+            "name": "created_at_to",
+            "in": "query",
+            "required": false,
+            "description": "Upper bound of task creation time (inclusive). ISO 8601 format, e.g. `2024-12-31T23:59:59Z`.",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "example": "2026-08-31T23:59:59Z"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Page number to retrieve (starts at 1).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Number of tasks per page (max 100).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Runs returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BotRunSummaryPage"
+                },
+                "example": {
+                  "items": [
+                    {
+                      "task_id": "93001",
+                      "bot_id": "1001",
+                      "bot_type": "workflow",
+                      "bot_name": "Order status lookup",
+                      "status": "running",
+                      "created_at": "2026-08-13T09:00:00Z",
+                      "input": {
+                        "order_id": "A-100"
+                      },
+                      "live_url_info": {
+                        "live_url": "https://live.browseract.com/93001",
+                        "width": 1280,
+                        "height": 1024
+                      }
+                    }
+                  ],
+                  "page": 1,
+                  "limit": 20,
+                  "total_count": 1,
+                  "total_pages": 1
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns a paginated list of Bot execution tasks.\n\n### Filtering\n- Use `status` to filter by task status.\n- Use `bot_id` to list tasks created from a specific Bot.\n- Use `bot_name` to search by Bot name using a contains match.\n- Use `created_at_from` / `created_at_to` for inclusive task creation time bounds in ISO 8601 format.\n\n### Pagination\nUse `page` and `limit`. The response includes `total_pages` and `total_count`.\n\nNormal Bot runs can include `bot_id` and `bot_name`. Official template runs omit template source fields and internal copied Bot IDs."
+      }
+    },
+    "/v3/bots/runs/{task_id}/resume": {
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Resume a paused task",
+        "operationId": "resumeRun",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "description": "Task ID",
+            "schema": {
+              "type": "string"
+            },
+            "example": "93001"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resume requested.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BotRunStatusResponse"
+                },
+                "example": {
+                  "task_id": "93001",
+                  "status": "paused",
+                  "updated_at": "2026-08-13T09:05:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Run not found. Returns error code 10112.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Requests the resumption of a paused Bot task. SkillFlow tasks return error code `10879`; tasks that are not paused return `10127`. Resume is asynchronous, so the returned status can remain `paused` until processing continues."
+      }
+    },
+    "/v3/bots/runs/{task_id}/cancel": {
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Cancel a running task",
+        "operationId": "cancelRun",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "description": "Task ID",
+            "schema": {
+              "type": "string"
+            },
+            "example": "93001"
+          },
+          {
+            "name": "biz_code",
+            "in": "query",
+            "required": false,
+            "description": "Optional business cancellation code (for your own tracking/analytics).",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Run canceled.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BotRunStatusResponse"
+                },
+                "example": {
+                  "task_id": "93001",
+                  "status": "canceled",
+                  "updated_at": "2026-08-13T09:05:00Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Run not found. Returns error code 10112.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Cancels a running or paused task. Optionally provide `biz_code`; when omitted, the default user-cancel code is used. A task already in a terminal state (`finished`, `canceled`, or `failed`) returns error code `10121` and cannot be resumed."
+      }
+    },
+    "/v3/bots": {
+      "get": {
+        "tags": [
+          "Bots"
+        ],
+        "summary": "List bots",
+        "operationId": "pageBots",
+        "parameters": [
+          {
+            "name": "bot_type",
+            "in": "query",
+            "required": false,
+            "description": "Optional bot type filter. agent represents SkillFlow.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "workflow",
+                "agent"
+              ]
+            },
+            "example": "workflow"
+          },
+          {
+            "name": "keyword",
+            "in": "query",
+            "required": false,
+            "description": "Search keyword (optional).",
+            "schema": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "example": "order"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Page number to retrieve (starts at 1).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Number of Bots per page (max 100).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Bots returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BotSummaryPage"
+                },
+                "example": {
+                  "items": [
+                    {
+                      "bot_id": "1001",
+                      "bot_type": "workflow",
+                      "name": "Order status lookup",
+                      "description": "Looks up an order and returns its current status.",
+                      "published_at": "2026-08-10T03:00:00Z"
+                    }
+                  ],
+                  "page": 1,
+                  "limit": 20,
+                  "total_count": 1,
+                  "total_pages": 1
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns a paginated list of Bots that have a runnable published version.\n\n### Filtering\n- Use `bot_type` to select a Bot type. The public `agent` value means SkillFlow.\n- Use `keyword` for a case-insensitive Bot name search.\n\n### Pagination\nUse `page` and `limit`. The response includes `total_pages` and `total_count`."
+      }
+    },
+    "/v3/bots/{bot_id}": {
+      "get": {
+        "tags": [
+          "Bots"
+        ],
+        "summary": "Retrieve a bot",
+        "operationId": "queryBot",
+        "parameters": [
+          {
+            "name": "bot_id",
+            "in": "path",
+            "required": true,
+            "description": "Public bot identifier.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "1001"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Bot returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BotDetailResponse"
+                },
+                "example": {
+                  "bot_id": "1001",
+                  "bot_type": "workflow",
+                  "name": "Order status lookup",
+                  "description": "Looks up an order and returns its current status.",
+                  "created_at": "2026-08-01T00:00:00Z",
+                  "published_at": "2026-08-10T03:00:00Z",
+                  "input_schema": {
+                    "type": "object",
+                    "properties": {
+                      "order_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "order_id"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "output_schema": null
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bot not found. Returns error code 10111.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Fetches a Bot definition, including its creation time and published schemas. For an unpublished Bot owned by the current company, `published_at`, `input_schema`, and `output_schema` are null; attempting to run it returns error code `10020`. If you only need a list of runnable Bots, use `GET /v3/bots`."
+      }
+    },
+    "/v3/bots/templates": {
+      "get": {
+        "tags": [
+          "Bot Templates"
+        ],
+        "summary": "List official bot templates",
+        "operationId": "pageTemplates",
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "required": false,
+            "description": "Search keyword (optional).",
+            "schema": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "example": "price"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Page number to retrieve (starts at 1).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Number of templates per page (max 500).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500,
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Bot templates returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BotTemplateSummaryPage"
+                },
+                "example": {
+                  "items": [
+                    {
+                      "template_id": "3001",
+                      "name": "Product price comparison",
+                      "recommend_desc": "Compare prices across multiple stores.",
+                      "detail_url": "https://www.browseract.com/template/3001"
+                    }
+                  ],
+                  "page": 1,
+                  "limit": 10,
+                  "total_count": 1,
+                  "total_pages": 1
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns a paginated list of official Bot templates curated by BrowserAct.\n\nUse `keyword` for a case-insensitive template name search. Use the returned `template_id` with the template detail or run endpoint."
+      }
+    },
+    "/v3/bots/templates/{template_id}": {
+      "get": {
+        "tags": [
+          "Bot Templates"
+        ],
+        "summary": "Retrieve an official bot template",
+        "operationId": "queryTemplate",
+        "parameters": [
+          {
+            "name": "template_id",
+            "in": "path",
+            "required": true,
+            "description": "Public Bot template identifier.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "3001"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Bot template returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BotTemplateDetailResponse"
+                },
+                "example": {
+                  "template_id": "3001",
+                  "name": "Product price comparison",
+                  "description": "Compare prices across multiple stores.",
+                  "created_at": "2026-07-01T00:00:00Z",
+                  "published_at": "2026-07-10T00:00:00Z",
+                  "input_schema": {
+                    "type": "object",
+                    "properties": {
+                      "url": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "url"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "recommend_desc": "Compare prices across multiple stores.",
+                  "detail_url": "https://www.browseract.com/template/3001"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bot template not found. Returns error code 10176.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Fetches an official Bot template, including the standard JSON `input_schema` required when creating a template run. If you only need a list of templates, use `GET /v3/bots/templates`."
+      }
+    },
+    "/v3/bots/regions": {
+      "get": {
+        "tags": [
+          "Regions"
+        ],
+        "summary": "List supported proxy regions",
+        "operationId": "listRegions",
+        "responses": {
+          "200": {
+            "description": "Proxy regions returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BotRegionResponse"
+                  }
+                },
+                "example": [
+                  {
+                    "code": "US",
+                    "name": "United States"
+                  },
+                  {
+                    "code": "DE",
+                    "name": "Germany"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns the Bot proxy regions visible to the current API key. Pass a returned region `code` as `proxy_region` when creating an official template run."
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Send your API key in the `Authorization` header as `Bearer <API_KEY>`."
+      }
+    },
+    "schemas": {
+      "BotType": {
+        "type": "string",
+        "enum": [
+          "workflow",
+          "agent"
+        ],
+        "description": "Public bot type. agent represents SkillFlow, not the legacy Agent app type."
+      },
+      "BotRunStatus": {
+        "type": "string",
+        "enum": [
+          "created",
+          "running",
+          "finished",
+          "canceled",
+          "pausing",
+          "paused",
+          "failed"
+        ],
+        "description": "Public lifecycle status of a bot run."
+      },
+      "TaskStepStatusEnum": {
+        "type": "string",
+        "enum": [
+          "running",
+          "succeed",
+          "failed"
+        ],
+        "description": "Enumeration of possible task step states."
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "Response code. `0` means success; non-zero means failure."
+          },
+          "msg": {
+            "type": "string",
+            "description": "Human-readable error message (present when `code` is non-zero)."
+          },
+          "data": {
+            "type": "object",
+            "nullable": true,
+            "description": "Error details (shape may vary by error)."
+          },
+          "ts": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Server timestamp (milliseconds)."
+          },
+          "time": {
+            "type": "string",
+            "description": "Server time."
+          },
+          "traceId": {
+            "type": "string",
+            "description": "Error ID for tracking in logs."
+          }
+        },
+        "required": [
+          "code",
+          "msg",
+          "ts",
+          "time",
+          "traceId"
+        ],
+        "example": {
+          "code": 123,
+          "msg": "Invalid task_id",
+          "data": null,
+          "ts": 1786634400000,
+          "time": "2026-08-13 18:00:00",
+          "traceId": "a1b2c3d4e5f6"
+        }
+      },
+      "BotSummaryPage": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "description": "Items for the current page.",
+            "items": {
+              "$ref": "#/components/schemas/BotSummaryResponse"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "description": "Current page number."
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Number of items per page."
+          },
+          "total_count": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Total number of items."
+          },
+          "total_pages": {
+            "type": "integer",
+            "description": "Total number of pages available."
+          }
+        },
+        "required": [
+          "items",
+          "page",
+          "limit",
+          "total_count",
+          "total_pages"
+        ]
+      },
+      "BotRunSummaryPage": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "description": "Tasks for the current page.",
+            "items": {
+              "$ref": "#/components/schemas/BotRunSummaryResponse"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "description": "Current page number."
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Number of items per page."
+          },
+          "total_count": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Total number of items."
+          },
+          "total_pages": {
+            "type": "integer",
+            "description": "Total number of pages available."
+          }
+        },
+        "required": [
+          "items",
+          "page",
+          "limit",
+          "total_count",
+          "total_pages"
+        ]
+      },
+      "BotTemplateSummaryPage": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "description": "Templates for the current page.",
+            "items": {
+              "$ref": "#/components/schemas/BotTemplateSummaryResponse"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "description": "Current page number."
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Number of items per page."
+          },
+          "total_count": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Total number of items."
+          },
+          "total_pages": {
+            "type": "integer",
+            "description": "Total number of pages available."
+          }
+        },
+        "required": [
+          "items",
+          "page",
+          "limit",
+          "total_count",
+          "total_pages"
+        ]
+      },
+      "BotSummaryResponse": {
+        "type": "object",
+        "properties": {
+          "bot_id": {
+            "type": "string",
+            "description": "Public bot identifier."
+          },
+          "bot_type": {
+            "$ref": "#/components/schemas/BotType"
+          },
+          "name": {
+            "type": "string",
+            "description": "Bot name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Bot description"
+          },
+          "published_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Time when the currently runnable bot definition was published."
+          }
+        },
+        "required": [
+          "bot_id",
+          "bot_type",
+          "name"
+        ]
+      },
+      "BotDetailResponse": {
+        "type": "object",
+        "properties": {
+          "bot_id": {
+            "type": "string",
+            "description": "Public bot identifier."
+          },
+          "bot_type": {
+            "$ref": "#/components/schemas/BotType"
+          },
+          "name": {
+            "type": "string",
+            "description": "Bot name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Bot description"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Bot creation time."
+          },
+          "published_at": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "Time when the bot definition was published; null when unpublished."
+          },
+          "input_schema": {
+            "type": "object",
+            "additionalProperties": true,
+            "nullable": true,
+            "description": "JSON Schema for the published input definition; null when unpublished."
+          },
+          "output_schema": {
+            "type": "object",
+            "additionalProperties": true,
+            "nullable": true,
+            "description": "JSON Schema describing the run result. null when a Bot has no authoritative output schema."
+          }
+        },
+        "required": [
+          "bot_id",
+          "bot_type",
+          "name",
+          "created_at",
+          "published_at",
+          "input_schema",
+          "output_schema"
+        ]
+      },
+      "BotRunCreateRequest": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Run input object. Its shape must conform to the bot input_schema; use an empty object when no inputs are required."
+          },
+          "callback_url": {
+            "type": "string",
+            "format": "uri",
+            "maxLength": 2048,
+            "description": "Optional. HTTP/HTTPS URL to receive a POST notification when the task **finishes**, **fails**, or is **canceled**. Maximum length: 2048 characters. Must be publicly reachable (no private/local addresses)."
+          },
+          "status_change_callback_url": {
+            "type": "string",
+            "format": "uri",
+            "maxLength": 2048,
+            "description": "Optional. HTTP/HTTPS URL to receive a POST notification whenever the task status changes (e.g., running, paused, finished, canceled, failed). Maximum length: 2048 characters. Must be publicly reachable (no private/local addresses)."
+          }
+        },
+        "required": [
+          "input"
+        ]
+      },
+      "BotRunCreatedResponse": {
+        "type": "object",
+        "properties": {
+          "task_id": {
+            "type": "string",
+            "description": "Task ID"
+          },
+          "status": {
+            "$ref": "#/components/schemas/BotRunStatus"
+          }
+        },
+        "required": [
+          "task_id",
+          "status"
+        ]
+      },
+      "BotRunSummaryResponse": {
+        "type": "object",
+        "properties": {
+          "task_id": {
+            "type": "string",
+            "description": "Task ID"
+          },
+          "bot_id": {
+            "type": "string",
+            "description": "Public bot identifier used by a normal Bot run. Absent for an official template run."
+          },
+          "bot_type": {
+            "$ref": "#/components/schemas/BotType"
+          },
+          "bot_name": {
+            "type": "string",
+            "description": "Bot display name when available for a normal Bot run."
+          },
+          "status": {
+            "$ref": "#/components/schemas/BotRunStatus"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Task creation time"
+          },
+          "finished_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Task finish time (if ended)"
+          },
+          "input": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Input object accepted for this run."
+          },
+          "task_failure_info": {
+            "$ref": "#/components/schemas/BotRunFailureInfoResponse"
+          },
+          "live_url_info": {
+            "$ref": "#/components/schemas/BotRunLiveUrlInfoResponse",
+            "description": "Present only when the task is `running`."
+          },
+          "credit": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Credits consumed by this task."
+          }
+        },
+        "required": [
+          "task_id",
+          "bot_type",
+          "status",
+          "created_at",
+          "input"
+        ]
+      },
+      "BotRunStatusResponse": {
+        "type": "object",
+        "properties": {
+          "task_id": {
+            "type": "string",
+            "description": "Task ID"
+          },
+          "status": {
+            "$ref": "#/components/schemas/BotRunStatus"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Time when the task record was last updated."
+          }
+        },
+        "required": [
+          "task_id",
+          "status",
+          "updated_at"
+        ]
+      },
+      "BotRunFailureInfoResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "Error code"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ]
+      },
+      "BotRunOutputFileResponse": {
+        "type": "object",
+        "properties": {
+          "file_name": {
+            "type": "string",
+            "description": "Business result file name."
+          },
+          "file_size": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Business result file size in bytes when available."
+          },
+          "download_url": {
+            "type": "string",
+            "description": "Temporary URL for downloading the business result file."
+          }
+        },
+        "required": [
+          "file_name",
+          "download_url"
+        ]
+      },
+      "BotRunDownloadFileResponse": {
+        "type": "object",
+        "properties": {
+          "guid": {
+            "type": "string",
+            "description": "File unique identifier"
+          },
+          "file_name": {
+            "type": "string",
+            "description": "Display file name."
+          },
+          "file_size": {
+            "type": "integer",
+            "format": "int64",
+            "description": "File size in bytes."
+          },
+          "status": {
+            "type": "string",
+            "description": "File status (value may vary)"
+          },
+          "progress": {
+            "type": "integer",
+            "description": "Download progress (0-100)"
+          },
+          "download_url": {
+            "type": "string",
+            "description": "Temporary download URL, available after upload completes."
+          },
+          "download_start_time": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Download start time in epoch milliseconds."
+          },
+          "download_completed_time": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Download completion time in epoch milliseconds."
+          },
+          "expires_at": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Download expiration time in epoch milliseconds."
+          },
+          "error_message": {
+            "type": "string",
+            "description": "Failure or cancellation message when file transfer does not complete."
+          },
+          "create_time": {
+            "type": "integer",
+            "format": "int64",
+            "description": "File record creation time in epoch milliseconds."
+          }
+        }
+      },
+      "TaskStepDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Step ID"
+          },
+          "step": {
+            "type": "integer",
+            "description": "Step sequence number"
+          },
+          "evaluation_previous_goal": {
+            "type": "string",
+            "description": "Evaluation result of the previous step"
+          },
+          "step_goal": {
+            "type": "string",
+            "description": "Goal of the current step"
+          },
+          "screenshots_url": {
+            "type": "string",
+            "description": "Screenshot URL captured during this step"
+          },
+          "status": {
+            "$ref": "#/components/schemas/TaskStepStatusEnum"
+          }
+        },
+        "required": [
+          "id",
+          "step",
+          "evaluation_previous_goal",
+          "step_goal",
+          "screenshots_url",
+          "status"
+        ]
+      },
+      "BotRunLiveUrlInfoResponse": {
+        "type": "object",
+        "properties": {
+          "live_url": {
+            "type": "string",
+            "description": "Live view URL. Can be embedded in an `<iframe>`."
+          },
+          "width": {
+            "type": "integer",
+            "description": "Viewport width"
+          },
+          "height": {
+            "type": "integer",
+            "description": "Viewport height"
+          }
+        },
+        "required": [
+          "width",
+          "height"
+        ]
+      },
+      "BotRunDetailResponse": {
+        "type": "object",
+        "properties": {
+          "task_id": {
+            "type": "string",
+            "description": "Task ID"
+          },
+          "log_detail_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to detailed execution logs for this task."
+          },
+          "bot_id": {
+            "type": "string",
+            "description": "Public bot identifier used by a normal Bot run."
+          },
+          "bot_type": {
+            "$ref": "#/components/schemas/BotType"
+          },
+          "bot_name": {
+            "type": "string",
+            "description": "Bot display name when available for a normal Bot run."
+          },
+          "status": {
+            "$ref": "#/components/schemas/BotRunStatus"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Task creation time"
+          },
+          "finished_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Task finish time (if ended)"
+          },
+          "input": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Input object accepted for this run."
+          },
+          "task_failure_info": {
+            "$ref": "#/components/schemas/BotRunFailureInfoResponse"
+          },
+          "output": {
+            "nullable": true,
+            "description": "Present only when the task has ended."
+          },
+          "output_files": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/BotRunOutputFileResponse"
+            },
+            "description": "Business result files keyed by format, for example json, md, csv or xml."
+          },
+          "download_files": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BotRunDownloadFileResponse"
+            },
+            "description": "Files generated by the task (if any)."
+          },
+          "files_expires_at": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Expiration timestamp for download files."
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TaskStepDto"
+            },
+            "description": "Steps executed within the task."
+          },
+          "live_url_info": {
+            "$ref": "#/components/schemas/BotRunLiveUrlInfoResponse",
+            "description": "Present only when the task is `running`."
+          },
+          "credit": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Credits consumed by this task."
+          }
+        },
+        "required": [
+          "task_id",
+          "log_detail_url",
+          "bot_type",
+          "status",
+          "created_at",
+          "input"
+        ]
+      },
+      "BotTemplateSummaryResponse": {
+        "type": "object",
+        "properties": {
+          "template_id": {
+            "type": "string",
+            "description": "Public Bot template identifier."
+          },
+          "name": {
+            "type": "string",
+            "description": "Template name"
+          },
+          "recommend_desc": {
+            "type": "string",
+            "description": "Short recommendation text shown to template consumers."
+          },
+          "detail_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Public page containing additional template details."
+          }
+        },
+        "required": [
+          "template_id",
+          "name"
+        ]
+      },
+      "BotTemplateDetailResponse": {
+        "type": "object",
+        "properties": {
+          "template_id": {
+            "type": "string",
+            "description": "Public Bot template identifier."
+          },
+          "name": {
+            "type": "string",
+            "description": "Template name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Template description"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Template creation time."
+          },
+          "published_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Template publication time."
+          },
+          "input_schema": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "JSON Schema describing the input object accepted by the template run endpoint."
+          },
+          "recommend_desc": {
+            "type": "string",
+            "description": "Short recommendation text shown to template consumers."
+          },
+          "detail_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Public page containing additional template details."
+          }
+        },
+        "required": [
+          "template_id",
+          "name",
+          "input_schema"
+        ]
+      },
+      "BotTemplateRunCreateRequest": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Run input object. Its shape must conform to the template input_schema; use an empty object when no inputs are required."
+          },
+          "proxy_region": {
+            "type": "string",
+            "description": "Optional proxy region code returned by the regions endpoint.",
+            "example": "US"
+          },
+          "callback_url": {
+            "type": "string",
+            "format": "uri",
+            "maxLength": 2048,
+            "description": "Optional. HTTP/HTTPS URL to receive a POST notification when the task **finishes**, **fails**, or is **canceled**. Maximum length: 2048 characters. Must be publicly reachable (no private/local addresses)."
+          },
+          "status_change_callback_url": {
+            "type": "string",
+            "format": "uri",
+            "maxLength": 2048,
+            "description": "Optional. HTTP/HTTPS URL to receive a POST notification whenever the task status changes (e.g., running, paused, finished, canceled, failed). Maximum length: 2048 characters. Must be publicly reachable (no private/local addresses)."
+          }
+        },
+        "required": [
+          "input"
+        ]
+      },
+      "BotRegionResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Region code"
+          },
+          "name": {
+            "type": "string",
+            "description": "Human-readable region name"
+          }
+        },
+        "required": [
+          "code",
+          "name"
+        ]
+      }
+    }
+  },
+  "security": [
+    {
+      "HTTPBearer": []
+    }
+  ]
+}

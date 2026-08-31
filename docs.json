@@ -257,7 +257,7 @@
             "group": "API Reference",
             "icon": "code-xml",
             "openapi": {
-              "source": "openapi_2.json",
+              "source": "openapi_3.json",
               "directory": "workflow/api-reference"
             }
           }
