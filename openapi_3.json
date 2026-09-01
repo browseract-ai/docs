@@ -394,28 +394,83 @@
                   "task_id": "93001",
                   "log_detail_url": "https://www.browseract.com/reception/logs?keyword=93001",
                   "bot_id": "1001",
-                  "bot_type": "workflow",
-                  "bot_name": "Order status lookup",
+                  "bot_type": "agent",
+                  "bot_name": "Business Contact Finder Bot",
                   "status": "finished",
                   "created_at": "2026-08-13T09:00:00Z",
                   "finished_at": "2026-08-13T09:02:00Z",
                   "input": {
-                    "order_id": "A-100"
+                    "company_name": "Example Corp"
                   },
                   "output": {
-                    "status": "paid"
+                    "company_name": "Example Corp",
+                    "official_website_url": "https://example.com",
+                    "linkedin_url": "https://www.linkedin.com/company/example-company",
+                    "x_url": "https://x.com/example_company",
+                    "youtube_url": "https://www.youtube.com/@example-company",
+                    "facebook_url": null,
+                    "instagram_url": "https://www.instagram.com/example_company",
+                    "tiktok_url": "https://www.tiktok.com/@example_company",
+                    "github_url": "https://github.com/example-company",
+                    "other_social_profiles": [
+                      {
+                        "platform": "discord",
+                        "url": "https://discord.gg/example"
+                      }
+                    ],
+                    "rss_feed_url": "https://example.com/news/rss.xml",
+                    "source_search_url": "https://www.google.com/search?q=Example+Corp",
+                    "evidence_urls": [
+                      "https://www.google.com/search?q=Example+Corp",
+                      "https://example.com",
+                      "https://example.com/news",
+                      "https://example.com/news/rss.xml",
+                      "https://example.com/about"
+                    ]
                   },
-                  "steps": [
+                  "output_files": {
+                    "md": {
+                      "file_name": "result.md",
+                      "file_size": 1024,
+                      "download_url": "https://signed-url/result.md"
+                    },
+                    "csv": {
+                      "file_name": "result.csv",
+                      "file_size": 768,
+                      "download_url": "https://signed-url/result.csv"
+                    },
+                    "xml": {
+                      "file_name": "result.xml",
+                      "file_size": 1152,
+                      "download_url": "https://signed-url/result.xml"
+                    },
+                    "json": {
+                      "file_name": "result.json",
+                      "file_size": 896,
+                      "download_url": "https://signed-url/result.json"
+                    }
+                  },
+                  "download_files": [
                     {
-                      "id": "501",
-                      "step": 1,
-                      "evaluation_previous_goal": "The order page opened successfully.",
-                      "step_goal": "Open the order page.",
-                      "screenshots_url": "https://signed-url/step-1.png",
-                      "status": "succeed"
+                      "guid": "file-example-001",
+                      "file_name": "company-profile.pdf",
+                      "file_size": 245760,
+                      "status": "completed",
+                      "progress": 100,
+                      "download_url": "https://signed-url/company-profile.pdf",
+                      "download_start_time": 1786611630000,
+                      "download_completed_time": 1786611645000,
+                      "expires_at": 1786688520000,
+                      "create_time": 1786611620000
                     }
                   ],
-                  "credit": 12
+                  "files_expires_at": 1786688520000,
+                  "live_url_info": {
+                    "width": 1280,
+                    "height": 1024,
+                    "live_url": "https://www.browseract.com/remote/example-session"
+                  },
+                  "credit": 42
                 }
               }
             }
