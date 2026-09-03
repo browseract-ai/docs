@@ -88,6 +88,10 @@ After the MCP Server is created, select the `Server Management` icon for that se
 
 ### Step 3: Connect an MCP Client
 
+You can configure the client manually or ask an AI agent such as Codex or Claude Code to help complete the connection.
+
+#### Option 1: Configure the Client Manually
+
 1. Open `Connect to Clients` for the MCP Server.
 2. Copy the MCP Server URL.
 3. Create or copy the API Key from the same MCP Server.
@@ -99,6 +103,61 @@ After the MCP Server is created, select the `Server Management` icon for that se
 ![Open the setup guide for an MCP client](../images/mcp-client-setup-guide.png)
 
 Use the MCP Server URL and API Key from the same server. Do not share the API Key in prompts, screenshots, repositories, or public configuration files.
+
+#### Option 2: Configure Quickly with an Agent
+
+Send the following prompt to your agent. Replace the example URL with the MCP Server URL from BrowserAct. Keep the key placeholder until the agent begins its secure local configuration flow, and only provide the key in a trusted session.
+
+````text
+Connect to BrowserAct via its MCP server and return structured output.
+
+## MCP Server
+- URL: https://mcp.browseract.com/************/mcp/
+- Transport: Streamable HTTP (type: "http")
+- Auth: `Authorization: Bearer <BROWSERACT_MCP_KEY>`
+
+IMPORTANT: The authentication header must use the `Authorization: Bearer` format, not `x-api-key` or another header name.
+
+## Before calling the tool
+Verify that the `browseract` MCP server is connected in the current session. If it is not connected or configured, do not continue. Instead, provide the setup command and guide me through completing the connection.
+
+For Claude Code, use:
+
+```bash
+claude mcp add --transport http --header "Authorization: Bearer <KEY>" --scope user browseract "<URL>"
+```
+
+For another agent, provide the equivalent configuration command or file location for that agent, then verify the connection before calling the tool.
+````
+
+![Configure the BrowserAct MCP connection with an AI agent](../images/mcp-agent-quick-connect.jpg)
+
+### Step 4: Run an MCP Tool
+
+After the client confirms that the `browseract` MCP Server is connected and the exposed tool is available, run the tool with either of the following methods.
+
+#### Run from a Standard MCP Client
+
+Include the required runtime inputs in the request. For example:
+
+```text
+Run the BrowserAct tool for this URL and return the structured result:
+https://example.com
+```
+
+#### Run from an Agent
+
+Ask the agent to use the connected BrowserAct MCP Tool in natural language. For example:
+
+```text
+Use BrowserAct MCP to crawl posts about Codex on Reddit.
+```
+
+The agent should select the exposed tool, supply its required inputs, and return the result in the requested format.
+
+![Run an exposed BrowserAct MCP Tool from an AI agent](../images/mcp-agent-run-tool.png)
+
+Open the MCP Server's execution logs to review status, duration, and errors.
 
 ## Convert a Workflow Built Bot into an MCP Tool
 
@@ -182,6 +241,10 @@ Only published, MCP-ready Bots can be exposed. One MCP Server can expose multipl
 
 Each MCP Server has its own MCP Server URL and API Key. Use the matching pair from the same server.
 
+You can configure the client manually or ask an AI agent such as Codex or Claude Code to help complete the connection.
+
+#### Option 1: Configure the Client Manually
+
 Get the Server URL and API Key:
 
 1. Open `Management` for the target MCP Server.
@@ -205,20 +268,58 @@ Configure the client:
 
 Do not expose the API Key in prompts, screenshots, repositories, or shared configuration files.
 
-## Run an MCP Tool
+#### Option 2: Configure Quickly with an Agent
 
-Ask the connected client to run the exposed BrowserAct tool and include the required runtime inputs.
+Send the following prompt to your agent. Replace the example URL with the MCP Server URL from BrowserAct. Keep the key placeholder until the agent begins its secure local configuration flow, and only provide the key in a trusted session.
 
-To run a BrowserAct MCP Tool in Codex, use a prompt like this:
+````text
+Connect to BrowserAct via its MCP server and return structured output.
+
+## MCP Server
+- URL: https://mcp.browseract.com/************/mcp/
+- Transport: Streamable HTTP (type: "http")
+- Auth: `Authorization: Bearer <BROWSERACT_MCP_KEY>`
+
+IMPORTANT: The authentication header must use the `Authorization: Bearer` format, not `x-api-key` or another header name.
+
+## Before calling the tool
+Verify that the `browseract` MCP server is connected in the current session. If it is not connected or configured, do not continue. Instead, provide the setup command and guide me through completing the connection.
+
+For Claude Code, use:
+
+```bash
+claude mcp add --transport http --header "Authorization: Bearer <KEY>" --scope user browseract "<URL>"
+```
+
+For another agent, provide the equivalent configuration command or file location for that agent, then verify the connection before calling the tool.
+````
+
+![Configure the BrowserAct MCP connection with an AI agent](../images/mcp-agent-quick-connect.jpg)
+
+### Step 4: Run an MCP Tool
+
+After the client confirms that the `browseract` MCP Server is connected and the exposed tool is available, run the tool with either of the following methods.
+
+#### Run from a Standard MCP Client
+
+Include the required runtime inputs in the request. For example:
 
 ```text
-Connect to the BrowserAct Tool through the provided MCP Server URL and return the output as structured data.
-
-MCP Server URL:
-https://mcp.browseract.com/************/mcp/
-
-Before calling the tool, verify whether the required BrowserAct MCP Key is already authorized and available in the current environment. If the key is missing, invalid, or not authorized, do not continue with the tool call. Instead, guide the user to install or configure the BrowserAct MCP Key at the exact required file location. Provide the concrete file path, the configuration snippet or format to add, and the steps to retry the connection after setup is complete.
+Run the BrowserAct tool for this URL and return the structured result:
+https://example.com
 ```
+
+#### Run from an Agent
+
+Ask the agent to use the connected BrowserAct MCP Tool in natural language. For example:
+
+```text
+Use BrowserAct MCP to crawl posts about Codex on Reddit.
+```
+
+The agent should select the exposed tool, supply its required inputs, and return the result in the requested format.
+
+![Run an exposed BrowserAct MCP Tool from an AI agent](../images/mcp-agent-run-tool.png)
 
 Open the MCP Server's execution logs to review status, duration, and errors.
 
