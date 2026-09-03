@@ -9,15 +9,26 @@ Yes, if QwenPaw supports connecting to a remote MCP server. Create a BrowserAct 
 
 Both Workflow Built Bots and Agent Built Bots support MCP. See [Integrate BrowserAct with MCP](/integrations/mcp) for the setup steps.
 
+## Can BrowserAct MCP connect to the Claude.ai web app?
+
+Not currently. Support for connecting BrowserAct MCP to Claude.ai on the web is under development.
+
 ## Can I use BrowserAct with AI agents other than Claude?
 
-Yes. BrowserAct Bots can connect to Claude and other AI agents through MCP.
+Yes. BrowserAct Bots can connect to supported Claude clients, such as Claude Desktop and Claude Code, and to other compatible AI agents through MCP.
 
 Create a BrowserAct MCP Server, expose the Bot as an MCP Tool, and connect the server to your MCP client with the MCP Server URL and API key.
 
 BrowserAct provides connection guidance for clients such as Claude Desktop, Claude Code, Cursor, Windsurf, Gemini CLI, VS Code, and supported API-based agent environments.
 
 For setup details, see [Workflow Built MCP setup](/integrations/mcp#convert-a-workflow-built-bot-into-an-mcp-tool) or [Agent Built MCP setup](/integrations/mcp#convert-an-agent-built-bot-into-an-mcp-tool).
+
+## Why does a REST API request return an authorization error when I use an API key created from the MCP Server?
+
+The API key created from the MCP Server panel is only used for MCP Server access. It cannot be used for REST API requests. MCP Server and REST API are separate modules, and their API keys are managed separately.
+
+- **MCP Server key:** Used only for MCP client connections.
+- **REST API key:** Used only for BrowserAct REST API calls.
 
 ## Where are API keys managed?
 
