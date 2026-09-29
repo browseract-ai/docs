@@ -1766,14 +1766,14 @@
           },
           "output": {
             "nullable": true,
-            "description": "Present only when the task has ended."
+            "description": "Present only when the task has ended. Inline output is limited to 5 MB. If the complete result exceeds this limit, read it from `output_files`."
           },
           "output_files": {
             "type": "object",
             "additionalProperties": {
               "$ref": "#/components/schemas/BotRunOutputFileResponse"
             },
-            "description": "Business result files keyed by format, for example json, md, csv or xml."
+            "description": "Business result files keyed by format, for example json, md, csv or xml. Each file is limited to 100 MB."
           },
           "download_files": {
             "type": "array",
