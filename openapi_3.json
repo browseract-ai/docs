@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "BrowserAct API",
-    "description": "BrowserAct's API lets you list and run BrowserAct bots programmatically and monitor their execution.\n\n**Core concepts (same as the Dashboard):**\n- **Bot**: a published Bot automation that can be run through the API.\n- **Task**: a single bot execution record (the \"run\").\n\nThe public `bot_type=agent` value represents **SkillFlow**, not the legacy Agent app type.\n\n## Base URL\nAll requests use the following base URL:\n\n```\nhttps://api.browseract.com\n```\n\n## API versioning\nThe API is versioned in the URL path (for example, `/v3/bots/...`).\n\n## Authentication\nAuthenticate with a Bearer token in the `Authorization` header:\n\n```\nAuthorization: Bearer <API_KEY>\n```\n\nAPI keys are scoped to a company and channel. Do not send internal session headers such as `x-session-company-id` or `x-session-api-channel`; BrowserAct injects them after authentication.\n\n## Requests\n- Send request bodies as JSON.\n- Set `Content-Type: application/json` for endpoints that accept a body.\n- Run inputs use an `input` object that must conform to the bot or template `input_schema`.\n\n## Response codes\n- `200` for successful queries, creates, cancels, and resumes\n- `400` for invalid parameters, business validation failures, or resources not visible to the current API key\n- `500` for server-side errors\n\nSuccessful responses return the business object directly without a data wrapper. Error responses use `code`, `msg`, `data`, `ts`, `time`, and `traceId`.\n\n## Pagination\nList endpoints use **page-based pagination** with these query parameters:\n- `page` (starts at 1)\n- `limit` (maximum depends on the endpoint)\n\nPaginated responses include `page`, `limit`, `items`, `total_pages`, and `total_count`.\n\n## Webhooks (optional)\nWhen creating a task, you can provide:\n- `callback_url`: called when a task **finishes**, **fails**, or is **canceled**.\n- `status_change_callback_url`: called whenever the public task status changes.\n\nBoth callbacks receive the complete `BotRunDetailResponse` directly, without an additional `data` wrapper. Callback URLs cannot resolve to private or local addresses.\n\n## Task status values\n`created`, `running`, `pausing`, `paused`, `finished`, `canceled`, `failed`.\n\n## Common error codes\n- `99001`: Request parameter error\n- `99002`: No operation permission\n- `10013`: Proxy region does not exist\n- `10020`: Bot is not published\n- `10021`: SkillFlow LLM configuration is incomplete\n- `10111`: Bot does not exist or is not visible\n- `10112`: Task does not exist\n- `10121`: Task has already completed\n- `10127`: Only a paused task can be resumed\n- `10142`: Required Bot input is missing\n- `10143`: Required SkillFlow input is missing\n- `10176`: Bot template does not exist\n- `10879`: SkillFlow runs do not support resume\n\n## Rate limits\nTo protect platform stability, rate limits may apply. If you hit a limit, reduce request frequency and retry with backoff.\n\n## Need help?\nJoin our Discord community: https://discord.com/invite/UpnCKd7GaU\n",
+    "description": "BrowserAct's API lets you list and run BrowserAct bots programmatically and monitor their execution.\n\n**Core concepts (same as the Dashboard):**\n- **Bot**: a published Bot automation that can be run through the API.\n- **Task**: a single bot execution record (the \"run\").\n\n## Base URL\nAll requests use the following base URL:\n\n```\nhttps://api.browseract.com\n```\n\n## API versioning\nThe API is versioned in the URL path (for example, `/v3/bots/...`).\n\n## Authentication\nAuthenticate with a Bearer token in the `Authorization` header:\n\n```\nAuthorization: Bearer <API_KEY>\n```\n\nAPI keys are scoped to a company and channel. Do not send internal session headers such as `x-session-company-id` or `x-session-api-channel`; BrowserAct injects them after authentication.\n\n## Requests\n- Send request bodies as JSON.\n- Set `Content-Type: application/json` for endpoints that accept a body.\n- Run inputs use an `input` object that must conform to the bot or template `input_schema`.\n\n## Response codes\n- `200` for successful queries, creates, cancels, and resumes\n- `400` for invalid parameters, business validation failures, or resources not visible to the current API key\n- `500` for server-side errors\n\nSuccessful responses return the business object directly without a data wrapper. Error responses use `code`, `msg`, `data`, `ts`, `time`, and `traceId`.\n\n## Pagination\nList endpoints use **page-based pagination** with these query parameters:\n- `page` (starts at 1)\n- `limit` (maximum depends on the endpoint)\n\nPaginated responses include `page`, `limit`, `items`, `total_pages`, and `total_count`.\n\n## Webhooks (optional)\nWhen creating a task, you can provide:\n- `callback_url`: called when a task **finishes**, **fails**, or is **canceled**.\n- `status_change_callback_url`: called whenever the public task status changes.\n\nBoth callbacks receive the complete `BotRunDetailResponse` directly, without an additional `data` wrapper. Callback URLs cannot resolve to private or local addresses.\n\n## Task status values\n`created`, `running`, `pausing`, `paused`, `finished`, `canceled`, `failed`.\n\n## Common error codes\n- `99001`: Request parameter error\n- `99002`: No operation permission\n- `10013`: Proxy region does not exist\n- `10020`: Bot is not published\n- `10021`: Agent bot LLM configuration is incomplete\n- `10111`: Bot does not exist or is not visible\n- `10112`: Task does not exist\n- `10121`: Task has already completed\n- `10127`: Only a paused task can be resumed\n- `10142`: Required Bot input is missing\n- `10143`: Required agent bot input is missing\n- `10176`: Bot template does not exist\n- `10879`: Agent bot runs do not support resume\n\n## Rate limits\nTo protect platform stability, rate limits may apply. If you hit a limit, reduce request frequency and retry with backoff.\n\n## Need help?\nJoin our Discord community: https://discord.com/invite/UpnCKd7GaU\n",
     "version": "v3",
     "contact": {
       "name": "BrowserAct Support",
@@ -698,7 +698,7 @@
             }
           }
         },
-        "description": "Requests the resumption of a paused Bot task. SkillFlow tasks return error code `10879`; tasks that are not paused return `10127`. Resume is asynchronous, so the returned status can remain `paused` until processing continues."
+        "description": "Requests the resumption of a paused Bot task. Agent bot tasks return error code `10879`; tasks that are not paused return `10127`. Resume is asynchronous, so the returned status can remain `paused` until processing continues."
       }
     },
     "/v3/bots/runs/{task_id}/cancel": {
@@ -782,7 +782,7 @@
             "name": "bot_type",
             "in": "query",
             "required": false,
-            "description": "Optional bot type filter. agent represents SkillFlow.",
+            "description": "Optional bot type filter.",
             "schema": {
               "type": "string",
               "enum": [
@@ -874,7 +874,7 @@
             }
           }
         },
-        "description": "Returns a paginated list of Bots that have a runnable published version.\n\n### Filtering\n- Use `bot_type` to select a Bot type. The public `agent` value means SkillFlow.\n- Use `keyword` for a case-insensitive Bot name search.\n\n### Pagination\nUse `page` and `limit`. The response includes `total_pages` and `total_count`."
+        "description": "Returns a paginated list of Bots that have a runnable published version.\n\n### Filtering\n- Use `bot_type` to select a Bot type.\n- Use `keyword` for a case-insensitive Bot name search.\n\n### Pagination\nUse `page` and `limit`. The response includes `total_pages` and `total_count`."
       }
     },
     "/v3/bots/{bot_id}": {
@@ -1190,7 +1190,7 @@
           "workflow",
           "agent"
         ],
-        "description": "Public bot type. agent represents SkillFlow, not the legacy Agent app type."
+        "description": "Public bot type."
       },
       "BotRunStatus": {
         "type": "string",
