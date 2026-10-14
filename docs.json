@@ -246,7 +246,7 @@
           },
           {
             "group": "FAQ",
-            "icon": "circle-help",
+            "icon": "circle-question",
             "expanded": false,
             "pages": [
               "faq/index",
