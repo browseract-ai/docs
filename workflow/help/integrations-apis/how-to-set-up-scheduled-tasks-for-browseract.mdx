@@ -1,10 +1,16 @@
 ---
-title: "How to Setting Up Scheduled Tasks for BrowserAct"
-description: "This tutorial shows how to set up automatic scheduled execution for BrowserAct workflows via Make.com."
+title: "How to Set Up Scheduled Runs for BrowserAct"
+description: "Choose BrowserAct schedules or Make.com scheduling to run BrowserAct automatically."
 sidebarTitle: "Scheduled Runs"
 ---
 
 ### Why Scheduled Tasks?
+
+BrowserAct now supports native Bot schedules for published Bots. Use BrowserAct schedules when you want BrowserAct to run a Bot automatically and email results from inside BrowserAct.
+
+See [Schedule Bot Runs](/bot/schedules/schedule-bot-runs) for the native BrowserAct setup.
+
+Use Make.com scheduling when the scheduled run should continue into Make modules such as Google Sheets, Airtable, Slack, email, a database, or another downstream workflow.
 
 Common use cases:
 
@@ -16,14 +22,16 @@ Common use cases:
 
 ### Basic Concepts
 
-[**Make.com**](http://Make.com)\*\* Scheduled Triggers\*\*  [Make.com](http://Make.com) provides flexible scheduling features that can:
+BrowserAct schedules can run published Bots by hour, day, or week, with BrowserAct result email options and retry settings.
+
+[**Make.com**](http://Make.com)\*\* Scheduled Triggers\*\*  [Make.com](http://Make.com) provides flexible scheduling features for external automation scenarios that can:
 
 - ✅ Run at fixed intervals (hourly, daily, etc.)
 - ✅ Run at specific times (every day at 8:00 AM)
 - ✅ Run on specific dates (every Monday at 9:00 AM)
 - ✅ Custom Cron expressions (advanced users)
 
-### Quick Start: 3 Steps to Set Up Scheduled Tasks
+### Quick Start: 3 Steps to Set Up Make Scheduled Tasks
 
 #### **Step 1: Create Make Scenario**
 
@@ -85,7 +93,7 @@ Common use cases:
 2. Click "OK" to save
 3. Activate scenario (turn on switch in top right)
 
-Your BrowserAct workflow is now scheduled to run automatically. [Make.com](http://Make.com) will trigger it according to your configured schedule.
+Your BrowserAct workflow is now scheduled to run automatically from Make. [Make.com](http://Make.com) will trigger it according to your configured schedule.
 
 **Want to Do More with Your Data?**
 
@@ -101,6 +109,7 @@ Simply click the **\+** button after your BrowserAct module to explore hundreds 
 
 ### **Next Steps:**
 
-- Monitor your scheduled runs in [Make.com](http://Make.com)'s execution history
+- For native BrowserAct schedules, review the schedule list in the Bot's `Schedules` tab
+- For Make scheduled scenarios, monitor runs in [Make.com](http://Make.com)'s execution history
 - Check BrowserAct's Activity Log to verify completions
 - Join Discord for automation ideas and support

@@ -28,6 +28,8 @@ API request examples, authentication headers, task status, results, callbacks, a
 
 Connect BrowserAct with Make, n8n, Zapier, or MCP to build end-to-end automations around your Bots. For example, you can trigger a Bot from a schedule or external event, pass in dynamic inputs, receive structured results, and then send the data to Google Sheets or another downstream application.
 
+For native scheduled Bot runs and BrowserAct result emails, see [Schedule Bot Runs](/bot/schedules/schedule-bot-runs).
+
 For custom integrations using the BrowserAct API or Webhooks, see the existing API Reference.
 
 ## Integration Guides

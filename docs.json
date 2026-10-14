@@ -123,6 +123,15 @@
                 ]
               },
               {
+                "group": "Schedules",
+                "expanded": false,
+                "pages": [
+                  "bot/schedules/schedule-bot-runs",
+                  "bot/schedules/configure-schedule-emails",
+                  "bot/schedules/schedule-faq"
+                ]
+              },
+              {
                 "group": "Tasks",
                 "expanded": false,
                 "pages": ["bot/tasks/view-manage-tasks"]
