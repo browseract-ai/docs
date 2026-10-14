@@ -56,6 +56,12 @@ If `Retry failed runs once` is enabled, BrowserAct automatically creates one ret
 
 If `Email me if a run fails` is enabled, BrowserAct sends a failure email when a scheduled run fails.
 
+## Where can I check exception notifications?
+
+Click the bell icon in the top navigation, then open the `Exceptions` tab.
+
+Use this tab to review exception messages that need attention, including issues related to scheduled or recurring Bot runs. Exception messages can include the reason and the related Bot or schedule.
+
 ## Will a schedule enter the queue if credits are insufficient?
 
 No. If the schedule cannot create a run because credits are insufficient, the run is not added to the task queue.

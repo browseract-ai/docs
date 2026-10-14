@@ -134,3 +134,15 @@ The schedule list shows information such as:
 Use this list to check whether a schedule is enabled, whether it needs attention, and when it was last triggered.
 
 ![View multiple schedules for one Bot](../../images/schedule-list-multiple.png)
+
+## Review Exception Notifications
+
+You can also review exception notifications from the global notification panel.
+
+1. Click the bell icon in the top navigation.
+2. Select the `Exceptions` tab.
+3. Review any exception messages that need attention.
+
+The `Exceptions` tab is useful when you want to check whether a scheduled run or recurring Bot setup has produced an issue that needs follow-up. Exception messages can show why a scheduled task could not be created and which Bot or schedule is related to the issue.
+
+![Open exception notifications](../../images/schedule-exceptions-entry.png)
