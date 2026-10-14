@@ -44,7 +44,9 @@ You can check the recipient shown under `When to email results` when creating a 
 
 ## Can I send emails only when a condition is met?
 
-Yes. Choose `When results meet a condition`, then describe the condition that should trigger an email.
+Yes, for Agent Built Bots.
+
+Choose `When results meet a condition`, then describe the condition that should trigger an email. This option is currently supported only for schedules created from Agent Built Bots.
 
 For example, you can ask BrowserAct to email you when a product price drops below a certain amount, when an item becomes available, or when a result includes a specific keyword.
 

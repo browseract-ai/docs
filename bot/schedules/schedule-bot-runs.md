@@ -1,7 +1,7 @@
 ---
 title: "Schedule Bot Runs"
 sidebarTitle: "Schedule Bot Runs"
-description: "Create schedules to run published BrowserAct Bots automatically and receive result emails based on changes, successful runs, or custom conditions."
+description: "Create schedules to run published BrowserAct Bots automatically and receive result emails based on changes, successful runs, or Agent Built Bot conditions."
 ---
 
 Use schedules to run a published BrowserAct Bot automatically.
@@ -13,7 +13,7 @@ Schedules are useful when you want BrowserAct to:
 - Check product prices or availability on a recurring basis
 - Track search results, listings, leads, jobs, or market data
 - Refresh data at a fixed time or interval
-- Email you when results change or meet a condition
+- Email you when results change, or when an Agent Built Bot result meets a condition
 
 Schedules run Bots based on the timing you configure. They are not real-time monitoring.
 
@@ -89,13 +89,15 @@ Choose one result email option:
 - `When results change`: send an email only when the schedule finds a change compared with the previous successful result.
 - `After every successful run`: send an email after each successful scheduled run.
 - `Don't send result emails`: do not send emails for successful scheduled runs.
-- `When results meet a condition`: send an email only when the run result meets the condition you describe.
+- `When results meet a condition`: for Agent Built Bots only, send an email only when the run result meets the condition you describe.
 
 ![Configure result emails and retry settings](../../images/schedule-email-retry.png)
 
 ### Condition-based email notifications
 
 Use `When results meet a condition` when you only want to be notified in a specific situation.
+
+This option is currently supported only for schedules created from Agent Built Bots.
 
 After selecting this option, describe the condition the result must meet.
 

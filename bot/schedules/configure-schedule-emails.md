@@ -40,6 +40,8 @@ The schedule can still run, and run records can still be reviewed from BrowserAc
 
 Choose `When results meet a condition` when you only want an email in a specific situation.
 
+This option is currently supported only for schedules created from Agent Built Bots.
+
 After selecting this option, describe the condition the result must meet.
 
 Example conditions:
