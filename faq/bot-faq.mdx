@@ -13,7 +13,7 @@ Each build and run creates a Task. Open `Tasks` to view activity across all Bots
 
 A Bot using `Standard Browser` supports one active Task at a time because its runs reuse the same persistent browser environment.
 
-To run multiple Tasks in parallel, open the Bot's `Browser settings` and switch to `Private Browser`. Also make sure your BrowserAct plan supports the number of concurrent Tasks you need.
+To run multiple Tasks in parallel, open the Bot's `Browser settings` and switch to `Rotating Browser`. Also make sure your BrowserAct plan supports the number of concurrent Tasks you need.
 
 ### How do I get a Bot ID?
 
@@ -30,7 +30,7 @@ It depends on how the Bot was built.
 
 To create a shareable template, open `Bots`, select the three-dot menu on the Workflow Built Bot card, and select `Save as Template`.
 
-![Save a Workflow Built Bot as a template for sharing](../images/workflow-built-save-as-template.png)
+![Save a Workflow Built Bot as a template for sharing](/images/workflow-built-save-as-template.png)
 
 The recipient uses the template to create a separate Bot. This does not give them access to your original Bot, run history, or credentials.
 
@@ -44,7 +44,7 @@ This reduces repeated model and token usage while keeping execution fast and pre
 
 Yes. BrowserAct automatically detects and handles supported CAPTCHA and verification challenges. When a challenge needs manual input, BrowserAct can continue through human-in-the-loop assistance.
 
-Email or SMS codes, device confirmations, and account-specific checks may require your input.
+For login-related email or SMS codes, follow [Manual login](/website-login/overview?co-from=link-Docs#method-3-log-in-manually). If a run has already failed, fix login and start a new run.
 
 ### What types of CAPTCHA and human verification does BrowserAct support?
 
@@ -66,12 +66,7 @@ CAPTCHA behavior varies by website and verification provider. If BrowserAct cann
 
 ### Can BrowserAct be used on websites that require login?
 
-Yes. BrowserAct supports login-protected websites.
-
-- **Workflow Built Bots:** Save the account in Credential Center, authorize the Bot, and enable stored credentials in the Start node. You can also prompt for credentials on each run. See [Authorize a Workflow Built Bot](../credential-center/authentication-and-credentials.mdx#authorize-a-workflow-built-bot).
-- **Agent Built Bots:** Complete the login through human-in-the-loop assistance. Select `Standard Browser` so the browser can retain and reuse the authenticated session in later runs. Managed credential hosting for Agent Built Bots is coming soon.
-
-If the website requests a code, device confirmation, or another account-specific check, complete it through human-in-the-loop assistance.
+Yes. Bots built with Agent or Workflow can use authorized account credentials. Use Standard Browser to import cookies or log in manually. See [Website Login](/website-login/overview?co-from=link-Docs).
 
 ## Agent Built Bots
 
@@ -87,9 +82,7 @@ Open the Agent Built Bot and select `Improve Bot` to update its behavior or extr
 
 ### Can an Agent Built Bot use stored login credentials?
 
-Not yet. For a login-protected website, sign in through human-in-the-loop assistance and select `Standard Browser` to retain the session for future runs.
-
-Credential hosting for Agent Built Bots is coming soon.
+Yes. In the Bot's `Browser settings` → `Website login`, select `Settings` on the `Account credentials` card to add or authorize a credential. See [Use account credentials](/website-login/overview?co-from=link-Docs#method-1-use-account-credentials).
 
 ## Workflow Built Bots
 
@@ -101,8 +94,4 @@ To check the status or results later, open the Bot and select `History`. You can
 
 ### Can a Workflow Built Bot run a login-protected process?
 
-Yes. Save the login in Credential Center, authorize the Workflow Built Bot, and enable stored credentials in the Start node.
-
-See [Authorize a Workflow Built Bot](../credential-center/authentication-and-credentials.mdx#authorize-a-workflow-built-bot) for the complete setup process.
-
-Complete any account-specific verification through the available human-in-the-loop flow.
+Yes. Authorize account credentials for the Bot, or use Standard Browser for cookie import and manual login. See [Website Login](/website-login/overview?co-from=link-Docs).

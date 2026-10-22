@@ -21,23 +21,9 @@ sidebarTitle: "Data Extraction"
 
 ### Login-Protected Websites
 
-✅ **Yes!** We support:
+Bots built with Agent or Workflow can use authorized account credentials. Standard Browser also supports cookie import and manual login. See [Website Login](/website-login/overview?co-from=link-Docs).
 
-- Username/password login
-- CAPTCHA (95% auto-detected)
-- 2FA via Authenticator apps (Google, Authy, Microsoft)
-- Dynamic content loading
-
-📅 **Coming soon:** Manual CAPTCHA, email/SMS 2FA
-
-**⚠️ Social media warning:**
-
-- Use test accounts only (not production accounts)
-- Start with small batches
-- Monitor for account restrictions
-- Avoid aggressive large-scale scraping
-
-🔜 Better security coming: Static IPs, consistent fingerprints
+For email or SMS verification, complete the check yourself using [Manual login](/website-login/overview?co-from=link-Docs#method-3-log-in-manually), or import cookies from a verified session. If a run has already failed, fix login and start a new run.
 
 ---
 
@@ -62,12 +48,12 @@ sidebarTitle: "Data Extraction"
 
 **Understanding costs:**
 
-- 1 step= 5 credits
+- Workflow Built Bots: **3 credits per executed step**.
 - Standard actions: Click, Type, Navigate, Extract, Scroll, etc.
 
-**Real examples (simple website):**
+**Workflow step-cost example:**
 
-- 10 products ≈ 5-10 steps ≈ **25-50 credits**
+- 5–10 executed steps = **15–30 credits**.
 - Start with small test runs (verify accuracy)
 - Then run in bulk (confirm stability)
 - ⚠️ Recommend no more than 10,000 records per run

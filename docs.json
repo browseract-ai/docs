@@ -8,6 +8,26 @@
       "source": "/",
       "destination": "/overview/what-is-browseract-cloud",
       "permanent": false
+    },
+    {
+      "source": "/credential-center/credential-center-overview",
+      "destination": "/website-login/overview",
+      "permanent": true
+    },
+    {
+      "source": "/credential-center/authentication-and-credentials",
+      "destination": "/website-login/overview#method-1-use-account-credentials",
+      "permanent": true
+    },
+    {
+      "source": "/workflow/help/authentication-and-credentials",
+      "destination": "/website-login/overview#method-1-use-account-credentials",
+      "permanent": true
+    },
+    {
+      "source": "/workflow/help/credits-subscription/billing-credits",
+      "destination": "/account-billing/billing/billing-credits",
+      "permanent": true
     }
   ],
   "colors": {
@@ -172,12 +192,11 @@
             ]
           },
           {
-            "group": "Credential Center",
-            "icon": "shield-check",
+            "group": "Website Login",
+            "icon": "key-round",
             "expanded": false,
             "pages": [
-              "credential-center/credential-center-overview",
-              "credential-center/authentication-and-credentials"
+              "website-login/overview"
             ]
           },
           {
