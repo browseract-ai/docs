@@ -1,0 +1,51 @@
+---
+title: "Log in manually"
+sidebarTitle: "Log in manually"
+description: "Sign in to a website, complete verification, and return to your Bot or Build."
+---
+
+Sign in yourself when a website needs direct verification, such as CAPTCHA, email or SMS codes, or single sign-on (SSO). Complete login in the Bot's browser so the session is available to that Bot.
+
+For an email or SMS code, check your inbox or phone and enter the code in the website's verification field in the Bot's browser.
+
+## Open the browser from Login settings
+
+Use **Standard Browser** and wait for all tasks in that browser to finish.
+
+1. Open the Bot's `Browser settings` → `Website login`.
+2. Select `Open browser` on the `Log in manually` card.
+3. Enter the website's URL in the browser's address bar.
+4. Sign in and complete any required verification.
+5. Select `Complete login` to save the session and return to the Bot's `Browser settings`.
+
+![Select Open browser on the Log in manually card in Browser settings](/images/website-login-manual-browser.png)
+
+## Complete login during Build
+
+When Build asks for your help, select `Take over browser` in the latest request in the Build conversation.
+
+![Select Take over browser when Build asks you to sign in](/images/website-login-build-assistance.png)
+
+1. Sign in and complete any required verification.
+2. Select `Return to Agent`.
+3. Choose `Return without a note`, or add a short explanation and select `Send note & return`.
+
+![Choose Return without a note or Send note & return after completing login](/images/website-login-build-return-note.png)
+
+The optional note can contain up to **2,000 characters**. After you return, the same Build continues.
+
+## Complete verification in a Workflow
+
+A Workflow configured with a [Human Interaction node](/bot/workflow-built/node-types/human-interaction-node?co-from=link-Docs) can pause for verification. Follow its instructions and select `Resume` to continue the waiting Workflow.
+
+## Time limits and incomplete login
+
+| Login flow | How to finish | Time limit |
+| --- | --- | --- |
+| From settings | Select `Complete login` to save and return. | 15-minute browser session. |
+| During Agent Build | Select `Return to Agent`, then return with or without a note. | Respond within the Build's one-hour waiting window. |
+| Workflow Human Interaction node | Complete the requested actions and select `Resume`. | The time limit configured for that node. |
+
+Follow the remaining time or deadline shown for your flow. If a Build assistance request expires, the current Build ends.
+
+Canceling, timing out, or failing to save keeps the Bot's previous saved login state.

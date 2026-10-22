@@ -1,0 +1,59 @@
+---
+title: "Import cookies"
+sidebarTitle: "Import cookies"
+description: "Export a signed-in website session from your browser and import it into BrowserAct."
+---
+
+Import cookies from a signed-in website session to reuse it in your Bot. The website may still expire the session or require verification again.
+
+## Export cookies from your local browser
+
+The following example uses the **Cookie Editor** Chrome extension.
+
+### Step 1: Install Cookie Editor
+
+Search for **Cookie Editor** in the Chrome Web Store, open its [extension page](https://chromewebstore.google.com/detail/cookie-editor/ookdjilphngeeeghgngjabigmpepanpl?hl=en), and select `Add to Chrome`.
+
+![Find Cookie Editor in the Chrome Web Store and select Add to Chrome](/images/cookie-editor-install-chrome.png)
+
+### Step 2: Export the website's cookies
+
+Open the website in Chrome and sign in to the account your Bot will use. Open **Cookie Editor**, select the **Export** icon, and choose **Netscape** or **JSON**. Keep the exported file or copied data.
+
+![Open Cookie Editor on the target website and select Export](/images/cookie-editor-export-cookies.png)
+
+### Step 3: Import into BrowserAct
+
+Upload the file or paste the data using the steps below.
+
+## Import cookie data
+
+Use **Standard Browser** and wait for all tasks in that browser to finish before importing.
+
+1. Open the Bot's `Browser settings` → `Website login`.
+2. Select `Import` on the `Import cookies` card.
+3. Paste the data into `Cookie data`, or select `Upload cookie file` to upload a `.json`, `.txt`, or `.cookies` file.
+4. Correct any validation errors, then select `Import cookies`.
+
+![Upload a cookie file, then select Import cookies](/images/website-login-cookie-import-steps.png)
+
+After a successful import, the card shows the cookie count and domains. BrowserAct saves the update for the Bot's future runs.
+
+![The Import cookies card shows the imported cookie count and domains](/images/website-login-cookie-import-success.png)
+
+## Update saved cookies
+
+When cookies stop working, export a fresh signed-in session and repeat the import steps. If an import fails, BrowserAct keeps your input and the previous saved state.
+
+## Supported formats and limits
+
+| Requirement | Details |
+| --- | --- |
+| Formats | JSON Cookie Array or Netscape Cookie File. Plain Cookie Header Strings are not supported. |
+| File types | `.json`, `.txt`, `.cookies` |
+| Multiple domains | Allowed; each domain is counted separately. |
+| Cookies per domain | Up to 180. Counting ignores leading dots and letter case, so `.EXAMPLE.com` and `example.com` count as the same domain. |
+| Size per cookie | The `name=value` string must be no more than 4 KB (4,096 UTF-8 bytes). One oversized cookie causes the entire import to fail. |
+| Total input length | No total character limit. Cookie format, required fields, domain counts, and individual cookie sizes are still checked. |
+
+Include the cookies' domain and path information. A header string such as `name=value; name2=value2` does not contain this context. Follow any validation message below the input to correct your data.

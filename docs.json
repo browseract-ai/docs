@@ -11,17 +11,17 @@
     },
     {
       "source": "/credential-center/credential-center-overview",
-      "destination": "/website-login/overview",
+      "destination": "/website-login/account-credentials",
       "permanent": true
     },
     {
       "source": "/credential-center/authentication-and-credentials",
-      "destination": "/website-login/overview#method-1-use-account-credentials",
+      "destination": "/website-login/account-credentials",
       "permanent": true
     },
     {
       "source": "/workflow/help/authentication-and-credentials",
-      "destination": "/website-login/overview#method-1-use-account-credentials",
+      "destination": "/website-login/account-credentials",
       "permanent": true
     },
     {
@@ -194,9 +194,12 @@
           {
             "group": "Website Login",
             "icon": "key-round",
-            "expanded": false,
+            "expanded": true,
             "pages": [
-              "website-login/overview"
+              "website-login/overview",
+              "website-login/account-credentials",
+              "website-login/import-cookies",
+              "website-login/manual-login"
             ]
           },
           {
