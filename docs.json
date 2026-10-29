@@ -352,7 +352,7 @@
     "links": [
       {
         "label": "Contact Us",
-        "href": "https://discord.com/invite/UpnCKd7GaU"
+        "href": "https://www.browseract.com/?support=messages&co-from=link-Docs"
       }
     ],
     "primary": {
@@ -364,8 +364,7 @@
   "footer": {
     "socials": {
       "x": "https://x.com/browseract",
-      "linkedin": "https://www.linkedin.com/company/browseract/posts/?feedView=all",
-      "discord": "https://discord.com/invite/UpnCKd7GaU"
+      "linkedin": "https://www.linkedin.com/company/browseract/posts/?feedView=all"
     }
   },
   "seo": {

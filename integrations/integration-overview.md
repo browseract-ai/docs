@@ -20,6 +20,7 @@ Confirm that:
 
 - `Make`: build visual business automation scenarios.
 - `n8n`: build technical workflows with branching and transformations.
+- [Dify](/integrations/dify?co-from=link-Docs): run Bots and official templates in Dify workflows. While Marketplace review is in progress, download and install the plugin package using Local Package File.
 - `Zapier`: connect a Bot to supported triggers and actions.
 - `MCP`: connect BrowserAct to compatible MCP clients.
 - `API Keys`: create and manage the credentials used by supported integrations.
