@@ -249,6 +249,7 @@
                   "account-billing/billing/billing-credits",
                   "account-billing/billing/view-credit-usage",
                   "account-billing/billing/choose-plan",
+                  "account-billing/billing/use-discount-code",
                   "account-billing/billing/view-billing-history",
                   "account-billing/billing/credit-packs",
                   "account-billing/billing/subscription-management"
