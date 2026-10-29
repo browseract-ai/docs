@@ -211,6 +211,7 @@
               "integrations/api-keys",
               "integrations/make",
               "integrations/n8n",
+              "integrations/dify",
               "integrations/zapier",
               "integrations/mcp",
               {
