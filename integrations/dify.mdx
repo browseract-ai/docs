@@ -11,7 +11,7 @@ Run BrowserAct Bots and official templates from a Dify workflow, then pass their
 ## Before You Start
 
 - Access to a Dify workspace where you can install plugins.
-- A BrowserAct REST API key. An MCP Server key cannot be used for this integration.
+- A general BrowserAct API Key for REST API access. A Custom MCP Server’s independent key cannot be used for this integration.
 - A published BrowserAct Bot, or an official template you want to run.
 - The input values required by your Bot or template.
 
@@ -121,9 +121,9 @@ The plugin is still under review. Use the package download and **Local Package F
 
 Yes. Select **Run My Bot** for a published Bot in your account, or **Run Official Template** for an official template.
 
-### Why does authorization fail with my MCP key?
+### Why does authorization fail with a Custom MCP Server key?
 
-This plugin uses BrowserAct REST API authentication. Create a REST API key using [API Keys](/integrations/api-keys?co-from=link-Docs); MCP Server keys are managed separately.
+This plugin uses a general BrowserAct API Key for REST API authentication. The same type of key is used for the BrowserAct MCP connection. A Custom MCP Server’s independent key only works with its matching Custom Server. Create or manage a general key using [API Keys](/integrations/api-keys?co-from=link-Docs).
 
 ### What if Dify stops displaying output while the Task is running?
 

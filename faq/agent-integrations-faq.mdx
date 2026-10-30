@@ -5,9 +5,9 @@ sidebarTitle: "Agent & Integrations"
 
 ## Can I use BrowserAct through MCP in QwenPaw?
 
-Yes, if QwenPaw supports connecting to a remote MCP server. Create a BrowserAct MCP Server, expose the required Bot as an MCP Tool, and add the MCP Server URL and API key to QwenPaw.
+Yes, if QwenPaw supports a remote MCP connection with Bearer API Key authentication. Connect to `https://mcp.browseract.com/mcp/` with your general BrowserAct API Key. Your agent can then find and run your accessible published Bots and official templates; you do not need to expose each Bot individually.
 
-Both Workflow Built Bots and Agent Built Bots support MCP. See [Integrate BrowserAct with MCP](/integrations/mcp) for the setup steps.
+Both Workflow Built Bots and Agent Built Bots support MCP. See [BrowserAct MCP](/integrations/mcp?co-from=link-Docs) for the setup steps.
 
 ## Can BrowserAct MCP connect to the Claude.ai web app?
 
@@ -17,22 +17,21 @@ Not currently. Support for connecting BrowserAct MCP to Claude.ai on the web is 
 
 Yes. BrowserAct Bots can connect to supported Claude clients, such as Claude Desktop and Claude Code, and to other compatible AI agents through MCP.
 
-Create a BrowserAct MCP Server, expose the Bot as an MCP Tool, and connect the server to your MCP client with the MCP Server URL and API key.
+Connect your client to `https://mcp.browseract.com/mcp/` using your general BrowserAct API Key. One connection lets your agent find and run accessible published Bots and official templates, then retrieve their results. Individual Bot exposure is only needed when you choose a Custom MCP Server.
 
 BrowserAct provides connection guidance for clients such as Claude Desktop, Claude Code, Cursor, Windsurf, Gemini CLI, VS Code, and supported API-based agent environments.
 
-For setup details, see [Workflow Built MCP setup](/integrations/mcp#convert-a-workflow-built-bot-into-an-mcp-tool) or [Agent Built MCP setup](/integrations/mcp#convert-an-agent-built-bot-into-an-mcp-tool).
+For setup details, see [Connect to BrowserAct MCP](/integrations/mcp?co-from=link-Docs#connect-to-browseract-mcp).
 
-## Why does a REST API request return an authorization error when I use an API key created from the MCP Server?
+## Why does a REST API request fail with a Custom MCP Server key?
 
-The API key created from the MCP Server panel is only used for MCP Server access. It cannot be used for REST API requests. MCP Server and REST API are separate modules, and their API keys are managed separately.
+A Custom MCP Server key only grants access to its matching Custom Server. It cannot be used for BrowserAct REST API requests.
 
-- **MCP Server key:** Used only for MCP client connections.
-- **REST API key:** Used only for BrowserAct REST API calls.
+Use a general BrowserAct API Key for REST API requests and the BrowserAct MCP connection at `https://mcp.browseract.com/mcp/`. For a Custom MCP Server, use the URL and independent MCP API Key shown on that Server’s connection page.
 
 ## Where are API keys managed?
 
-Open `Integrations` and select `Manage API Keys` to create, copy, edit, or delete an API key. For endpoints and API-based webhooks, see the API Reference.
+Open **API & Integrations** and use the **API Keys** section to create or manage a general BrowserAct API Key. See [API Keys & Authentication](/integrations/api-keys?co-from=link-Docs). Custom MCP Server keys are managed separately on the selected Server’s **Connect to Clients** page.
 
 ## Is Google Sheets a direct BrowserAct integration?
 
@@ -40,7 +39,7 @@ Not directly. Connect BrowserAct to Make, n8n, or Zapier, then add Google Sheets
 
 ## Can I integrate BrowserAct with platforms other than Make, n8n, and Zapier?
 
-Yes. Use the BrowserAct API to connect a Bot to another application or automation platform. BrowserAct Bots can also be exposed as MCP Tools for supported AI agents and MCP clients.
+Yes. Use the BrowserAct API to connect a Bot to another application or automation platform. Compatible AI clients can also use BrowserAct MCP to find and run accessible published Bots and official templates. See [BrowserAct MCP](/integrations/mcp?co-from=link-Docs) for setup.
 
 Make, n8n, and Zapier provide ready-to-use integration paths. Other platforms can connect through the API or MCP, depending on the platform's capabilities.
 
