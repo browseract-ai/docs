@@ -28,6 +28,11 @@
       "source": "/workflow/help/credits-subscription/billing-credits",
       "destination": "/account-billing/billing/billing-credits",
       "permanent": true
+    },
+    {
+      "source": "/workflow/learn/integrations/mcp",
+      "destination": "/integrations/mcp",
+      "permanent": true
     }
   ],
   "colors": {

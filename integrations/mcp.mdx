@@ -1,378 +1,213 @@
 ---
-title: "Integrate BrowserAct with MCP"
+title: "BrowserAct MCP"
 sidebarTitle: "MCP"
-description: "Turn BrowserAct Bots into MCP Tools and connect them to MCP clients."
+description: "Connect your AI client to find and run BrowserAct Bots and official templates, then get results in your conversation."
 ---
 
-BrowserAct MCP Server lets compatible MCP clients discover and run BrowserAct Bots as MCP Tools.
+import { MCPClientPrompts, MCPSetupPrompt } from "/snippets/mcp-setup.jsx"
 
-> **Naming note:** The MCP interface currently uses `Workflow`. In the new BrowserAct product structure, the completed automation is managed as a Bot, and a legacy Workflow ID corresponds to the Bot ID.
+## What you can do
 
-## What Is BrowserAct MCP Server?
+Use BrowserAct from an MCP-compatible AI client to find and run published Bots or official templates, then retrieve their results. MCP (Model Context Protocol) is the connection that lets your AI client use BrowserAct tools.
 
-BrowserAct MCP Server connects MCP clients to BrowserAct Bots through the Model Context Protocol. A connected client can discover exposed tools, provide inputs, run the Bot, and receive its result.
+## Before you start
 
-You can use it to:
+You need a BrowserAct account and an MCP-compatible client. Publish your own Bots before running them; official templates are ready to use.
 
-- Run browser automation from a chat or agent interface
-- Pass runtime inputs in natural language
-- Return results as text or files
-- Expose multiple BrowserAct Bots from one MCP Server
+## Connect BrowserAct
 
-## Supported MCP Clients
-
-BrowserAct can connect to clients that support the required MCP server transport and authentication method, including clients shown in the current BrowserAct setup interface.
-
-Compatibility depends on the client, not only on the AI model name. For a client that is not listed, follow its instructions for adding a generic MCP Server.
-
-## Before You Start
-
-Prepare the following:
-
-- A BrowserAct account
-- A published BrowserAct Bot
-- An MCP-compatible client
-- A Bot that does not require manual credential input on every run
-
-## How to Use MCP
-
-BrowserAct supports two MCP setup paths:
-
-- Convert an Agent Built Bot into an MCP Tool from the Bot's `Integrations` tab.
-- Convert a Workflow Built Bot into an MCP Tool from the Workflow Builder's MCP configuration.
-
-## Convert an Agent Built Bot into an MCP Tool
-
-Use this path when the Bot was created with Agent Built.
-
-### Step 1: Select the Bot to Expose
-
-1. Open `Bots`.
-2. Find the Agent Built Bot you want to expose as an MCP Tool.
-3. Select the Bot.
-
-![Select an Agent Built Bot from the Bots page](../images/mcp-agent-built-select-bot.png)
-
-### Step 2: Create an MCP Server and Expose the Tool
-
-#### Create an MCP Server
-
-1. Open the Bot's `Integrations` tab.
-2. Find the `MCP` card.
-3. Select `MCP Server`.
-
-![Open MCP Server from an Agent Built Bot](../images/mcp-agent-built-integrations-card.png)
-
-Before exposing the Bot, you can review or edit the MCP Tool's basic information from the settings icon on the `MCP` card. BrowserAct generates the Tool Call Name, Tool Description, and input descriptions automatically, but you can adjust them before exposing the Bot to MCP clients.
-
-![Open Agent Built MCP Tool settings](../images/mcp-agent-built-tool-settings-entry.png)
-
-![Edit Agent Built MCP Tool configuration](../images/mcp-agent-built-tool-configuration.png)
-
-Select `Add MCP Servers`, enter a server name and optional description, then select `Confirm`.
-
-![Create an MCP Server for an Agent Built Bot](../images/mcp-agent-built-add-server-form.png)
-
-#### Expose the Tool
-
-After the MCP Server is created, select the `Server Management` icon for that server.
-
-![Open Server Management for the MCP Server](../images/mcp-agent-built-server-management.png)
-
-1. Open `Exposed Tools`.
-2. Select `Not Exposed`.
-3. Select the Bot you want to expose.
-4. Select the expose action, then confirm.
-
-![Expose an Agent Built Bot as an MCP Tool](../images/mcp-agent-built-expose-tool.png)
-
-### Step 3: Connect an MCP Client
-
-You can configure the client manually or ask an AI agent such as Codex or Claude Code to help complete the connection.
-
-#### Option 1: Configure the Client Manually
-
-1. Open `Connect to Clients` for the MCP Server.
-2. Copy the MCP Server URL.
-3. Create or copy the API Key from the same MCP Server.
-4. Select the MCP client you want to connect, then follow the setup instructions shown in BrowserAct.
-5. Reload the client if required and confirm that the exposed Agent Built Bot appears as an available MCP Tool.
-
-![Copy the MCP Server URL and API Key](../images/mcp-connect-to-clients.png)
-
-![Open the setup guide for an MCP client](../images/mcp-client-setup-guide.png)
-
-Use the MCP Server URL and API Key from the same server. Do not share the API Key in prompts, screenshots, repositories, or public configuration files.
-
-#### Option 2: Configure Quickly with an Agent
-
-Send the following prompt to your agent. Replace the example URL with the MCP Server URL from BrowserAct. Keep the key placeholder until the agent begins its secure local configuration flow, and only provide the key in a trusted session.
-
-````text
-Connect to BrowserAct via its MCP server and return structured output.
-
-## MCP Server
-- URL: https://mcp.browseract.com/************/mcp/
-- Transport: Streamable HTTP (type: "http")
-- Auth: `Authorization: Bearer <BROWSERACT_MCP_KEY>`
-
-IMPORTANT: The authentication header must use the `Authorization: Bearer` format, not `x-api-key` or another header name.
-
-## Before calling the tool
-Verify that the `browseract` MCP server is connected in the current session. If it is not connected or configured, do not continue. Instead, provide the setup command and guide me through completing the connection.
-
-For Claude Code, use:
-
-```bash
-claude mcp add --transport http --header "Authorization: Bearer <KEY>" --scope user browseract "<URL>"
-```
-
-For another agent, provide the equivalent configuration command or file location for that agent, then verify the connection before calling the tool.
-````
-
-![Configure the BrowserAct MCP connection with an AI agent](../images/mcp-agent-quick-connect.jpg)
-
-### Step 4: Run an MCP Tool
-
-After the client confirms that the `browseract` MCP Server is connected and the exposed tool is available, run the tool with either of the following methods.
-
-#### Run from a Standard MCP Client
-
-Include the required runtime inputs in the request. For example:
+BrowserAct MCP server URL:
 
 ```text
-Run the BrowserAct tool for this URL and return the structured result:
-https://example.com
+https://mcp.browseract.com/mcp/
 ```
 
-#### Run from an Agent
+Prepare your general BrowserAct API Key and follow [Connect to BrowserAct MCP](#connect-to-browseract-mcp) to set up your AI client.
 
-Ask the agent to use the connected BrowserAct MCP Tool in natural language. For example:
+## Run Bots or official templates
+
+Describe your task to find a matching Bot or template. Your client checks the required inputs before running it.
+
+## Get your result
+
+A run returns a task ID first. Your client uses that ID to check progress and retrieve the completed result and any available file information. Follow [Run Bots and Templates](#run-bots-and-templates) for the full process.
+
+
+## Connect to BrowserAct MCP
+
+### Before you start
+
+Create or copy a BrowserAct API Key on the [API & Integrations page](https://www.browseract.com/reception/integrations?co-from=link-Docs). For instructions, see [API Keys & Authentication](https://docs.browseract.com/integrations/api-keys?co-from=link-Docs).
+
+### Connect with a setup prompt
+
+Paste this prompt into your AI client to set up the connection. The server URL is included. Enter your API Key in the client configuration or secure credential field, never in chat.
+
+<MCPSetupPrompt text={"Identify this MCP client and connect BrowserAct. Configure it if you have access; otherwise give the setup steps.\n\nName: browseract\nURL: https://mcp.browseract.com/mcp/\nTransport: Streamable HTTP\nAuthorization: Bearer <BROWSERACT_API_KEY>\n\nReuse a valid key, or get one at https://www.browseract.com/reception/integrations?co-from=link-Docs. Enter it in local configuration or a secure credential field, never in chat.\n\nReuse or repair an existing browseract connection; preserve other MCP settings. Verify that BrowserAct tools are available, and reload only if needed. Report any setup or verification issue. Do not run tasks."} />
+
+Example confirmation after setup (wording varies by client):
+
+![Example client response confirming successful BrowserAct authentication](/images/global-mcp/browseract-authentication-succeeded.png)
+
+
+
+
+
+### Copy a setup prompt for your client
+
+Choose a client and click **Copy**. Paste API integration prompts into your coding assistant.
+
+<MCPClientPrompts />
+
+### Verify the connection
+
+In your client’s MCP settings, confirm that `browseract` is enabled. The example uses **Settings → Plugins → MCPs**; paths vary by client.
+
+![BrowserAct enabled in the client MCP settings](/images/global-mcp/browseract-mcp-enabled.png)
+
+Ask your client to confirm that `search_bots` and `search_official_templates` are available in this chat. If unavailable, see [troubleshooting](#troubleshooting-and-faq).
+
+### Try your first request
+
+Send this request to your AI client:
 
 ```text
-Use BrowserAct MCP to crawl posts about Codex on Reddit.
+Find a BrowserAct official template for my reddit post comment extraction task and show me its required inputs before running it.
 ```
 
-The agent should select the exposed tool, supply its required inputs, and return the result in the requested format.
+Example response: a matching Reddit template and its required inputs. No extraction task has run yet.
 
-![Run an exposed BrowserAct MCP Tool from an AI agent](../images/mcp-agent-run-tool.png)
+![Example response showing a Reddit template and its published inputs](/images/global-mcp/reddit-template-query-result.png)
 
-Open the MCP Server's execution logs to review status, duration, and errors.
+Continue with [Run Bots and Templates](#run-bots-and-templates) to submit a task and retrieve its result.
 
-## Convert a Workflow Built Bot into an MCP Tool
 
-Use this path when the Bot was created with Workflow Built.
+## Run Bots and Templates
 
-### Step 1: Select the Workflow Built Bot to Expose
+### Run your published Bot
 
-1. Open the Workflow Built Bot.
-2. Select `MCP Configure`.
-3. Turn on `MCP-Ready`.
-
-![Open MCP Configure in a Workflow Built Bot](../images/mcp-configure-entry.png)
-
-Turning on `MCP-Ready` does not activate the tool immediately. Publish the Workflow after completing the configuration.
-
-### Configure the Tool
-
-Enter the following information:
-
-- **Tool Call Name:** Use 2-32 characters. Start with a letter and use only letters, numbers, and underscores. The name must be unique within the account.
-- **Description:** Explain what the tool does and when the MCP client should use it.
-- **Tool Output Method:** Choose `Text` or `File` based on the expected result.
-
-Clear tool names and descriptions help the MCP client select the correct tool.
-
-![Enable and configure the MCP Tool](../images/mcp-tool-configuration.png)
-
-#### Configure Input Parameters
-
-Choose how each Workflow input is provided:
-
-- **AI-Inferred:** The MCP client supplies the value at runtime. Add a clear parameter description.
-- **Fixed Value:** BrowserAct uses the same value for every execution.
-
-MCP Tools do not support credentials entered manually for each run. Use credentials stored and authorized through Credential Center.
-
-After the configuration is published, update the Workflow and publish again when its MCP parameters need to change.
-
-#### Publish the Workflow
-
-Select `Publish` after the MCP configuration is complete. MCP clients run the latest published configuration; unpublished changes are not available to them.
-
-### Step 2: Create an MCP Server and Expose the Tool
-
-Open the MCP Server page:
-
-1. Open `Integrations` in BrowserAct Cloud.
-2. Find the `MCP` section.
-3. Select the `MCP` card.
-
-![Open MCP from the BrowserAct Integrations page](../images/mcp-integrations-entry.png)
-
-1. Select `Add` on the MCP Server page.
-
-![Add an MCP Server](../images/mcp-server-list-add.png)
-
-2. Enter a unique Server Name.
-3. Add an optional description.
-4. Select `Confirm`.
-
-![Enter the MCP Server name and description](../images/mcp-add-server-form.png)
-
-Expose the Workflow Built Bot as an MCP Tool:
-
-1. Select `Management` for the target MCP Server.
-
-![Open MCP Server management](../images/mcp-open-server-management.png)
-
-2. Open `Exposed Tools` and select `Not Exposed`.
-3. Find the MCP Tool and select the expose action.
-
-![Select a Workflow Built Bot that has not been exposed](../images/mcp-select-not-exposed-tool.png)
-
-4. Review the notice and select `Confirm`.
-
-![Confirm that the MCP Tool should be exposed](../images/mcp-confirm-expose-tool.png)
-
-Only published, MCP-ready Bots can be exposed. One MCP Server can expose multiple MCP Tools.
-
-### Step 3: Connect an MCP Client
-
-Each MCP Server has its own MCP Server URL and API Key. Use the matching pair from the same server.
-
-You can configure the client manually or ask an AI agent such as Codex or Claude Code to help complete the connection.
-
-#### Option 1: Configure the Client Manually
-
-Get the Server URL and API Key:
-
-1. Open `Management` for the target MCP Server.
-2. Open `Connect to Clients`.
-3. Copy the MCP Server URL.
-4. Select `Create New API Key`, then copy the generated key from the Actions column.
-
-![Copy the MCP Server URL and API Key](../images/mcp-connect-to-clients.png)
-
-This is the MCP Server connection key. It is managed from the MCP Server, not from the general `Manage API Keys` page.
-
-Configure the client:
-
-1. Select the target MCP client in `Connect to Clients`.
-2. Open the setup instructions for that client.
-3. Add the MCP Server URL and API Key to the client's configuration.
-4. Reload the client if required.
-5. Confirm that the exposed BrowserAct tools are available.
-
-![Open the setup guide for an MCP client](../images/mcp-client-setup-guide.png)
-
-Do not expose the API Key in prompts, screenshots, repositories, or shared configuration files.
-
-#### Option 2: Configure Quickly with an Agent
-
-Send the following prompt to your agent. Replace the example URL with the MCP Server URL from BrowserAct. Keep the key placeholder until the agent begins its secure local configuration flow, and only provide the key in a trusted session.
-
-````text
-Connect to BrowserAct via its MCP server and return structured output.
-
-## MCP Server
-- URL: https://mcp.browseract.com/************/mcp/
-- Transport: Streamable HTTP (type: "http")
-- Auth: `Authorization: Bearer <BROWSERACT_MCP_KEY>`
-
-IMPORTANT: The authentication header must use the `Authorization: Bearer` format, not `x-api-key` or another header name.
-
-## Before calling the tool
-Verify that the `browseract` MCP server is connected in the current session. If it is not connected or configured, do not continue. Instead, provide the setup command and guide me through completing the connection.
-
-For Claude Code, use:
-
-```bash
-claude mcp add --transport http --header "Authorization: Bearer <KEY>" --scope user browseract "<URL>"
-```
-
-For another agent, provide the equivalent configuration command or file location for that agent, then verify the connection before calling the tool.
-````
-
-![Configure the BrowserAct MCP connection with an AI agent](../images/mcp-agent-quick-connect.jpg)
-
-### Step 4: Run an MCP Tool
-
-After the client confirms that the `browseract` MCP Server is connected and the exposed tool is available, run the tool with either of the following methods.
-
-#### Run from a Standard MCP Client
-
-Include the required runtime inputs in the request. For example:
+Describe what you want in natural language, or use a Bot ID as shown below. Your agent checks the required inputs and retrieves the results after a successful run.
 
 ```text
-Run the BrowserAct tool for this URL and return the structured result:
-https://example.com
+Run BrowserAct Bot [BOT_ID]. Ask me for any missing required inputs, then run once and retrieve the results.
 ```
 
-#### Run from an Agent
+### Run an official template
 
-Ask the agent to use the connected BrowserAct MCP Tool in natural language. For example:
+Describe what you want in natural language, or specify an official template ID. Your agent checks the required inputs and retrieves the results after a successful run.
 
 ```text
-Use BrowserAct MCP to crawl posts about Codex on Reddit.
+Run BrowserAct official template [TEMPLATE_ID]. Ask me for any missing required inputs, then run once and retrieve the results.
 ```
 
-The agent should select the exposed tool, supply its required inputs, and return the result in the requested format.
+### Choose a proxy region for a template run
 
-![Run an exposed BrowserAct MCP Tool from an AI agent](../images/mcp-agent-run-tool.png)
+Ask your agent to find and use a supported region.
 
-Open the MCP Server's execution logs to review status, duration, and errors.
+```text
+Find the BrowserAct proxy region code for [country or region] and use it when I ask you to run official template [TEMPLATE_ID].
+```
 
-## Troubleshooting
+### Rate limits and performance
 
-### Authentication Error
+There is no request rate limit. The number of tasks you can run concurrently depends on your account’s current plan.
 
-- Confirm that the API Key belongs to the selected MCP Server.
-- Copy the key again from `Management > Connect to Clients`.
-- Confirm that the key has not been revoked or deleted.
+### Available tools
 
-### MCP Client Cannot Find Tools
+| Tool name | Category | Enabled by default | Description |
+| --- | --- | :---: | --- |
+| `search_bots` | Bots | ✅ | Find published Bots accessible to your API Key. |
+| `get_bot_details` | Bots | ✅ | Get Bot details and input schema. |
+| `run_bot` | Bots | ✅ | Run a published Bot and return a task ID. |
+| `search_official_templates` | Templates | ✅ | Find available official templates. |
+| `get_official_template_details` | Templates | ✅ | Get template details and input schema. |
+| `run_official_template` | Templates | ✅ | Run an official template and return a task ID. |
+| `list_proxy_regions` | Regions | ✅ | List supported proxy region codes and names. |
+| `list_tasks` | Tasks | ✅ | Find existing tasks and their IDs. |
+| `get_task_status` | Tasks | ✅ | Get the current task status. |
+| `get_task` | Tasks | ✅ | Get task details, output, and available files. |
+| `cancel_task` | Tasks | ✅ | Cancel a running or paused task. |
 
-- Confirm that the MCP Server URL is correct.
-- Confirm that the MCP Server is online.
-- Confirm that at least one tool is exposed.
-- Confirm that the Bot is MCP-ready and published.
-- Reload the MCP client after changing the configuration.
 
-### MCP Client Cannot Run a Tool
+## Troubleshooting and FAQ
 
-- Check the BrowserAct credit balance.
-- Confirm that every required input is available.
-- Improve the tool and parameter descriptions if the client selects or fills them incorrectly.
-- Review the MCP Server execution logs.
+### Check the reported problem
 
-## MCP Limits and Behavior
+| Problem | What to check |
+| --- | --- |
+| Authentication fails | Use `Authorization: Bearer …`. The BrowserAct MCP connection requires a general API Key. Check that the key is still valid. |
+| I see tools but not individual Bots | Bots and templates are discovered through search rather than listed individually in your client. Use `search_bots` to find your Bots or `search_official_templates` to find available official templates. |
+| Input validation fails | Read the current resource details. Supply required fields with the correct types. Check parameter descriptions and defaults. |
+| A run returned only an ID | This is expected for the BrowserAct MCP run tools. Query status, then retrieve the task result. |
+| A run submission timed out | The request may already have created a task. If you have its ID, check that task. Otherwise, reconcile the submission using identifiable task information; do not submit again while the outcome is uncertain. |
+| A region is rejected | Call `list_proxy_regions` and select a returned code. |
+| A run fails | Read task details. Check the reported permission, input, balance, or website-access issue. Start another run only after you have addressed the issue and choose to run again. |
 
-### Can Agent Built Bots Be Used as MCP Tools?
+### Improve unclear input descriptions
 
-Yes. Agent Built Bots can be exposed as MCP Tools from the Bot's `Integrations` tab. See [Convert an Agent Built Bot into an MCP Tool](#convert-an-agent-built-bot-into-an-mcp-tool).
+If the client selects a tool or fills its inputs incorrectly, clarify the Bot and parameter descriptions.
 
-### Can Every Workflow Built Bot Be Exposed?
+#### Agent Built Bots
 
-Most can be exposed, except Bots that require users to enter credentials manually on every run.
+Open **Edit Bot** from the Bot details. Update the Bot description or the input descriptions under **Parameters**, then click **Save**.
 
-### How Many MCP Servers Can I Create?
+![Edit Agent Built Bot parameter descriptions and click Save](/images/global-mcp/agent-bot-parameter-descriptions.png)
 
-- Free accounts: 1 MCP Server
-- Paid accounts: Unlimited MCP Servers
+#### Workflow Built Bots
 
-### How Many Tools Can One Server Expose?
+For Workflow Built Bots, open the input parameter editor in the **Start** node, update **Description**, and click **OK** to save. Then click **Publish** to make the updated configuration available through MCP. Ask your client to read the updated tool details.
 
-There is no fixed tool-count limit. One MCP Server can expose multiple MCP Tools.
+![Edit the Start node input description, save with OK, and publish the Bot](/images/global-mcp/workflow-start-description-publish.png)
 
-### Do MCP API Keys Expire?
+### A request timed out
 
-They do not expire by default. You can revoke or regenerate them from MCP Server management.
+A timeout does not mean the task stopped. Query it by ID. If no ID was returned, check for the original task before retrying; do not create a duplicate while its status is uncertain.
 
-### What Happens When the Workflow Changes?
+### Set up a custom MCP server with selected Bot tools
 
-Publish the updated Workflow. MCP clients use the latest published configuration and continue using the previous one until the update is published.
+Use a **Custom MCP Server** to choose which published Bot tools this connection exposes. Both Agent Built and Workflow Built Bots can be selected.
 
-### What Happens When the MCP Server Is Offline?
+#### 1. Add a Server
 
-MCP clients cannot connect to or run its tools. The exposure configuration remains saved.
+Open [Manage Custom MCP Servers](https://www.browseract.com/reception/mcp-servers?co-from=link-Docs). Click **Add** and complete the Server creation form.
+
+![Add a Custom MCP Server](/images/global-mcp/custom-server-add.png)
+
+#### 2. Expose Bot tools
+
+In the Server’s **Action** column, click the management icon shown below to open its settings.
+
+![Open management for the selected Custom MCP Server](/images/global-mcp/custom-server-open-management.png)
+
+Open **Exposed Tools → Not Exposed**, select the published Bot tools you want to make available, and click **Expose**. Complete any confirmation shown. Publishing a Bot does not automatically expose it to this Server.
+
+![Select Bot tools in Not Exposed and click Expose](/images/global-mcp/custom-server-expose-tools.png)
+
+#### 3. Connect to your client
+
+Open **Connect to Clients**. Copy the **MCP Server URL** and create or copy a key from the **API Keys** section on this Server’s connection page. Use both in your client’s configuration, following its setup guide.
+
+**Each Custom MCP Server requires its own independent MCP API Key. Use the URL and key from the same Server. Do not use your general BrowserAct API Key or a key from another Custom Server.**
+
+![Connect to Clients shows the selected Server URL and its independent MCP API Keys](/images/global-mcp/custom-server-client-key.png)
+
+Keep the Server online and confirm that the selected tools appear in your client. Access remains subject to the key’s permissions.
+
+### Frequently asked questions
+
+**Do I need to expose each Bot before using the BrowserAct MCP server?**
+
+No. Connect with your BrowserAct API Key to search for accessible Bots and run your published Bots. You do not need to expose each Bot individually for this connection.
+
+**Do I need OAuth sign-in?**
+
+This connection uses API Key authentication. OAuth is not supported in this release.
+
+**Can I change which tools the BrowserAct MCP server exposes with a URL parameter?**
+
+No. URL `?tools=` filtering is not supported.
+
+
+**Can I resume a task through MCP?**
+
+MCP does not provide a task-resume tool. Read the task details to decide your next step.
