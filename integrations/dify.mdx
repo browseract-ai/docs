@@ -1,12 +1,12 @@
 ---
 title: "Integrate BrowserAct with Dify"
 sidebarTitle: "Dify"
-description: "Install the BrowserAct plugin from a local package and run Bots or official templates in Dify workflows."
+description: "Install BrowserAct from the Dify Marketplace and run Bots or official templates in Dify workflows."
 ---
 
 Run BrowserAct Bots and official templates from a Dify workflow, then pass their structured results to downstream nodes.
 
-> **Marketplace review in progress:** The BrowserAct plugin is currently under review for the Dify Marketplace. Download the plugin package and install it using **Local Package File** for now.
+Install BrowserAct directly from the Dify Marketplace. You do not need to download or upload a plugin package.
 
 ## Before You Start
 
@@ -17,23 +17,21 @@ Run BrowserAct Bots and official templates from a Dify workflow, then pass their
 
 Create or manage your REST API key by following [API Keys](/integrations/api-keys?co-from=link-Docs).
 
-## Step 1: Download and Install the Plugin
+## Step 1: Install from the Dify Marketplace
 
-**1.** [Download the BrowserAct plugin package (.difypkg)](https://browseract-prod.browseract.com/prod/tools/browseract-1.0.0-view-properties-20261029.difypkg).
+**1.** Open [BrowserAct in the Dify Marketplace](https://cloud.dify.ai/marketplace?q=browseract). Sign in to your Dify workspace if prompted.
 
-**2.** Open Dify and select **Integrations**.
+**2.** Select the **BrowserAct** plugin published by **browser-act** from the search results, then select **Install**.
 
-**3.** Select **Install** > **Local Package File**.
+![Find the BrowserAct plugin published by browser-act in the Dify Marketplace.](../images/dify-marketplace-search.png)
 
-![Select Install > Local Package File.](../images/dify-install-local-package.png)
+**3.** In the **Install Integration** dialog, confirm that the plugin is **BrowserAct** by **browser-act**, then select **Install**.
 
-**4.** Select the downloaded `.difypkg` file.
+![Confirm the BrowserAct plugin and select Install.](../images/dify-marketplace-install.png)
 
-**5.** Select **Install** in the confirmation dialog.
+**4.** Wait for the **Installation successful** message, then select **Close**.
 
-![Select Install in the confirmation dialog.](../images/dify-confirm-install.png)
-
-**6.** Wait for installation to finish.
+![Installation successful. Select Close to continue.](../images/dify-marketplace-success.png)
 
 ## Step 2: Create a Dify Workflow
 
@@ -113,9 +111,9 @@ Both tools default to **Run Bot**. **View Parameters** only inspects inputs; an 
 
 ## FAQ
 
-### Why can't I find BrowserAct in the Dify Marketplace?
+### Do I need to download a plugin package?
 
-The plugin is still under review. Use the package download and **Local Package File** installation steps above.
+No. Install the **BrowserAct** plugin published by **browser-act** directly from the [Dify Marketplace](https://cloud.dify.ai/marketplace?q=browseract), following Step 1 above.
 
 ### Can I run both my Bots and official templates?
 
