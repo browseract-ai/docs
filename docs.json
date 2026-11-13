@@ -214,6 +214,12 @@
             "pages": [
               "integrations/integration-overview",
               "integrations/api-keys",
+              "integrations/destinations/google-sheets",
+              "integrations/destinations/airtable",
+              "integrations/destinations/gmail",
+              "integrations/destinations/notion",
+              "integrations/destinations/slack",
+              "integrations/destinations/webhook",
               "integrations/make",
               "integrations/n8n",
               "integrations/dify",

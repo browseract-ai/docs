@@ -1,0 +1,107 @@
+---
+title: "Send Bot Results to Notion"
+sidebarTitle: "Notion"
+---
+
+Save each run as a page, or add and update records in a Notion database.
+
+## Before you start
+
+- Use a published Agent-built Bot.
+- Create a Notion parent page or database. For databases, prepare properties for the Bot's output.
+- Make sure you can authorize the workspace and connect the target.
+
+## 1. Connect Notion
+
+Open your Bot → **Integrations** → **Notion → Configure**.
+
+![Configure Notion from the Bot's Integrations tab](/images/integrations-notion-01-integrations.png)
+
+In **Account & destination**, click **Authorize new account**. Composio, BrowserAct's integration partner, opens authorization in a new window.
+
+![Authorize a new Notion account](/images/integrations-notion-02-authorize-account.png)
+
+Choose the workspace, review permissions, and click **Select pages**.
+
+![Review Composio's requested Notion permissions and select pages](/images/integrations-notion-03-notion-permissions.png)
+
+Select the pages and click **Allow access**.
+
+![Select the Notion pages to authorize and allow access](/images/integrations-notion-04-select-pages.png)
+
+Return to BrowserAct and **refresh the page**. Reopen the configuration if needed and confirm **Connected**.
+
+## 2. Grant access to the target in Notion
+
+**Workspace authorization alone is not enough.** Add the Composio connection to the specific page or database:
+
+1. Open the target's **•••** menu.
+2. Select **More → Connections → Composio**.
+
+![In Notion, open More and Connections, then select Composio](/images/integrations-notion-05-add-connection.png)
+
+3. Click **Add to page**. This also grants access to subpages.
+
+![Confirm Add to page to grant the connection access](/images/integrations-notion-06-confirm-connection.png)
+
+Menu labels may vary; see [Notion's connection guide](https://www.notion.com/help/add-and-manage-connections-with-the-api#add-connections-to-pages). Return to BrowserAct and refresh the target list.
+
+## 3. Select run sources and a destination
+
+Under **Runs to deliver**, select at least one source: **Manual runs**, **Scheduled runs**, **Runs from Make, n8n & Zapier**, or **API runs**.
+
+Only successful runs from selected sources deliver results. See [delivery conditions](/integrations/integration-overview?co-from=link-Docs#delivery-conditions) for exclusions.
+
+Under **Deliver to**, choose **Parent page** or **Database**.
+
+### Parent page
+
+Select the connected parent page. Refresh the list if it is missing.
+
+![Select Parent page and choose the connected Notion page](/images/integrations-notion-07-parent-page.png)
+
+Click **Next**. In **Content**, enter a **Page title**. Each run creates a child page containing the full result.
+
+![Enter the page title in Content](/images/integrations-notion-08-page-title.png)
+
+### Database
+
+Prepare the database properties and add the Composio connection as described above.
+
+![Prepare a Notion database with properties for the Bot results](/images/integrations-notion-12-create-database.png)
+
+In BrowserAct, choose **Database**, refresh the list, and select your database. Click **Next**.
+
+![Choose Database and select the prepared database in BrowserAct](/images/integrations-notion-13-database-selected.png)
+
+In **Content → Field mapping**, map each **Bot output** to a **Database property**. Select **Don't write** to exclude a field.
+
+![Map Bot output fields to Notion database properties](/images/integrations-notion-14-database-field-mapping.png)
+
+Choose **one mapped field** under **Match** to identify records, such as `post_id`. Matching records are updated with the mapped values; if no record matches, a new record is added.
+
+![Select post_id as the Match field to update matching records or add new records](/images/integrations-notion-15-database-match.png)
+
+## 4. Save and check delivery
+
+Click **Save & enable**, or **Save changes** when editing. The card shows the target, run sources, account, and **Enabled** switch. Saving does not send a test result.
+
+![The enabled Notion destination card shows the selected page and run sources](/images/integrations-notion-09-enabled-destination.png)
+
+Run the Bot from a selected source. In **History**, hover over or keyboard-focus **Delivery** beside **Status** to view the Notion result or error. A successful run can have a failed delivery. See [delivery statuses](/integrations/integration-overview?co-from=link-Docs#check-delivery).
+
+![History shows a completed run and a successful Notion delivery](/images/integrations-notion-18-history-delivery.png)
+
+In Notion, check the new child page or database records. For databases, confirm that matching records were updated and unmatched results were added with the expected properties.
+
+![Bot results stored as records in the selected Notion database](/images/integrations-notion-19-database-result.png)
+
+## Troubleshooting
+
+| Problem | Fix |
+| --- | --- |
+| Account state has not updated | Refresh BrowserAct and reopen the configuration. |
+| Page or database is missing | Check the workspace, add Composio to that target, then refresh the list. |
+| Database list times out | Check account and target permissions, then retry. Keep the error message if it persists. |
+| No content is delivered | Check Enabled, run success, selected source, and Delivery errors. |
+| Database values are missing | Check field mapping, property types, Match selection, and Delivery details. |
