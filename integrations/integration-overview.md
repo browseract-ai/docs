@@ -20,7 +20,7 @@ Select **API & Integrations** in the sidebar:
 | **MCP** | Find and run published Bots and official templates from an AI client. | **Connect to MCP Server**, or read the [MCP guide](/integrations/mcp?co-from=link-Docs). |
 | **Rest API** | Start runs and retrieve task status and results from your application. | **View Docs** on the Rest API card. |
 
-For connections that require a key, see [API Keys & Authentication](/integrations/api-keys?co-from=link-Docs).
+For Key-based connections, the same API Key can be used with the unified BrowserAct MCP URL, a Custom MCP Server URL, and supported public REST API endpoints. Manage Keys in **API & Integrations → API Keys**. The selected endpoint and current permissions determine the available resources; revoking a shared Key stops every connection that uses it. See [API Keys & Authentication](/integrations/api-keys?co-from=link-Docs).
 
 ## Destinations
 

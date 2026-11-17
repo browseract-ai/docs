@@ -11,7 +11,7 @@ Both Workflow Built Bots and Agent Built Bots support MCP. See [BrowserAct MCP](
 
 ## Can BrowserAct MCP connect to the Claude.ai web app?
 
-Not currently. Support for connecting BrowserAct MCP to Claude.ai on the web is under development.
+Yes. BrowserAct MCP supports the Claude.ai web app. Add `https://mcp.browseract.com/mcp/` as a custom connector, then sign in to BrowserAct and complete OAuth authorization. See [BrowserAct MCP](/integrations/mcp?co-from=link-Docs) for setup.
 
 ## Can I use BrowserAct with AI agents other than Claude?
 
@@ -23,15 +23,9 @@ BrowserAct provides connection guidance for clients such as Claude Desktop, Clau
 
 For setup details, see [Connect to BrowserAct MCP](/integrations/mcp?co-from=link-Docs#connect-to-browseract-mcp).
 
-## Why does a REST API request fail with a Custom MCP Server key?
-
-A Custom MCP Server key only grants access to its matching Custom Server. It cannot be used for BrowserAct REST API requests.
-
-Use a general BrowserAct API Key for REST API requests and the BrowserAct MCP connection at `https://mcp.browseract.com/mcp/`. For a Custom MCP Server, use the URL and independent MCP API Key shown on that Server’s connection page.
-
 ## Where are API keys managed?
 
-Open **API & Integrations** and use the **API Keys** section to create or manage a general BrowserAct API Key. See [API Keys & Authentication](/integrations/api-keys?co-from=link-Docs). Custom MCP Server keys are managed separately on the selected Server’s **Connect to Clients** page.
+Create and manage API Keys in **[API & Integrations](https://www.browseract.com/reception/integrations?co-from=link-Docs) → API Keys**. See [API Keys & Authentication](/integrations/api-keys?co-from=link-Docs).
 
 ## Is Google Sheets a direct BrowserAct integration?
 

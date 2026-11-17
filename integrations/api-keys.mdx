@@ -6,20 +6,30 @@ description: "Create and manage API keys used to connect BrowserAct to supported
 
 API keys authenticate BrowserAct integrations and API requests. An API key grants access to your account, so keep it private and create separate keys when you need to manage connections independently.
 
+## Use one API Key across MCP and REST API
+
+The same API Key can authenticate:
+
+| Connection | Address and access scope |
+| --- | --- |
+| Unified BrowserAct MCP | Use the /mcp URL from BrowserAct. Access built-in tools and eligible, exposed Custom tools. |
+| A Custom MCP Server | Use that Server's URL. This endpoint provides only its currently exposed, permitted Custom tools. |
+| Public REST API | Use the documented API endpoint and Authorization: Bearer authentication. |
+
 ## Open API Key Management
 
-1. Open `Integrations` in the BrowserAct dashboard.
-2. Select `Manage API Keys`.
+1. Open **API & Integrations** in the BrowserAct dashboard.
+2. Find the **API Keys** section.
 
 The Integrations page also shows the API server, API documentation, supported tools, and integration platforms.
 
-![Open Manage API Keys from Integrations](../images/integrations-manage-api-keys.png)
+![Open Manage API Keys from Integrations](/images/integrations-manage-api-keys.png)
 
 ## Create an API Key
 
 1. In the API Keys window, select `Create New API Key`.
 
-![Create a new API key](../images/api-keys-create.png)
+![Create a new API key](/images/api-keys-create.png)
 
 2. Enter a name that identifies where the key will be used.
 3. Choose a **CLI Action Confirmation** mode.
@@ -36,7 +46,7 @@ Use this mode only for a trusted environment where unattended execution is requi
 
 4. Select `Confirm`.
 
-![Name the API key and choose its confirmation mode](../images/api-key-confirmation-mode.png)
+![Name the API key and choose its confirmation mode](/images/api-key-confirmation-mode.png)
 
 ## Copy and Manage API Keys
 
@@ -48,7 +58,7 @@ Use the icons in the **Actions** column to:
 - Edit its name or confirmation mode
 - Delete the API key
 
-![Copy, edit, or delete an API key](../images/api-key-actions.png)
+![Copy, edit, or delete an API key](/images/api-key-actions.png)
 
 Deleting a key stops integrations and clients that depend on it from authenticating. Update the connected tool before removing a key that is still in use.
 
